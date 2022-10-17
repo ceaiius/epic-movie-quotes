@@ -17,14 +17,17 @@
 
         <div id="navbar-default" class="">
           <ul class="flex p-4 rounded-lg text-white space-x-8">
-            <li class="mt-2" @click="onClick">
+            <li class="mt-2" @click="onChangeLanguage">
               <a class="flex justify-center items-center gap-2"
                 >{{ english }}
                 <span><img src="/images/arrow.svg" alt="" /></span
               ></a>
-              <a v-if="!isHidden" class="absolute" @click="changeLanguage">{{
-                georgian
-              }}</a>
+              <a
+                v-if="!isHiddenDropdown"
+                class="absolute"
+                @click="changeLanguage"
+                >{{ georgian }}</a
+              >
             </li>
             <li class="hidden md:block">
               <button
@@ -206,8 +209,8 @@ import { ref } from "vue";
 
 export default {
   setup() {
-    const isHidden = ref(true);
-    const toggle = ref(false);
+    const isHiddenDropdown = ref(true);
+    const toggleDropdown = ref(false);
     const english = ref("En");
     const georgian = ref("Ka");
     const log = () => {
@@ -215,24 +218,24 @@ export default {
     };
 
     const changeLanguage = () => {
-      toggle.value = !toggle.value;
-      if (toggle.value == true) {
+      toggleDropdown.value = !toggleDropdown.value;
+      if (toggleDropdown.value == true) {
         english.value = "Ka";
         georgian.value = "En";
-      } else if (toggle.value == false) {
+      } else if (toggleDropdown.value == false) {
         english.value = "En";
         georgian.value = "Ka";
       }
     };
-    const onClick = () => {
-      isHidden.value = !isHidden.value;
+    const onChangeLanguage = () => {
+      isHiddenDropdown.value = !isHiddenDropdown.value;
       setTimeout(() => {
-        isHidden.value = true;
+        isHiddenDropdown.value = true;
       }, 5000);
     };
     return {
-      isHidden,
-      onClick,
+      isHiddenDropdown,
+      onChangeLanguage,
       georgian,
       english,
       changeLanguage,
