@@ -2,7 +2,22 @@
 module.exports = {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        brown: "#DDCCAA",
+        red: "#E31221",
+        grey: "#D9D9D9",
+      },
+      screens: {
+        xs: "375px",
+      },
+      spacing: {
+        large_dash_top: "40px",
+        large_dash_right: "80px",
+        small_dash_top: "16px",
+        small_dash_right: "24px",
+      },
+    },
   },
   plugins: [],
 };
