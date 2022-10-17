@@ -17,19 +17,24 @@
 
         <div id="navbar-default" class="">
           <ul class="flex p-4 rounded-lg text-white space-x-8">
-            <li class="mt-2" @click="onChangeLanguage">
+            <li class="mt-2" @click="toggleLanguageSelect">
               <a class="flex justify-center items-center gap-2"
-                >{{ english }}
+                >{{ activeLanguage }}
+
                 <span><img src="/images/arrow.svg" alt="" /></span
               ></a>
-              <a
-                v-if="!isHiddenDropdown"
-                class="absolute"
-                @click="changeLanguage"
-                >{{ georgian }}</a
-              >
+              <div v-if="!isHiddenDropdown">
+                <a
+                  v-for="language in filteredLanguage"
+                  :key="language.value"
+                  class="absolute"
+                  @click="changeLanguage(language.value)"
+                >
+                  {{ language.value }}
+                </a>
+              </div>
             </li>
-            <li class="hidden md:block">
+            <li class="hidden md:block" @click="hideDropdown">
               <button
                 type="button"
                 class="
@@ -46,7 +51,7 @@
                 Sign Up
               </button>
             </li>
-            <li>
+            <li @click="hideDropdown">
               <button
                 type="button"
                 class="
@@ -67,7 +72,10 @@
         </div>
       </div>
     </nav>
-    <div class="flex flex-col items-center justify-center">
+    <div
+      class="flex flex-col items-center justify-center"
+      @click="hideDropdown"
+    >
       <header>
         <h1
           class="
@@ -204,42 +212,47 @@
   </footer>
 </template>
 
+
+
 <script>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 export default {
   setup() {
     const isHiddenDropdown = ref(true);
-    const toggleDropdown = ref(false);
-    const english = ref("En");
-    const georgian = ref("Ka");
-    const log = () => {
-      console.log("blurred");
-    };
 
-    const changeLanguage = () => {
-      toggleDropdown.value = !toggleDropdown.value;
-      if (toggleDropdown.value == true) {
-        english.value = "Ka";
-        georgian.value = "En";
-      } else if (toggleDropdown.value == false) {
-        english.value = "En";
-        georgian.value = "Ka";
-      }
+    const activeLanguage = ref("En");
+    const languages = [
+      {
+        value: "En",
+      },
+      {
+        value: "Ka",
+      },
+    ];
+    const filteredLanguage = computed(() => {
+      return languages.filter(
+        (language) => language.value != activeLanguage.value
+      );
+    });
+
+    const hideDropdown = () => {
+      isHiddenDropdown.value = true;
     };
-    const onChangeLanguage = () => {
+    const changeLanguage = (lang) => {
+      activeLanguage.value = lang;
+    };
+    const toggleLanguageSelect = () => {
       isHiddenDropdown.value = !isHiddenDropdown.value;
-      setTimeout(() => {
-        isHiddenDropdown.value = true;
-      }, 5000);
     };
     return {
       isHiddenDropdown,
-      onChangeLanguage,
-      georgian,
-      english,
+      toggleLanguageSelect,
+      languages,
       changeLanguage,
-      log,
+      hideDropdown,
+      filteredLanguage,
+      activeLanguage,
     };
   },
 };
