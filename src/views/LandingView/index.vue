@@ -45,7 +45,7 @@
                 </a>
               </div>
             </li>
-            <li class="hidden md:block" @click="hideDropdown">
+            <li class="hidden md:block" @click="isHiddenDropdown = true">
               <button
                 type="button"
                 class="
@@ -63,7 +63,7 @@
                 Sign Up
               </button>
             </li>
-            <li @click="hideDropdown">
+            <li @click="isHiddenDropdown = true">
               <button
                 type="button"
                 class="
@@ -89,20 +89,22 @@
     <teleport to="body">
       <dialog-modal v-if="isOpenRegister" @close="isOpenRegister = false">
         <RegistrationForm
-          @open="(isOpenRegister = false), (isOpenLogin = true)"
+          @open-login="(isOpenRegister = false), (isOpenLogin = true)"
         />
       </dialog-modal>
     </teleport>
 
     <teleport to="body">
       <dialog-modal v-if="isOpenLogin" @close="isOpenLogin = false">
-        <LoginForm @open="(isOpenRegister = true), (isOpenLogin = false)" />
+        <LoginForm
+          @open-registration="(isOpenRegister = true), (isOpenLogin = false)"
+        />
       </dialog-modal>
     </teleport>
 
     <div
       class="flex flex-col items-center justify-center"
-      @click="hideDropdown"
+      @click="isHiddenDropdown = true"
     >
       <header>
         <h1
@@ -288,9 +290,6 @@ const filteredLanguage = computed(() => {
   return languages.filter((language) => language.value != activeLanguage.value);
 });
 
-const hideDropdown = () => {
-  isHiddenDropdown.value = true;
-};
 const changeLanguage = (lang) => {
   activeLanguage.value = lang;
 };

@@ -10,6 +10,7 @@ module.exports = {
         input_bg: "#CED4DA",
         link: "#0D6EFD",
         grey_text: "#6C757D",
+        form_bg: "#222030",
       },
       screens: {
         xs: "375px",
@@ -19,6 +20,12 @@ module.exports = {
         large_dash_right: "80px",
         small_dash_top: "16px",
         small_dash_right: "24px",
+      },
+      width: {
+        input_width: "600px",
+      },
+      height: {
+        input_height: "700px",
       },
     },
   },

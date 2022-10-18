@@ -5,8 +5,8 @@
       items-center
       md:rounded-xl
       rounded-none
-      bg-[#222030]
-      md:w-[600px] md:h-[700px]
+      bg-form_bg
+      md:w-input_width md:h-input_height
       w-screen
       h-screen
       justify-center
@@ -121,7 +121,9 @@
       </form>
       <p class="text-center pt-4 text-grey_text">
         Already have an account?
-        <a class="text-link cursor-pointer underline" @click="$emit('open')"
+        <a
+          class="text-link cursor-pointer underline"
+          @click="$emit('openLogin')"
           >Log in</a
         >
       </p>
@@ -131,7 +133,7 @@
 
 <script>
 export default {
-  emits: ["open"],
+  emits: ["openLogin"],
 };
 </script>
  

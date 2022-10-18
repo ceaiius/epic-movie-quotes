@@ -3,8 +3,8 @@
     class="
       flex flex-col
       items-center
-      bg-[#222030]
-      md:w-[600px] md:h-[700px]
+      bg-form_bg
+      md:w-input_width md:h-input_height
       w-screen
       h-screen
       md:rounded-xl
@@ -99,7 +99,9 @@
       </form>
       <p class="text-center pt-4 text-grey_text">
         Don't have an account?
-        <a class="text-link cursor-pointer underline" @click="$emit('open')"
+        <a
+          class="text-link cursor-pointer underline"
+          @click="$emit('openRegistration')"
           >Sign up</a
         >
       </p>
@@ -109,7 +111,7 @@
 
 <script>
 export default {
-  emits: ["open"],
+  emits: ["openRegistration"],
 };
 </script>
  
