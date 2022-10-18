@@ -58,7 +58,7 @@
                   rounded-md
                   text-sm
                 "
-                @click="isOpen = true"
+                @click="isOpenRegister = true"
               >
                 Sign Up
               </button>
@@ -76,6 +76,7 @@
                   rounded-md
                   text-sm
                 "
+                @click="isOpenLogin = true"
               >
                 Log In
               </button>
@@ -86,8 +87,16 @@
     </nav>
 
     <teleport to="body">
-      <dialog-modal v-if="isOpen" @close="isOpen = false">
-        <RegistrationForm />
+      <dialog-modal v-if="isOpenRegister" @close="isOpenRegister = false">
+        <RegistrationForm
+          @open="(isOpenRegister = false), (isOpenLogin = true)"
+        />
+      </dialog-modal>
+    </teleport>
+
+    <teleport to="body">
+      <dialog-modal v-if="isOpenLogin" @close="isOpenLogin = false">
+        <LoginForm @open="(isOpenRegister = true), (isOpenLogin = false)" />
       </dialog-modal>
     </teleport>
 
@@ -116,7 +125,7 @@
       <button
         type="button"
         class="text-white bg-red w-28 h-10 font-medium rounded-md text-sm mt-6"
-        @click="isOpen = true"
+        @click="isOpenRegister = true"
       >
         Get Started
       </button>
@@ -239,12 +248,14 @@
 import { computed, ref } from "vue";
 import DialogModal from "@/components/DialogModal.vue";
 import RegistrationForm from "./RegistrationForm.vue";
+import LoginForm from "./LoginForm.vue";
 
 // const username = ref("");
 // const email = ref("");
 // const password = ref("");
 // const password_confirmation = ref("");
-const isOpen = ref(false);
+const isOpenRegister = ref(false);
+const isOpenLogin = ref(false);
 const isHiddenDropdown = ref(true);
 // const handleRegister = () => {
 //   axios
@@ -261,7 +272,7 @@ const isHiddenDropdown = ref(true);
 // };
 
 const onBlurBackground = computed(() => {
-  return isOpen.value ? "blur-[2px]" : "blur-none";
+  return isOpenRegister.value || isOpenLogin.value ? "blur-[2px]" : "blur-none";
 });
 
 const activeLanguage = ref("En");

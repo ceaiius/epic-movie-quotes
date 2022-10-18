@@ -8,6 +8,7 @@
     class="
       absolute
       top-1/2
+      bg-transparent
       z-[100]
       p-0
       left-1/2

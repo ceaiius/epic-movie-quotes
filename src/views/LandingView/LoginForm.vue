@@ -3,41 +3,23 @@
     class="
       flex flex-col
       items-center
-      md:rounded-xl
-      rounded-none
       bg-[#222030]
       md:w-[600px] md:h-[700px]
       w-screen
       h-screen
+      md:rounded-xl
+      rounded-none
       justify-center
     "
   >
-    <div class="pt-8 text-center">
-      <h1 class="text-white text-3xl">Create an account</h1>
-      <h3 class="text-grey_text text-base pt-2">Start your journey!</h3>
+    <div class="text-center">
+      <h1 class="text-white text-3xl">Log in to your account</h1>
+      <h3 class="text-grey_text text-base pt-2">
+        Welcome back! Please enter your details
+      </h3>
     </div>
     <div class="w-96">
       <form class="pl-4">
-        <div class="flex flex-col pt-4">
-          <label for="exampleInputEmail1" class="text-white text-base pb-2"
-            >Name</label
-          >
-          <input
-            type="text"
-            class="
-              bg-input_bg
-              text-sm
-              h-10
-              w-full
-              p-2
-              border
-              border-input_bg
-              rounded
-            "
-            name="username"
-            placeholder="At least 3 & max.15 lower case characters"
-          />
-        </div>
         <div class="flex flex-col pt-4">
           <label for="exampleInputEmail1" class="text-white text-base pb-2"
             >Email</label
@@ -66,23 +48,19 @@
               alt=""
           /></span>
         </div>
-        <div class="flex flex-col pt-4 relative">
-          <label for="exampleInputPassword1" class="text-white text-base pb-2"
-            >Confirm Password</label
-          >
+        <div class="flex items-center mt-2 gap-2">
           <input
-            type="password"
-            name="password_confirmation"
-            class="bg-input_bg text-sm h-10 p-2 border border-input_bg rounded"
-            placeholder="Confirm password"
+            id="default-checkbox"
+            name="remember"
+            type="checkbox"
+            value=""
+            class="w-4 h-4 bg-gray-100 rounded"
           />
-          <span
-            ><img
-              class="w-6 h-6 absolute top-14 right-4"
-              src="/images/visible.svg"
-              alt=""
-          /></span>
+          <label for="default-checkbox" class="text-white text-base"
+            >Remember me</label
+          >
         </div>
+
         <button
           type="submit"
           class="
@@ -96,7 +74,7 @@
             mt-6
           "
         >
-          Get Started
+          Sign In
         </button>
         <button
           class="
@@ -115,14 +93,14 @@
             text-sm
           "
         >
-          <span><img src="/images/google.svg" alt="" /></span> Sign up with
+          <span><img src="/images/google.svg" alt="" /></span> Sign in with
           Google
         </button>
       </form>
       <p class="text-center pt-4 text-grey_text">
-        Already have an account?
+        Don't have an account?
         <a class="text-link cursor-pointer underline" @click="$emit('open')"
-          >Log in</a
+          >Sign up</a
         >
       </p>
     </div>
@@ -135,3 +113,4 @@ export default {
 };
 </script>
  
+  
