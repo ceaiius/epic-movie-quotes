@@ -1,5 +1,16 @@
+<!-- eslint-disable vue/multi-word-component-names -->
+
 <template>
-  <div class="h-screen bg-fixed bg-gradient-to-tr from-[#11101A] to-[#08080D]">
+  <div
+    class="
+      h-screen
+      relative
+      bg-fixed bg-gradient-to-tr
+      from-[#11101A]
+      to-[#08080D]
+    "
+    :class="onBlurBackground"
+  >
     <nav class="px-2 sm:px-4 py-4 rounded">
       <div
         class="container flex flex-wrap justify-between items-center mx-auto"
@@ -47,6 +58,7 @@
                   rounded-md
                   text-sm
                 "
+                @click="isOpen = true"
               >
                 Sign Up
               </button>
@@ -72,6 +84,13 @@
         </div>
       </div>
     </nav>
+
+    <teleport to="body">
+      <dialog-modal v-if="isOpen" @close="isOpen = false">
+        <RegistrationForm />
+      </dialog-modal>
+    </teleport>
+
     <div
       class="flex flex-col items-center justify-center"
       @click="hideDropdown"
@@ -97,6 +116,7 @@
       <button
         type="button"
         class="text-white bg-red w-28 h-10 font-medium rounded-md text-sm mt-6"
+        @click="isOpen = true"
       >
         Get Started
       </button>
@@ -214,47 +234,57 @@
 
 
 
-<script>
+<script setup>
+// import axios from "@/config/axios/index.js";
 import { computed, ref } from "vue";
+import DialogModal from "@/components/DialogModal.vue";
+import RegistrationForm from "./RegistrationForm.vue";
 
-export default {
-  setup() {
-    const isHiddenDropdown = ref(true);
+// const username = ref("");
+// const email = ref("");
+// const password = ref("");
+// const password_confirmation = ref("");
+const isOpen = ref(false);
+const isHiddenDropdown = ref(true);
+// const handleRegister = () => {
+//   axios
+//     .post("register", {
+//       username: username.value,
+//       email: email.value,
+//       password: password.value,
+//       password_confirmation: password_confirmation.value,
+//     })
 
-    const activeLanguage = ref("En");
-    const languages = [
-      {
-        value: "En",
-      },
-      {
-        value: "Ka",
-      },
-    ];
-    const filteredLanguage = computed(() => {
-      return languages.filter(
-        (language) => language.value != activeLanguage.value
-      );
-    });
+//     .catch((error) => {
+//       alert(error.response.data.message);
+//     });
+// };
 
-    const hideDropdown = () => {
-      isHiddenDropdown.value = true;
-    };
-    const changeLanguage = (lang) => {
-      activeLanguage.value = lang;
-    };
-    const toggleLanguageSelect = () => {
-      isHiddenDropdown.value = !isHiddenDropdown.value;
-    };
-    return {
-      isHiddenDropdown,
-      toggleLanguageSelect,
-      languages,
-      changeLanguage,
-      hideDropdown,
-      filteredLanguage,
-      activeLanguage,
-    };
+const onBlurBackground = computed(() => {
+  return isOpen.value ? "blur-[2px]" : "blur-none";
+});
+
+const activeLanguage = ref("En");
+const languages = [
+  {
+    value: "En",
   },
+  {
+    value: "Ka",
+  },
+];
+const filteredLanguage = computed(() => {
+  return languages.filter((language) => language.value != activeLanguage.value);
+});
+
+const hideDropdown = () => {
+  isHiddenDropdown.value = true;
+};
+const changeLanguage = (lang) => {
+  activeLanguage.value = lang;
+};
+const toggleLanguageSelect = () => {
+  isHiddenDropdown.value = !isHiddenDropdown.value;
 };
 </script>
 

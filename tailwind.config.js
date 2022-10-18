@@ -7,6 +7,8 @@ module.exports = {
         brown: "#DDCCAA",
         red: "#E31221",
         grey: "#D9D9D9",
+        input_bg: "#CED4DA",
+        link: "#0D6EFD",
       },
       screens: {
         xs: "375px",
