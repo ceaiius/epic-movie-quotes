@@ -282,13 +282,58 @@
 <script setup>
 import axios from "@/config/axios/index.js";
 import { Form, Field, ErrorMessage } from "vee-validate";
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
+import { useCredentials } from "@/stores/index.js";
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["openLogin"]);
+const credentials = useCredentials();
 
-const username = ref("");
-const email = ref("");
-const password = ref("");
+const username = computed({
+  get() {
+    return credentials.username;
+  },
+
+  set(value) {
+    credentials.setUsername(value);
+  },
+});
+
+const email = computed({
+  get() {
+    return credentials.email;
+  },
+
+  set(value) {
+    credentials.setEmail(value);
+  },
+});
+
+const password = computed({
+  get() {
+    return credentials.password;
+  },
+
+  set(value) {
+    credentials.setPassword(value);
+  },
+});
+
+const password_confirmation = computed({
+  get() {
+    return credentials.password_confirmation;
+  },
+
+  set(value) {
+    credentials.setPasswordConfirmation(value);
+  },
+});
+onMounted(() => {
+  credentials.getUsername();
+  credentials.getEmail();
+  credentials.getPassword();
+  credentials.getPasswordConfirmation();
+});
+
 const errorUsername = ref(false);
 const errorEmail = ref(false);
 const errorPassword = ref(false);
@@ -296,7 +341,15 @@ const errorConfirmPassword = ref(false);
 const showPassword = ref(false);
 const showPasswordConfirm = ref(false);
 
-const password_confirmation = ref("");
+const handleRegister = () => {
+  axios.post("register", {
+    username: credentials.username,
+    email: credentials.email,
+    password: credentials.password,
+    password_confirmation: credentials.password_confirmation,
+  });
+  localStorage.clear();
+};
 
 const changeBorderUsername = computed(() => {
   return errorUsername.value
@@ -319,15 +372,6 @@ const changeBorderConfirmPassword = computed(() => {
     ? "border-2 border-red"
     : "border-2 border-green-500";
 });
-
-const handleRegister = () => {
-  axios.post("register", {
-    username: username.value,
-    email: email.value,
-    password: password.value,
-    password_confirmation: password_confirmation.value,
-  });
-};
 
 const validateUsername = (value) => {
   if (!value) {
