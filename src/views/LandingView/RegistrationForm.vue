@@ -26,7 +26,11 @@
           <Field
             v-model="username"
             :rules="validateUsername"
-            :class="changeBorderUsername"
+            :class="[
+              errorUsername
+                ? 'border-2 border-red-500'
+                : 'border-2 border-green-500',
+            ]"
             type="text"
             class="
               bg-input_bg
@@ -55,9 +59,12 @@
               alt=""
             />
           </span>
-          <ErrorMessage class="text-red text-sm pt-4" name="username" />
+          <ErrorMessage
+            class="text-default-red text-sm -bottom-6 absolute"
+            name="username"
+          />
         </div>
-        <div class="flex flex-col pt-4 relative">
+        <div class="flex flex-col pt-6 relative">
           <label for="exampleInputEmail1" class="text-white text-base pb-2"
             >Email</label
           >
@@ -65,7 +72,11 @@
             v-model="email"
             type="email"
             :rules="validateEmail"
-            :class="changeBorderEmail"
+            :class="[
+              errorEmail
+                ? 'border-2 border-red-500'
+                : 'border-2 border-green-500',
+            ]"
             class="bg-input_bg text-sm h-10 p-2 border border-input_bg rounded"
             name="email"
             placeholder="Enter your email"
@@ -73,27 +84,34 @@
           <span>
             <img
               :class="[errorEmail ? 'hidden' : 'block']"
-              class="w-6 h-6 absolute top-14 right-2"
+              class="w-6 h-6 absolute top-16 right-2"
               src="/images/valid.svg"
               alt=""
             />
             <img
               :class="[errorEmail ? 'block' : 'hidden']"
-              class="w-6 h-6 absolute top-14 right-2"
+              class="w-6 h-6 absolute top-16 right-2"
               src="/images/invalid.svg"
               alt=""
             />
           </span>
-          <ErrorMessage class="text-red text-sm pt-4" name="email" />
+          <ErrorMessage
+            class="text-default-red text-sm -bottom-6 absolute"
+            name="email"
+          />
         </div>
-        <div class="flex flex-col pt-4 relative">
+        <div class="flex flex-col pt-10 relative">
           <label for="exampleInputPassword1" class="text-white text-base pb-2"
             >Password</label
           >
           <Field
             v-model="password"
             :rules="validatePassword"
-            :class="changeBorderPassword"
+            :class="[
+              errorPassword
+                ? 'border-2 border-red-500'
+                : 'border-2 border-green-500',
+            ]"
             :type="[showPassword ? 'text' : 'password']"
             class="bg-input_bg text-sm h-10 p-2 border border-input_bg rounded"
             placeholder="At least 8 & max.15 lower case characters"
@@ -111,7 +129,7 @@
                 w-6
                 h-6
                 absolute
-                top-14
+                top-20
                 right-2
                 cursor-pointer
                 fill-transparent
@@ -141,7 +159,7 @@
                 w-6
                 h-6
                 absolute
-                top-14
+                top-20
                 right-2
                 cursor-pointer
                 stroke-[#7F8487]
@@ -154,9 +172,12 @@
               />
             </svg>
           </span>
-          <ErrorMessage class="text-red text-sm pt-4" name="password" />
+          <ErrorMessage
+            class="text-default-red text-sm -bottom-6 absolute"
+            name="password"
+          />
         </div>
-        <div class="flex flex-col pt-4 relative">
+        <div class="flex flex-col pt-10 relative">
           <label for="exampleInputPassword1" class="text-white text-base pb-2"
             >Confirm Password</label
           >
@@ -164,7 +185,11 @@
             v-model="password_confirmation"
             :type="[showPasswordConfirm ? 'text' : 'password']"
             :rules="validateConfirmPassword"
-            :class="changeBorderConfirmPassword"
+            :class="[
+              errorConfirmPassword
+                ? 'border-2 border-red-500'
+                : 'border-2 border-green-500',
+            ]"
             name="password_confirmation"
             class="bg-input_bg text-sm h-10 p-2 border border-input_bg rounded"
             placeholder="Confirm password"
@@ -182,7 +207,7 @@
                 w-6
                 h-6
                 absolute
-                top-14
+                top-20
                 right-2
                 cursor-pointer
                 fill-transparent
@@ -212,7 +237,7 @@
                 w-6
                 h-6
                 absolute
-                top-14
+                top-20
                 right-2
                 cursor-pointer
                 stroke-[#7F8487]
@@ -226,7 +251,7 @@
             </svg>
           </span>
           <ErrorMessage
-            class="text-red text-sm pt-4"
+            class="text-default-red text-sm -bottom-6 absolute"
             name="password_confirmation"
           />
         </div>
@@ -235,13 +260,13 @@
           type="submit"
           class="
             text-white
-            bg-red
+            bg-default-red
             w-full
             h-12
             font-medium
             rounded-md
             text-sm
-            mt-6
+            mt-10
           "
         >
           Sign up
@@ -290,7 +315,7 @@ const credentials = useCredentials();
 
 const username = computed({
   get() {
-    return credentials.username;
+    return credentials.username ? credentials.username : "";
   },
 
   set(value) {
@@ -300,7 +325,7 @@ const username = computed({
 
 const email = computed({
   get() {
-    return credentials.email;
+    return credentials.email ? credentials.email : "";
   },
 
   set(value) {
@@ -310,7 +335,7 @@ const email = computed({
 
 const password = computed({
   get() {
-    return credentials.password;
+    return credentials.password ? credentials.password : "";
   },
 
   set(value) {
@@ -320,7 +345,9 @@ const password = computed({
 
 const password_confirmation = computed({
   get() {
-    return credentials.password_confirmation;
+    return credentials.password_confirmation
+      ? credentials.password_confirmation
+      : "";
   },
 
   set(value) {
@@ -350,28 +377,6 @@ const handleRegister = () => {
   });
   localStorage.clear();
 };
-
-const changeBorderUsername = computed(() => {
-  return errorUsername.value
-    ? "border-2 border-red"
-    : "border-2 border-green-500";
-});
-
-const changeBorderEmail = computed(() => {
-  return errorEmail.value ? "border-2 border-red" : "border-2 border-green-500";
-});
-
-const changeBorderPassword = computed(() => {
-  return errorPassword.value
-    ? "border-2 border-red"
-    : "border-2 border-green-500";
-});
-
-const changeBorderConfirmPassword = computed(() => {
-  return errorConfirmPassword.value
-    ? "border-2 border-red"
-    : "border-2 border-green-500";
-});
 
 const validateUsername = (value) => {
   if (!value) {
