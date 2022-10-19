@@ -4,7 +4,8 @@
       flex flex-col
       items-center
       bg-form_bg
-      md:w-input_width md:h-input_height
+      md:w-input_width md:h-fit
+      pb-12
       w-screen
       h-screen
       md:rounded-xl

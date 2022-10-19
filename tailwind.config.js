@@ -11,6 +11,7 @@ module.exports = {
         link: "#0D6EFD",
         grey_text: "#6C757D",
         form_bg: "#222030",
+        validation_color: "#F15524",
       },
       screens: {
         xs: "375px",

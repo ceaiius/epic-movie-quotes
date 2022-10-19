@@ -246,32 +246,14 @@
 
 
 <script setup>
-// import axios from "@/config/axios/index.js";
 import { computed, ref } from "vue";
 import DialogModal from "@/components/DialogModal.vue";
 import RegistrationForm from "./RegistrationForm.vue";
 import LoginForm from "./LoginForm.vue";
 
-// const username = ref("");
-// const email = ref("");
-// const password = ref("");
-// const password_confirmation = ref("");
 const isOpenRegister = ref(false);
 const isOpenLogin = ref(false);
 const isHiddenDropdown = ref(true);
-// const handleRegister = () => {
-//   axios
-//     .post("register", {
-//       username: username.value,
-//       email: email.value,
-//       password: password.value,
-//       password_confirmation: password_confirmation.value,
-//     })
-
-//     .catch((error) => {
-//       alert(error.response.data.message);
-//     });
-// };
 
 const onBlurBackground = computed(() => {
   return isOpenRegister.value || isOpenLogin.value ? "blur-[2px]" : "blur-none";
