@@ -5,12 +5,13 @@ module.exports = {
     extend: {
       colors: {
         brown: "#DDCCAA",
-        red: "#E31221",
+        "default-red": "#E31221",
         grey: "#D9D9D9",
         input_bg: "#CED4DA",
         link: "#0D6EFD",
         grey_text: "#6C757D",
         form_bg: "#222030",
+        validation_color: "#F15524",
       },
       screens: {
         xs: "375px",
