@@ -13,6 +13,14 @@
       justify-center
     "
   >
+    <div>
+      <img
+        class="block md:hidden absolute left-10 cursor-pointer"
+        src="/images/back-arrow.svg"
+        alt=""
+        @click="$emit('closeDialog')"
+      />
+    </div>
     <div class="text-center pt-12">
       <h1 class="text-white text-3xl">Log in to your account</h1>
       <h3 class="text-grey_text text-base pt-2">
@@ -125,7 +133,7 @@
           type="submit"
           class="
             text-white
-            bg-default-red
+            bg-red
             w-full
             h-12
             font-medium
@@ -177,7 +185,7 @@ import { setJwtToken } from "../../helpers/jwt";
 import router from "../../router";
 
 // eslint-disable-next-line no-unused-vars
-const emit = defineEmits(["openRegistration"]);
+const emit = defineEmits(["openRegistration", "closeDialog"]);
 const email = ref("");
 const password = ref("");
 const errorInput = ref(false);

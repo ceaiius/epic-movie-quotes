@@ -51,7 +51,7 @@
                 class="
                   focus:outline-none
                   text-white
-                  bg-default-red
+                  bg-red
                   w-28
                   h-10
                   font-medium
@@ -90,6 +90,8 @@
       <dialog-modal v-if="isOpenRegister" @close="isOpenRegister = false">
         <RegistrationForm
           @open-login="(isOpenRegister = false), (isOpenLogin = true)"
+          @close-dialog="isOpenRegister = false"
+          @close-validate="isOpenRegister = false"
         />
       </dialog-modal>
     </teleport>
@@ -98,6 +100,7 @@
       <dialog-modal v-if="isOpenLogin" @close="isOpenLogin = false">
         <LoginForm
           @open-registration="(isOpenRegister = true), (isOpenLogin = false)"
+          @close-dialog="isOpenLogin = false"
         />
       </dialog-modal>
     </teleport>
@@ -126,16 +129,7 @@
       </header>
       <button
         type="button"
-        class="
-          text-white
-          bg-default-red
-          w-28
-          h-10
-          font-medium
-          rounded-md
-          text-sm
-          mt-6
-        "
+        class="text-white bg-red w-28 h-10 font-medium rounded-md text-sm mt-6"
         @click="isOpenRegister = true"
       >
         Get Started
@@ -262,6 +256,7 @@ import LoginForm from "./LoginForm.vue";
 
 const isOpenRegister = ref(false);
 const isOpenLogin = ref(false);
+
 const isHiddenDropdown = ref(true);
 
 const onBlurBackground = computed(() => {
