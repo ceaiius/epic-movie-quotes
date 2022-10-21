@@ -28,26 +28,38 @@
       </h3>
     </div>
     <div class="w-96">
-      <form class="pl-4" @submit.prevent="handleLogin">
-        <div class="flex flex-col pt-4">
+      <Form class="pl-4" @submit="handleLogin">
+        <div class="flex flex-col pt-4 relative">
           <label for="exampleInputEmail1" class="text-white text-base pb-2"
             >Email</label
           >
-          <input
+          <Field
             v-model="email"
             type="email"
+            :rules="validateEmail"
             :class="[errorInput ? 'border-2 border-red-500' : 'border-none']"
             class="bg-input_bg text-sm h-10 p-2 border border-input_bg rounded"
             name="email"
             placeholder="Enter your email"
           />
+          <ErrorMessage
+            class="
+              text-red
+              whitespace-nowrap
+              text-center text-sm
+              -bottom-6
+              absolute
+            "
+            name="email"
+          />
         </div>
-        <div class="flex flex-col pt-4 relative">
+        <div class="flex flex-col pt-10 relative">
           <label for="exampleInputPassword1" class="text-white text-base pb-2"
             >Password</label
           >
-          <input
+          <Field
             v-model="password"
+            :rules="validatePassword"
             :type="[showPassword ? 'text' : 'password']"
             :class="[errorInput ? 'border-2 border-red-500' : 'border-none']"
             class="bg-input_bg text-sm h-10 p-2 border border-input_bg rounded"
@@ -66,7 +78,7 @@
                 w-6
                 h-6
                 absolute
-                top-14
+                top-20
                 right-2
                 cursor-pointer
                 fill-transparent
@@ -96,7 +108,7 @@
                 w-6
                 h-6
                 absolute
-                top-14
+                top-20
                 right-2
                 cursor-pointer
                 stroke-[#7F8487]
@@ -109,13 +121,19 @@
               />
             </svg>
           </span>
+          <ErrorMessage
+            class="text-red whitespace-nowrap text-sm relative top-2"
+            name="password"
+          />
         </div>
         <div class="flex items-center mt-2 gap-2">
           <input
             id="default-checkbox"
+            v-model="remember"
             name="remember"
             type="checkbox"
-            value=""
+            true-value="yes"
+            false-value="no"
             class="w-4 h-4 bg-gray-100 rounded"
           />
           <label for="default-checkbox" class="text-white text-base"
@@ -164,7 +182,7 @@
           <span><img src="/images/google.svg" alt="" /></span> Sign in with
           Google
         </button>
-      </form>
+      </Form>
       <p class="text-center pt-4 text-grey_text">
         Don't have an account?
         <a
@@ -180,6 +198,7 @@
 <script setup>
 import { ref } from "vue";
 import axios from "@/config/axios/index.js";
+import { Field, Form, ErrorMessage } from "vee-validate";
 
 import { setJwtToken } from "../../helpers/jwt";
 import router from "../../router";
@@ -189,6 +208,8 @@ const emit = defineEmits(["openRegistration", "closeDialog"]);
 const email = ref("");
 const password = ref("");
 const errorInput = ref(false);
+const remember = ref("");
+
 const showPassword = ref(false);
 const handleLogin = async () => {
   axios
@@ -198,11 +219,48 @@ const handleLogin = async () => {
     })
     .then((response) => {
       router.push({ name: "home" });
-      setJwtToken(response.data.access_token, response.data.expires_in);
+      if (remember.value == "yes") {
+        setJwtToken(
+          response.data.access_token,
+          response.data.expires_in,
+          365000
+        );
+      } else {
+        setJwtToken(response.data.access_token, response.data.expires_in, 1000);
+      }
     })
     .catch(() => {
       errorInput.value = true;
     });
+};
+
+const validateEmail = (value) => {
+  // if the field is empty
+  if (!value) {
+    return "This field is required";
+  }
+
+  // if the field is not a valid email
+  const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+  if (!regex.test(value)) {
+    return "This field must be a valid email";
+  }
+
+  return true;
+};
+
+const validatePassword = (value) => {
+  if (!value) {
+    return "This field is required ";
+  }
+  if (value.length < 8) {
+    return "Password must be at least 8 characters";
+  }
+  if (value.length > 15) {
+    return "Password must not have more than 15 characters ";
+  }
+
+  return true;
 };
 </script>
  
