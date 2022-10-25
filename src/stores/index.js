@@ -7,6 +7,7 @@ export const useCredentials = defineStore("credentials", {
       email: "",
       password: "",
       password_confirmation: "",
+      forgot_password_email: "",
     };
   },
   actions: {
@@ -37,6 +38,13 @@ export const useCredentials = defineStore("credentials", {
     },
     getPasswordConfirmation() {
       this.password_confirmation = localStorage.password_confirmation;
+    },
+    setForgotPasswordEmail(value) {
+      this.forgot_password_email = value;
+      localStorage.setItem("forgot_password_email", this.forgot_password_email);
+    },
+    getForgotPasswordEmail() {
+      this.forgot_password_email = localStorage.forgot_password_email;
     },
   },
 });

@@ -369,7 +369,11 @@
     </div>
     <teleport to="body">
       <dialog-modal v-if="isOpenValidation" @close="isOpenValidation = false">
-        <ValidateEmail @close-validate="$emit('closeValidate')" />
+        <ValidateEmail
+          @close-validate="
+            (isOpenValidation = false), (isNotRegistered = false)
+          "
+        />
       </dialog-modal>
     </teleport>
   </div>
@@ -381,10 +385,10 @@ import { Form, Field, ErrorMessage } from "vee-validate";
 import { computed, onMounted, ref } from "vue";
 import DialogModal from "@/components/DialogModal.vue";
 import { useCredentials } from "@/stores/index.js";
-import ValidateEmail from "./messages/ValidateEmail.vue";
+import ValidateEmail from "./notifications/ValidateEmail.vue";
 
 // eslint-disable-next-line no-unused-vars
-const emit = defineEmits(["openLogin", "closeDialog", "closeValidate"]);
+const emit = defineEmits(["openLogin", "closeDialog"]);
 const credentials = useCredentials();
 const isOpenValidation = ref(false);
 const isNotRegistered = ref(true);
