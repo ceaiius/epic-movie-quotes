@@ -51,7 +51,7 @@
                 class="
                   focus:outline-none
                   text-white
-                  bg-default-red
+                  bg-red
                   w-28
                   h-10
                   font-medium
@@ -90,6 +90,7 @@
       <dialog-modal v-if="isOpenRegister" @close="isOpenRegister = false">
         <RegistrationForm
           @open-login="(isOpenRegister = false), (isOpenLogin = true)"
+          @close-dialog="isOpenRegister = false"
         />
       </dialog-modal>
     </teleport>
@@ -98,6 +99,15 @@
       <dialog-modal v-if="isOpenLogin" @close="isOpenLogin = false">
         <LoginForm
           @open-registration="(isOpenRegister = true), (isOpenLogin = false)"
+          @close-dialog="isOpenLogin = false"
+        />
+      </dialog-modal>
+    </teleport>
+
+    <teleport to="body">
+      <dialog-modal v-if="canResetPassword" @close="canResetPassword = false">
+        <ResetPassword
+          @back-to-login="(canResetPassword = false), (isOpenLogin = true)"
         />
       </dialog-modal>
     </teleport>
@@ -126,16 +136,7 @@
       </header>
       <button
         type="button"
-        class="
-          text-white
-          bg-default-red
-          w-28
-          h-10
-          font-medium
-          rounded-md
-          text-sm
-          mt-6
-        "
+        class="text-white bg-red w-28 h-10 font-medium rounded-md text-sm mt-6"
         @click="isOpenRegister = true"
       >
         Get Started
@@ -255,17 +256,30 @@
 
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import DialogModal from "@/components/DialogModal.vue";
 import RegistrationForm from "./RegistrationForm.vue";
 import LoginForm from "./LoginForm.vue";
+import ResetPassword from "./notifications/ResetPassword.vue";
+import { useRoute } from "vue-router";
 
 const isOpenRegister = ref(false);
 const isOpenLogin = ref(false);
+const canResetPassword = ref(false);
 const isHiddenDropdown = ref(true);
 
 const onBlurBackground = computed(() => {
-  return isOpenRegister.value || isOpenLogin.value ? "blur-[2px]" : "blur-none";
+  return isOpenRegister.value || isOpenLogin.value || canResetPassword.value
+    ? "blur-[2px]"
+    : "blur-none";
+});
+
+onMounted(() => {
+  const route = useRoute();
+
+  if (route.query.token) {
+    canResetPassword.value = true;
+  }
 });
 
 const activeLanguage = ref("En");
