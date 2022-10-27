@@ -24,6 +24,7 @@ module.exports = {
       },
       width: {
         input_width: "600px",
+        google_input_width: "368px",
       },
       height: {
         input_height: "700px",

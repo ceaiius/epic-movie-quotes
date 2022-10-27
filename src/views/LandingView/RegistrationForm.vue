@@ -336,6 +336,8 @@
           >
             Sign up
           </button>
+        </Form>
+        <form action="http://localhost:8000/api/auth/google">
           <button
             class="
               flex
@@ -343,20 +345,22 @@
               items-center
               gap-2
               mt-6
+              ml-4
               focus:outline-none
               text-white
               border border-white
-              w-full
+              w-google_input_width
               h-12
               font-medium
               rounded-md
               text-sm
             "
+            type="submit"
           >
             <span><img src="/images/google.svg" alt="" /></span> Sign up with
             Google
           </button>
-        </Form>
+        </form>
         <p class="text-center pt-4 text-grey_text">
           Already have an account?
           <a
