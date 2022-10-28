@@ -337,7 +337,7 @@
             Sign up
           </button>
         </Form>
-        <form action="http://localhost:8000/api/auth/google">
+        <form :action="url">
           <button
             class="
               flex
@@ -396,7 +396,7 @@ const emit = defineEmits(["openLogin", "closeDialog"]);
 const credentials = useCredentials();
 const isOpenValidation = ref(false);
 const isNotRegistered = ref(true);
-
+const url = import.meta.env.VITE_API_GOOGLE_URL;
 const username = computed({
   get() {
     return credentials.username ? credentials.username : "";

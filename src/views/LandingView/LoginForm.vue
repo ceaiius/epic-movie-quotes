@@ -186,7 +186,7 @@
             Sign In
           </button>
         </Form>
-        <form action="http://localhost:8000/api/auth/google">
+        <form :action="url">
           <button
             class="
               flex
@@ -271,7 +271,7 @@ const showPassword = ref(false);
 const isNotLogged = ref(true);
 const isOpenPasswordSent = ref(false);
 const credentials = useCredentials();
-
+const url = import.meta.env.VITE_API_GOOGLE_URL;
 const handleForgotPassword = async () => {
   isOpenPasswordSent.value = true;
   isOpenForgotPassword.value = false;
