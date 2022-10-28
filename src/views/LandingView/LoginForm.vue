@@ -185,6 +185,8 @@
           >
             Sign In
           </button>
+        </Form>
+        <form :action="url">
           <button
             class="
               flex
@@ -192,20 +194,22 @@
               items-center
               gap-2
               mt-6
+              ml-4
               focus:outline-none
               text-white
               border border-white
-              w-full
+              w-google_input_width
               h-12
               font-medium
               rounded-md
               text-sm
             "
+            type="submit"
           >
             <span><img src="/images/google.svg" alt="" /></span> Sign in with
             Google
           </button>
-        </Form>
+        </form>
         <p class="text-center pt-4 text-grey_text">
           Don't have an account?
           <a
@@ -267,7 +271,7 @@ const showPassword = ref(false);
 const isNotLogged = ref(true);
 const isOpenPasswordSent = ref(false);
 const credentials = useCredentials();
-
+const url = import.meta.env.VITE_API_GOOGLE_URL;
 const handleForgotPassword = async () => {
   isOpenPasswordSent.value = true;
   isOpenForgotPassword.value = false;
