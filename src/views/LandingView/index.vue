@@ -39,7 +39,11 @@
                   v-for="language in filteredLanguage"
                   :key="language.value"
                   class="absolute"
-                  @click="changeLanguage(language.value)"
+                  @click="
+                    changeLanguage(language.value),
+                      (localeDefault = !localeDefault),
+                      setLanguage()
+                  "
                 >
                   {{ language.value }}
                 </a>
@@ -263,11 +267,22 @@ import LoginForm from "./LoginForm.vue";
 import ResetPassword from "./notifications/ResetPassword.vue";
 import { useRoute } from "vue-router";
 
+import { setLocale } from "@vee-validate/i18n";
+
 const isOpenRegister = ref(false);
 const isOpenLogin = ref(false);
 const canResetPassword = ref(false);
 const isHiddenDropdown = ref(true);
+const localeDefault = ref(true);
 
+const setLanguage = () => {
+  console.log(localeDefault.value);
+  if (localeDefault.value == true) {
+    setLocale("en");
+  } else if (localeDefault.value == false) {
+    setLocale("ka");
+  }
+};
 const onBlurBackground = computed(() => {
   return isOpenRegister.value || isOpenLogin.value || canResetPassword.value
     ? "blur-[2px]"
