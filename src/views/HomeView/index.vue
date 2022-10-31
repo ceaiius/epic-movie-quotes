@@ -1,7 +1,17 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="w-screen h-screen bg-gradient-to-tr from-[#191725] to-[#0D0B14]">
+  <div
+    class="
+      w-screen
+      h-auto
+      bg-gradient-to-t
+      from-[#181623]
+      via-[#191725]
+      to-[#0D0B14]
+    "
+  >
     <NavBar />
+    <NewsFeed />
   </div>
 </template>
 
@@ -11,6 +21,7 @@ import { onMounted, ref } from "vue";
 import { useCredentials } from "@/stores/index.js";
 
 import NavBar from "../../components/NavBar.vue";
+import NewsFeed from "../HomeView/NewsFeed/Index.vue";
 
 const credentials = useCredentials();
 

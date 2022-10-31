@@ -18,12 +18,29 @@
         <div id="navbar-default" class="">
           <ul class="flex p-4 rounded-lg text-white space-x-8">
             <li>
-              <div>
+              <div class="relative">
                 <img
                   src="/images/bell.svg"
                   class="w-6 h-6 relative top-2"
                   alt=""
                 />
+                <div
+                  class="
+                    w-6
+                    h-6
+                    bg-default_red
+                    rounded-[50%]
+                    absolute
+                    top-0
+                    left-3
+                    flex
+                    justify-center
+                    items-center
+                    text-sm
+                  "
+                >
+                  0
+                </div>
               </div>
             </li>
             <li class="mt-2" @click="toggleLanguageSelect">

@@ -40,13 +40,19 @@
           placeholder="Enter your email"
         />
         <ErrorMessage
-          class="text-red whitespace-nowrap text-center text-sm absolute top-12"
+          class="
+            text-default_red
+            whitespace-nowrap
+            text-center text-sm
+            absolute
+            top-12
+          "
           name="email"
         />
         <button
           class="
             text-white
-            bg-red
+            bg-default_red
             w-96
             h-12
             font-medium

@@ -104,7 +104,7 @@
               </svg>
             </span>
             <ErrorMessage
-              class="text-red text-sm -bottom-6 absolute"
+              class="text-default_red text-sm -bottom-6 absolute"
               name="password"
             />
           </div>
@@ -190,12 +190,20 @@
               </svg>
             </span>
             <ErrorMessage
-              class="text-red text-sm -bottom-6 absolute"
+              class="text-default_red text-sm -bottom-6 absolute"
               name="password_confirmation"
             />
           </div>
           <button
-            class="text-white bg-red w-96 h-12 font-medium rounded-md text-sm"
+            class="
+              text-white
+              bg-default_red
+              w-96
+              h-12
+              font-medium
+              rounded-md
+              text-sm
+            "
             @click="$emit('closePasswordSent')"
           >
             Reset pasword

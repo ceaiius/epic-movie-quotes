@@ -42,7 +42,7 @@
                 :class="[
                   meta.valid && meta.touched
                     ? 'border-2 border-green-500'
-                    : 'border-2 border-red',
+                    : 'border-2 border-red-500',
                 ]"
                 class="
                   bg-input_bg
@@ -72,7 +72,7 @@
             </Field>
 
             <ErrorMessage
-              class="text-red text-sm -bottom-6 absolute"
+              class="text-default_red text-sm -bottom-6 absolute"
               name="email"
             />
           </div>
@@ -91,7 +91,7 @@
                 :class="[
                   meta.valid && meta.touched
                     ? 'border-2 border-green-500'
-                    : 'border-2 border-red',
+                    : 'border-2 border-red-500',
                 ]"
                 :type="[showPassword ? 'text' : 'password']"
                 class="
@@ -162,7 +162,7 @@
               </svg>
             </span>
             <ErrorMessage
-              class="text-red whitespace-nowrap text-sm relative top-2"
+              class="text-default_red whitespace-nowrap text-sm relative top-2"
               name="password"
             />
           </div>
@@ -187,7 +187,7 @@
           </div>
 
           <div class="whitespace-nowrap mt-4">
-            <span v-if="errorInput" class="text-red text-sm absolute">{{
+            <span v-if="errorInput" class="text-default_red text-sm absolute">{{
               errorMessage
             }}</span>
           </div>
@@ -196,7 +196,7 @@
             type="submit"
             class="
               text-white
-              bg-red
+              bg-default_red
               w-full
               h-12
               font-medium

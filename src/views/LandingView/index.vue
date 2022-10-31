@@ -55,7 +55,7 @@
                 class="
                   focus:outline-none
                   text-white
-                  bg-red
+                  bg-default_red
                   w-28
                   h-10
                   font-medium
@@ -140,7 +140,16 @@
       </header>
       <button
         type="button"
-        class="text-white bg-red w-28 h-10 font-medium rounded-md text-sm mt-6"
+        class="
+          text-white
+          bg-default_red
+          w-28
+          h-10
+          font-medium
+          rounded-md
+          text-sm
+          mt-6
+        "
         @click="isOpenRegister = true"
       >
         Get Started

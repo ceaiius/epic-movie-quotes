@@ -44,7 +44,7 @@
                 :class="[
                   meta.valid && meta.touched
                     ? 'border-2 border-green-500'
-                    : 'border-2 border-red',
+                    : 'border-2 border-red-500',
                 ]"
                 type="text"
                 class="
@@ -77,7 +77,7 @@
 
             <ErrorMessage
               class="
-                text-red
+                text-default_red
                 whitespace-nowrap
                 text-center text-sm
                 -bottom-6
@@ -88,7 +88,7 @@
             <p
               v-if="nameTaken"
               class="
-                text-red
+                text-default_red
                 whitespace-nowrap
                 text-center text-sm
                 -bottom-6
@@ -109,7 +109,7 @@
                 :class="[
                   meta.valid && meta.touched
                     ? 'border-2 border-green-500'
-                    : 'border-2 border-red',
+                    : 'border-2 border-red-500',
                 ]"
                 class="
                   bg-input_bg
@@ -139,13 +139,13 @@
             </Field>
 
             <ErrorMessage
-              class="text-red text-sm -bottom-6 absolute"
+              class="text-default_red text-sm -bottom-6 absolute"
               name="email"
             />
             <p
               v-if="emailTaken"
               class="
-                text-red
+                text-default_red
                 whitespace-nowrap
                 text-center text-sm
                 -bottom-6
@@ -171,7 +171,7 @@
                 :class="[
                   meta.valid && meta.touched
                     ? 'border-2 border-green-500'
-                    : 'border-2 border-red',
+                    : 'border-2 border-red-500',
                 ]"
                 :type="[showPassword ? 'text' : 'password']"
                 class="
@@ -242,7 +242,7 @@
               </svg>
             </span>
             <ErrorMessage
-              class="text-red text-sm -bottom-6 absolute"
+              class="text-default_red text-sm -bottom-6 absolute"
               name="password"
             />
           </div>
@@ -262,7 +262,7 @@
                 :class="[
                   meta.valid && meta.touched
                     ? 'border-2 border-green-500'
-                    : 'border-2 border-red',
+                    : 'border-2 border-red-500',
                 ]"
                 class="
                   bg-input_bg
@@ -333,7 +333,7 @@
               </svg>
             </span>
             <ErrorMessage
-              class="text-red text-sm -bottom-6 absolute"
+              class="text-default_red text-sm -bottom-6 absolute"
               name="password_confirmation"
             />
           </div>
@@ -342,7 +342,7 @@
             type="submit"
             class="
               text-white
-              bg-red
+              bg-default_red
               w-full
               h-12
               font-medium
