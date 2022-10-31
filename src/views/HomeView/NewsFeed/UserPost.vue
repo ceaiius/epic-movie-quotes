@@ -1,5 +1,5 @@
 <template>
-  <div class="w-auto flex flex-col bg-[#11101A] mt-6 rounded-xl mb-12">
+  <div class="w-auto flex flex-col bg-[#11101A] mt-6 rounded-xl md:mb-12">
     <div class="flex items-center gap-2 m-6 text-white w-12 h-12">
       <img src="/images/static.png" alt="" />
       <h2 class="whitespace-nowrap">Maia Nakashidze</h2>
@@ -8,18 +8,20 @@
       <h2 class="text-white">
         "Follow your dream." movie - <span>Billy Eliot</span> (2000)
       </h2>
-      <img class="max-w-3xl mt-2" src="/images/movie-image.png" alt="" />
+      <img class="md:max-w-3xl mt-2" src="/images/movie-image.png" alt="" />
       <div class="flex gap-6 text-white m-6">
-        <div class="flex gap-2">
+        <div class="flex gap-2 cursor-pointer">
           2 <img src="/images/comments.svg" alt="" />
         </div>
-        <div class="flex gap-2">10 <img src="/images/likes.svg" alt="" /></div>
+        <div class="flex gap-2 cursor-pointer">
+          10 <img src="/images/likes.svg" alt="" />
+        </div>
       </div>
       <hr class="border-[#efefef4d]" />
     </div>
     <div class="m-6 flex gap-6 text-white">
       <div>
-        <img src="/images/static.png" class="w-12 h-12" alt="" />
+        <img src="/images/static.png" class="md:w-12 md:h-12" alt="" />
       </div>
       <div>
         <h2>Nina Baldadze</h2>

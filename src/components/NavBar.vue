@@ -6,6 +6,8 @@
       >
         <span
           class="
+            lg:block
+            hidden
             self-center
             text-base
             font-semibold
@@ -15,13 +17,44 @@
           >Movie Quotes</span
         >
 
+        <teleport to="body">
+          <dialog-modal
+            v-if="isHamburgerClicked"
+            top="top-1/3"
+            @close="isHamburgerClicked = false"
+          >
+            <HamburgerMenu />
+          </dialog-modal>
+        </teleport>
+
+        <span @click="isHamburgerClicked = true">
+          <img
+            src="/images/hamburger.svg"
+            class="inline-flex items-center rounded-lg lg:hidden cursor-pointer"
+            alt=""
+          />
+        </span>
+
+        <teleport to="body">
+          <dialog-modal v-if="isSearchClicked" @close="isSearchClicked = false">
+            <SearchDialog @close-search="isSearchClicked = false" />
+          </dialog-modal>
+        </teleport>
+
         <div id="navbar-default" class="">
           <ul class="flex p-4 rounded-lg text-white space-x-8">
+            <li class="lg:hidden block" @click="isSearchClicked = true">
+              <img
+                class="w-6 h-6 relative top-2 cursor-pointer"
+                src="/images/search.svg"
+                alt=""
+              />
+            </li>
             <li>
               <div class="relative">
                 <img
                   src="/images/bell.svg"
-                  class="w-6 h-6 relative top-2"
+                  class="w-6 h-6 relative top-2 cursor-pointer"
                   alt=""
                 />
                 <div
@@ -43,7 +76,8 @@
                 </div>
               </div>
             </li>
-            <li class="mt-2" @click="toggleLanguageSelect">
+
+            <li class="mt-2 lg:block hidden" @click="toggleLanguageSelect">
               <a class="flex justify-center items-center gap-2"
                 >{{ activeLanguage }}
 
@@ -61,7 +95,7 @@
               </div>
             </li>
 
-            <li @click="isHiddenDropdown = true">
+            <li class="lg:block hidden" @click="isHiddenDropdown = true">
               <form @submit.prevent="handleLogout">
                 <button
                   type="submit"
@@ -92,12 +126,14 @@
 import { computed, onBeforeMount, ref } from "vue";
 import { useRoute } from "vue-router";
 import { setJwtToken } from "../helpers/jwt";
+import DialogModal from "./DialogModal.vue";
+import HamburgerMenu from "../views/HomeView/NewsFeed/HamburgerMenu.vue";
+import SearchDialog from "../views/HomeView/NewsFeed/SearchDialog.vue";
 import router from "../router";
-
 const isOpenLogin = ref(false);
-
+const isHamburgerClicked = ref(false);
 const isHiddenDropdown = ref(true);
-
+const isSearchClicked = ref(false);
 const activeLanguage = ref("En");
 const languages = [
   {
