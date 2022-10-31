@@ -5,6 +5,7 @@
   ></div>
   <dialog
     open
+    :class="top"
     class="
       absolute
       top-1/2
@@ -23,6 +24,8 @@
   
   <script>
 export default {
+  // eslint-disable-next-line vue/require-prop-types
+  props: ["top"],
   emits: ["close"],
 };
 </script>

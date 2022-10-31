@@ -34,44 +34,50 @@
               >Name</label
             >
             <Field
-              v-model="username"
-              :rules="validateUsername"
-              :class="[
-                errorUsername
-                  ? 'border-2 border-red'
-                  : 'border-2 border-green-500',
-              ]"
-              type="text"
-              class="
-                bg-input_bg
-                text-sm
-                h-10
-                w-full
-                p-2
-                border
-                border-input_bg
-                rounded
-              "
+              v-slot="{ meta, field }"
               name="username"
-              placeholder="At least 3 & max.15 lower case characters"
-            />
-            <span>
-              <img
-                :class="[errorUsername ? 'hidden' : 'block']"
-                class="w-6 h-6 absolute top-14 right-2"
-                src="/images/valid.svg"
-                alt=""
+              rules="username|required|min:6|max:15"
+            >
+              <input
+                v-bind="field"
+                v-model="username"
+                :class="[
+                  meta.valid && meta.touched
+                    ? 'border-2 border-green-500'
+                    : 'border-2 border-red-500',
+                ]"
+                type="text"
+                class="
+                  bg-input_bg
+                  text-sm
+                  h-10
+                  w-full
+                  p-2
+                  border
+                  border-input_bg
+                  rounded
+                "
+                placeholder="At least 3 & max.15 lower case characters"
               />
-              <img
-                :class="[errorUsername ? 'block' : 'hidden']"
-                class="w-6 h-6 absolute top-14 right-2"
-                src="/images/invalid.svg"
-                alt=""
-              />
-            </span>
+              <span>
+                <img
+                  :class="[meta.valid && meta.touched ? 'block' : 'hidden']"
+                  class="w-6 h-6 absolute top-14 right-2"
+                  src="/images/valid.svg"
+                  alt=""
+                />
+                <img
+                  :class="[meta.valid && meta.touched ? 'hidden' : 'block']"
+                  class="w-6 h-6 absolute top-14 right-2"
+                  src="/images/invalid.svg"
+                  alt=""
+                />
+              </span>
+            </Field>
+
             <ErrorMessage
               class="
-                text-red
+                text-default_red
                 whitespace-nowrap
                 text-center text-sm
                 -bottom-6
@@ -82,7 +88,7 @@
             <p
               v-if="nameTaken"
               class="
-                text-red
+                text-default_red
                 whitespace-nowrap
                 text-center text-sm
                 -bottom-6
@@ -93,52 +99,53 @@
             </p>
           </div>
           <div class="flex flex-col pt-6 relative">
-            <label for="exampleInputEmail1" class="text-white text-base pb-2"
-              >Email</label
-            >
-            <Field
-              v-model="email"
-              type="email"
-              :rules="validateEmail"
-              :class="[
-                errorEmail
-                  ? 'border-2 border-red'
-                  : 'border-2 border-green-500',
-              ]"
-              class="
-                bg-input_bg
-                text-sm
-                h-10
-                p-2
-                border
-                border-input_bg
-                rounded
-              "
-              name="email"
-              placeholder="Enter your email"
-            />
-            <span>
-              <img
-                :class="[errorEmail ? 'hidden' : 'block']"
-                class="w-6 h-6 absolute top-16 right-2"
-                src="/images/valid.svg"
-                alt=""
+            <label for="email" class="text-white text-base pb-2">Email</label>
+            <Field v-slot="{ meta, field }" name="email" rules="required|email">
+              <input
+                v-model="email"
+                v-bind="field"
+                type="email"
+                rules="required|email"
+                :class="[
+                  meta.valid && meta.touched
+                    ? 'border-2 border-green-500'
+                    : 'border-2 border-red-500',
+                ]"
+                class="
+                  bg-input_bg
+                  text-sm
+                  h-10
+                  p-2
+                  border
+                  border-input_bg
+                  rounded
+                "
+                placeholder="Enter your email"
               />
-              <img
-                :class="[errorEmail ? 'block' : 'hidden']"
-                class="w-6 h-6 absolute top-16 right-2"
-                src="/images/invalid.svg"
-                alt=""
-              />
-            </span>
+              <span>
+                <img
+                  :class="[meta.valid && meta.touched ? 'block' : 'hidden']"
+                  class="w-6 h-6 absolute top-16 right-2"
+                  src="/images/valid.svg"
+                  alt=""
+                />
+                <img
+                  :class="[meta.valid && meta.touched ? 'hidden' : 'block']"
+                  class="w-6 h-6 absolute top-16 right-2"
+                  src="/images/invalid.svg"
+                  alt=""
+                />
+              </span>
+            </Field>
+
             <ErrorMessage
-              class="text-red text-sm -bottom-6 absolute"
+              class="text-default_red text-sm -bottom-6 absolute"
               name="email"
             />
             <p
               v-if="emailTaken"
               class="
-                text-red
+                text-default_red
                 whitespace-nowrap
                 text-center text-sm
                 -bottom-6
@@ -154,26 +161,31 @@
               >Password</label
             >
             <Field
-              v-model="password"
-              :rules="validatePassword"
-              :class="[
-                errorPassword
-                  ? 'border-2 border-red'
-                  : 'border-2 border-green-500',
-              ]"
-              :type="[showPassword ? 'text' : 'password']"
-              class="
-                bg-input_bg
-                text-sm
-                h-10
-                p-2
-                border
-                border-input_bg
-                rounded
-              "
-              placeholder="At least 8 & max.15 lower case characters"
+              v-slot="{ meta, field }"
               name="password"
-            />
+              rules="required|min:8|max:15"
+            >
+              <input
+                v-bind="field"
+                v-model="password"
+                :class="[
+                  meta.valid && meta.touched
+                    ? 'border-2 border-green-500'
+                    : 'border-2 border-red-500',
+                ]"
+                :type="[showPassword ? 'text' : 'password']"
+                class="
+                  bg-input_bg
+                  text-sm
+                  h-10
+                  p-2
+                  border
+                  border-input_bg
+                  rounded
+                "
+                placeholder="At least 8 & max.15 lower case characters"
+              />
+            </Field>
             <span @click="showPassword = !showPassword">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -230,7 +242,7 @@
               </svg>
             </span>
             <ErrorMessage
-              class="text-red text-sm -bottom-6 absolute"
+              class="text-default_red text-sm -bottom-6 absolute"
               name="password"
             />
           </div>
@@ -239,26 +251,31 @@
               >Confirm Password</label
             >
             <Field
-              v-model="password_confirmation"
-              :type="[showPasswordConfirm ? 'text' : 'password']"
-              :rules="validateConfirmPassword"
-              :class="[
-                errorConfirmPassword
-                  ? 'border-2 border-red'
-                  : 'border-2 border-green-500',
-              ]"
+              v-slot="{ meta, field }"
               name="password_confirmation"
-              class="
-                bg-input_bg
-                text-sm
-                h-10
-                p-2
-                border
-                border-input_bg
-                rounded
-              "
-              placeholder="Confirm password"
-            />
+              rules="required|min:8|max:15|confirmed:@password"
+            >
+              <input
+                v-bind="field"
+                v-model="password_confirmation"
+                :type="[showPasswordConfirm ? 'text' : 'password']"
+                :class="[
+                  meta.valid && meta.touched
+                    ? 'border-2 border-green-500'
+                    : 'border-2 border-red-500',
+                ]"
+                class="
+                  bg-input_bg
+                  text-sm
+                  h-10
+                  p-2
+                  border
+                  border-input_bg
+                  rounded
+                "
+                placeholder="Confirm password"
+              />
+            </Field>
 
             <span @click="showPasswordConfirm = !showPasswordConfirm">
               <svg
@@ -316,7 +333,7 @@
               </svg>
             </span>
             <ErrorMessage
-              class="text-red text-sm -bottom-6 absolute"
+              class="text-default_red text-sm -bottom-6 absolute"
               name="password_confirmation"
             />
           </div>
@@ -325,7 +342,7 @@
             type="submit"
             class="
               text-white
-              bg-red
+              bg-default_red
               w-full
               h-12
               font-medium
@@ -445,10 +462,6 @@ onMounted(() => {
   credentials.getPasswordConfirmation();
 });
 
-const errorUsername = ref(false);
-const errorEmail = ref(false);
-const errorPassword = ref(false);
-const errorConfirmPassword = ref(false);
 const showPassword = ref(false);
 const showPasswordConfirm = ref(false);
 const nameTaken = ref(false);
@@ -469,102 +482,13 @@ const handleRegister = () => {
     .catch((error) => {
       if (error.response.data.errors.username) {
         nameTaken.value = true;
-        errorUsername.value = true;
       }
       if (error.response.data.errors.email) {
         emailTaken.value = true;
-        errorEmail.value = true;
       }
 
       console.log(error.response.data);
     });
-};
-
-const validateUsername = (value) => {
-  if (!value) {
-    nameTaken.value = false;
-    errorUsername.value = true;
-    return "This field is required ";
-  }
-
-  if (value.length < 3) {
-    nameTaken.value = false;
-    errorUsername.value = true;
-    return "Username must be at least 3 characters";
-  }
-
-  if (value.length > 15) {
-    nameTaken.value = false;
-    errorUsername.value = true;
-    return "Username must not have more than 15 characters ";
-  }
-
-  const regex = /^[a-za-z\s]*$/;
-  if (!regex.test(value)) {
-    nameTaken.value = false;
-    errorUsername.value = true;
-    return "Username must be in english alphabet and lowercase";
-  }
-  errorUsername.value = false;
-  return true;
-};
-
-const validateEmail = (value) => {
-  // if the field is empty
-  if (!value) {
-    errorEmail.value = true;
-    emailTaken.value = false;
-    return "This field is required";
-  }
-
-  // if the field is not a valid email
-  const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-  if (!regex.test(value)) {
-    errorEmail.value = true;
-    emailTaken.value = false;
-    return "This field must be a valid email";
-  }
-
-  errorEmail.value = false;
-  return true;
-};
-
-const validatePassword = (value) => {
-  if (!value) {
-    errorPassword.value = true;
-    return "This field is required ";
-  }
-  if (value.length < 8) {
-    errorPassword.value = true;
-    return "Password must be at least 8 characters";
-  }
-  if (value.length > 15) {
-    errorPassword.value = true;
-    return "Password must not have more than 15 characters ";
-  }
-  errorPassword.value = false;
-  return true;
-};
-
-const validateConfirmPassword = (value) => {
-  if (!value) {
-    errorConfirmPassword.value = true;
-    return "This field is required ";
-  }
-  if (value.length < 8) {
-    errorConfirmPassword.value = true;
-    return "Password must be at least 8 characters";
-  }
-  if (value.length > 15) {
-    errorConfirmPassword.value = true;
-    return "Password must not have more than 15 characters ";
-  }
-  if (value != password.value) {
-    errorConfirmPassword.value = true;
-    return "Passwords don't match";
-  }
-  errorConfirmPassword.value = false;
-  return true;
 };
 </script>
  

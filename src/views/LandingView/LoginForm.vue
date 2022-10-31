@@ -31,35 +31,48 @@
       </div>
       <div class="w-96">
         <Form class="pl-4" @submit="handleLogin">
-          <div class="flex flex-col pt-4 relative">
-            <label for="exampleInputEmail1" class="text-white text-base pb-2"
-              >Email</label
-            >
-            <Field
-              v-model="email"
-              type="email"
-              :rules="validateEmail"
-              :class="[errorInput ? 'border-2 border-red-500' : 'border-none']"
-              class="
-                bg-input_bg
-                text-sm
-                h-10
-                p-2
-                border
-                border-input_bg
-                rounded
-              "
-              name="email"
-              placeholder="Enter your email"
-            />
+          <div class="flex flex-col pt-6 relative">
+            <label for="email" class="text-white text-base pb-2">Email</label>
+            <Field v-slot="{ meta, field }" name="email" rules="required|email">
+              <input
+                v-model="email"
+                v-bind="field"
+                type="email"
+                rules="required|email"
+                :class="[
+                  meta.valid && meta.touched
+                    ? 'border-2 border-green-500'
+                    : 'border-2 border-red-500',
+                ]"
+                class="
+                  bg-input_bg
+                  text-sm
+                  h-10
+                  p-2
+                  border
+                  border-input_bg
+                  rounded
+                "
+                placeholder="Enter your email"
+              />
+              <span>
+                <img
+                  :class="[meta.valid && meta.touched ? 'block' : 'hidden']"
+                  class="w-6 h-6 absolute top-16 right-2"
+                  src="/images/valid.svg"
+                  alt=""
+                />
+                <img
+                  :class="[meta.valid && meta.touched ? 'hidden' : 'block']"
+                  class="w-6 h-6 absolute top-16 right-2"
+                  src="/images/invalid.svg"
+                  alt=""
+                />
+              </span>
+            </Field>
+
             <ErrorMessage
-              class="
-                text-red
-                whitespace-nowrap
-                text-center text-sm
-                -bottom-6
-                absolute
-              "
+              class="text-default_red text-sm -bottom-6 absolute"
               name="email"
             />
           </div>
@@ -68,22 +81,31 @@
               >Password</label
             >
             <Field
-              v-model="password"
-              :rules="validatePassword"
-              :type="[showPassword ? 'text' : 'password']"
-              :class="[errorInput ? 'border-2 border-red-500' : 'border-none']"
-              class="
-                bg-input_bg
-                text-sm
-                h-10
-                p-2
-                border
-                border-input_bg
-                rounded
-              "
-              placeholder="At least 8 & max.15 lower case characters"
+              v-slot="{ meta, field }"
               name="password"
-            />
+              rules="required|min:8|max:15"
+            >
+              <input
+                v-bind="field"
+                v-model="password"
+                :class="[
+                  meta.valid && meta.touched
+                    ? 'border-2 border-green-500'
+                    : 'border-2 border-red-500',
+                ]"
+                :type="[showPassword ? 'text' : 'password']"
+                class="
+                  bg-input_bg
+                  text-sm
+                  h-10
+                  p-2
+                  border
+                  border-input_bg
+                  rounded
+                "
+                placeholder="At least 8 & max.15 lower case characters"
+              />
+            </Field>
             <span @click="showPassword = !showPassword">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -140,7 +162,7 @@
               </svg>
             </span>
             <ErrorMessage
-              class="text-red whitespace-nowrap text-sm relative top-2"
+              class="text-default_red whitespace-nowrap text-sm relative top-2"
               name="password"
             />
           </div>
@@ -165,7 +187,7 @@
           </div>
 
           <div class="whitespace-nowrap mt-4">
-            <span v-if="errorInput" class="text-red text-sm absolute">{{
+            <span v-if="errorInput" class="text-default_red text-sm absolute">{{
               errorMessage
             }}</span>
           </div>
@@ -174,7 +196,7 @@
             type="submit"
             class="
               text-white
-              bg-red
+              bg-default_red
               w-full
               h-12
               font-medium
@@ -302,35 +324,6 @@ const handleLogin = async () => {
       errorInput.value = true;
       errorMessage.value = error.response.data.error;
     });
-};
-
-const validateEmail = (value) => {
-  // if the field is empty
-  if (!value) {
-    return "This field is required";
-  }
-
-  // if the field is not a valid email
-  const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-  if (!regex.test(value)) {
-    return "This field must be a valid email";
-  }
-
-  return true;
-};
-
-const validatePassword = (value) => {
-  if (!value) {
-    return "This field is required ";
-  }
-  if (value.length < 8) {
-    return "Password must be at least 8 characters";
-  }
-  if (value.length > 15) {
-    return "Password must not have more than 15 characters ";
-  }
-
-  return true;
 };
 </script>
  

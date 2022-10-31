@@ -38,7 +38,7 @@
         class="
           focus:outline-none
           text-white
-          bg-red
+          bg-default_red
           w-32
           h-10
           font-medium
