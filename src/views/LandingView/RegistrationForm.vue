@@ -24,15 +24,19 @@
         />
       </div>
       <div class="pt-8 text-center">
-        <h1 class="text-white text-3xl">Create an account</h1>
-        <h3 class="text-grey_text text-base pt-2">Start your journey!</h3>
+        <h1 class="text-white text-3xl">
+          {{ $t("RegistrationForm.create_an_account") }}
+        </h1>
+        <h3 class="text-grey_text text-base pt-2">
+          {{ $t("RegistrationForm.start_journey") }}
+        </h3>
       </div>
       <div class="w-96">
         <Form class="pl-4" @submit="handleRegister">
           <div class="flex flex-col pt-4 relative">
-            <label for="exampleInputEmail1" class="text-white text-base pb-2"
-              >Name</label
-            >
+            <label for="exampleInputEmail1" class="text-white text-base pb-2">{{
+              $t("RegistrationForm.name")
+            }}</label>
             <Field
               v-slot="{ meta, field }"
               name="username"
@@ -57,7 +61,7 @@
                   border-input_bg
                   rounded
                 "
-                placeholder="At least 3 & max.15 lower case characters"
+                :placeholder="placeholderUsername"
               />
               <span>
                 <img
@@ -95,11 +99,13 @@
                 absolute
               "
             >
-              The username has already been taken
+              {{ $t("RegistrationForm.username_taken") }}
             </p>
           </div>
           <div class="flex flex-col pt-6 relative">
-            <label for="email" class="text-white text-base pb-2">Email</label>
+            <label for="email" class="text-white text-base pb-2">{{
+              $t("RegistrationForm.email")
+            }}</label>
             <Field v-slot="{ meta, field }" name="email" rules="required|email">
               <input
                 v-model="email"
@@ -120,7 +126,7 @@
                   border-input_bg
                   rounded
                 "
-                placeholder="Enter your email"
+                :placeholder="placeholderEmail"
               />
               <span>
                 <img
@@ -152,13 +158,15 @@
                 absolute
               "
             >
-              Email has already been taken
+              {{ $t("RegistrationForm.email_taken") }}
             </p>
           </div>
 
           <div class="flex flex-col pt-10 relative">
-            <label for="exampleInputPassword1" class="text-white text-base pb-2"
-              >Password</label
+            <label
+              for="exampleInputPassword1"
+              class="text-white text-base pb-2"
+              >{{ $t("RegistrationForm.password") }}</label
             >
             <Field
               v-slot="{ meta, field }"
@@ -183,7 +191,7 @@
                   border-input_bg
                   rounded
                 "
-                placeholder="At least 8 & max.15 lower case characters"
+                :placeholder="placeholderPassword"
               />
             </Field>
             <span @click="showPassword = !showPassword">
@@ -247,8 +255,10 @@
             />
           </div>
           <div class="flex flex-col pt-10 relative">
-            <label for="exampleInputPassword1" class="text-white text-base pb-2"
-              >Confirm Password</label
+            <label
+              for="exampleInputPassword1"
+              class="text-white text-base pb-2"
+              >{{ $t("RegistrationForm.confirm_password") }}</label
             >
             <Field
               v-slot="{ meta, field }"
@@ -273,7 +283,7 @@
                   border-input_bg
                   rounded
                 "
-                placeholder="Confirm password"
+                :placeholder="placeholderConfirm"
               />
             </Field>
 
@@ -351,7 +361,7 @@
               mt-10
             "
           >
-            Sign up
+            {{ $t("RegistrationForm.sign_up") }}
           </button>
         </Form>
         <form :action="url">
@@ -374,16 +384,16 @@
             "
             type="submit"
           >
-            <span><img src="/images/google.svg" alt="" /></span> Sign up with
-            Google
+            <span><img src="/images/google.svg" alt="" /></span>
+            {{ $t("RegistrationForm.sign_up_with_google") }}
           </button>
         </form>
         <p class="text-center pt-4 text-grey_text">
-          Already have an account?
+          {{ $t("RegistrationForm.already_have_an_account") }}
           <a
             class="text-link cursor-pointer underline"
             @click="$emit('openLogin')"
-            >Log in</a
+            >{{ $t("RegistrationForm.log_in") }}</a
           >
         </p>
       </div>
@@ -404,6 +414,7 @@
 import axios from "@/config/axios/index.js";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { computed, onMounted, ref } from "vue";
+import { i18n } from "../../i18n";
 import DialogModal from "@/components/DialogModal.vue";
 import { useCredentials } from "@/stores/index.js";
 import ValidateEmail from "./notifications/ValidateEmail.vue";
@@ -490,5 +501,26 @@ const handleRegister = () => {
       console.log(error.response.data);
     });
 };
+
+const placeholderPassword = computed(
+  () =>
+    i18n.global.messages[i18n.global.locale].RegistrationForm
+      .password_placeholder
+);
+
+const placeholderEmail = computed(
+  () =>
+    i18n.global.messages[i18n.global.locale].RegistrationForm.email_placeholder
+);
+const placeholderUsername = computed(
+  () =>
+    i18n.global.messages[i18n.global.locale].RegistrationForm
+      .username_placeholder
+);
+const placeholderConfirm = computed(
+  () =>
+    i18n.global.messages[i18n.global.locale].RegistrationForm
+      .confirm_placeholder
+);
 </script>
  

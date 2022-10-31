@@ -14,7 +14,7 @@
             whitespace-nowrap
             text-brown
           "
-          >Movie Quotes</span
+          >{{ $t("NewsFeed.movie_quotes") }}</span
         >
 
         <teleport to="body">
@@ -88,7 +88,7 @@
                   v-for="language in filteredLanguage"
                   :key="language.value"
                   class="absolute"
-                  @click="changeLanguage(language.value)"
+                  @click="changeLanguage(language.value), changeLocale()"
                 >
                   {{ language.value }}
                 </a>
@@ -111,7 +111,7 @@
                   "
                   @click="isOpenLogin = true"
                 >
-                  Log Out
+                  {{ $t("NewsFeed.log_out") }}
                 </button>
               </form>
             </li>
@@ -129,11 +129,33 @@ import { setJwtToken } from "../helpers/jwt";
 import DialogModal from "./DialogModal.vue";
 import HamburgerMenu from "../views/HomeView/NewsFeed/HamburgerMenu.vue";
 import SearchDialog from "../views/HomeView/NewsFeed/SearchDialog.vue";
+import { i18n } from "../i18n";
 import router from "../router";
-const isOpenLogin = ref(false);
+
 const isHamburgerClicked = ref(false);
-const isHiddenDropdown = ref(true);
 const isSearchClicked = ref(false);
+
+const isOpenLogin = ref(false);
+
+const isHiddenDropdown = ref(true);
+
+const handleLogout = () => {
+  document.cookie = `jwt_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
+  router.push({ name: "landing" });
+};
+
+onBeforeMount(() => {
+  const route = useRoute();
+
+  if (route.query.token) {
+    setJwtToken(route.query.token, route.query.expires_in, 1000);
+  }
+});
+
+const changeLocale = () => {
+  i18n.global.locale = activeLanguage.value;
+};
+
 const activeLanguage = ref("En");
 const languages = [
   {
@@ -153,17 +175,4 @@ const changeLanguage = (lang) => {
 const toggleLanguageSelect = () => {
   isHiddenDropdown.value = !isHiddenDropdown.value;
 };
-
-const handleLogout = () => {
-  document.cookie = `jwt_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
-  router.push({ name: "landing" });
-};
-
-onBeforeMount(() => {
-  const route = useRoute();
-
-  if (route.query.token) {
-    setJwtToken(route.query.token, route.query.expires_in, 1000);
-  }
-});
 </script>

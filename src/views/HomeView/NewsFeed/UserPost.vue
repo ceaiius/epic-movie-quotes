@@ -51,9 +51,17 @@
           "
           cols="30"
           rows="2"
-          placeholder="Write a comment"
+          :placeholder="commentLocale"
         ></textarea>
       </div>
     </div>
   </div>
 </template>
+
+<script setup>
+import { computed } from "vue";
+import { i18n } from "../../../i18n";
+const commentLocale = computed(
+  () => i18n.global.messages[i18n.global.locale].NewsFeed.write_comment
+);
+</script>

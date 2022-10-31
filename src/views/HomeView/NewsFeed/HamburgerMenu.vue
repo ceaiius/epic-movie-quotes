@@ -18,17 +18,17 @@
         <div>
           <h2 class="text-white text-2xl">Nino Tabagari</h2>
           <h3 class="text-input_bg text-base cursor-pointer">
-            Edit your profile
+            {{ $t("NewsFeed.edit_profile") }}
           </h3>
         </div>
       </div>
       <div class="ml-4 mt-6 flex gap-8 items-center text-white">
         <img class="w-6 h-6" src="/images/home-white.svg" alt="" />
-        <h2 class="cursor-pointer">News Feed</h2>
+        <h2 class="cursor-pointer">{{ $t("NewsFeed.news_feed") }}</h2>
       </div>
       <div class="ml-4 mt-6 flex gap-8 items-center text-white">
         <img class="w-6 h-6" src="/images/camera.svg" alt="" />
-        <h2 class="cursor-pointer">List of movies</h2>
+        <h2 class="cursor-pointer">{{ $t("NewsFeed.list_of_movies") }}</h2>
       </div>
     </div>
   </div>
