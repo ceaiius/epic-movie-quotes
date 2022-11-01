@@ -26,8 +26,8 @@
         />
       </div>
       <div class="mt-10 ml-8 text-input_bg flex flex-col gap-2">
-        <h2>Enter @ to search movies</h2>
-        <h2>Enter # to search quotes</h2>
+        <h2>{{ $t("NewsFeed.enter_movies") }}</h2>
+        <h2>{{ $t("NewsFeed.enter_quotes") }}</h2>
       </div>
     </div>
   </div>

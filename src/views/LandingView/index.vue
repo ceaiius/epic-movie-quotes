@@ -23,7 +23,7 @@
             whitespace-nowrap
             text-brown
           "
-          >Movie Quotes</span
+          >{{ $t("LandingPage.movie_quotes") }}</span
         >
 
         <div id="navbar-default" class="">
@@ -42,7 +42,8 @@
                   @click="
                     changeLanguage(language.value),
                       (localeDefault = !localeDefault),
-                      setLanguage()
+                      setLanguage(),
+                      changeLocale()
                   "
                 >
                   {{ language.value }}
@@ -64,7 +65,7 @@
                 "
                 @click="isOpenRegister = true"
               >
-                Sign Up
+                {{ $t("LandingPage.sign_up") }}
               </button>
             </li>
             <li @click="isHiddenDropdown = true">
@@ -82,7 +83,7 @@
                 "
                 @click="isOpenLogin = true"
               >
-                Log In
+                {{ $t("LandingPage.log_in") }}
               </button>
             </li>
           </ul>
@@ -134,8 +135,8 @@
             mt-52
           "
         >
-          Find any quote in <br />
-          millions of movie lines
+          {{ $t("LandingPage.find_any_quote_in") }} <br />
+          {{ $t("LandingPage.millions_of_movie_lines") }}
         </h1>
       </header>
       <button
@@ -152,7 +153,7 @@
         "
         @click="isOpenRegister = true"
       >
-        Get Started
+        {{ $t("LandingPage.get_started") }}
       </button>
     </div>
   </div>
@@ -166,11 +167,13 @@
         /></span>
 
         <h1 class="text-white lg:text-5xl text-sm flex">
-          “You have to leave something <br />
-          behind to go forward”
+          “ {{ $t("LandingPage.you_have_to_leave_something") }}<br />
+          {{ $t("LandingPage.behind_to_go_forward") }}”
         </h1>
 
-        <h2 class="text-grey text-3xl">Interstellar, 2014</h2>
+        <h2 class="text-grey text-3xl">
+          {{ $t("LandingPage.interstellar") }}, 2014
+        </h2>
       </div>
     </div>
 
@@ -183,12 +186,16 @@
         /></span>
 
         <h1 class="text-white lg:text-5xl text-sm flex">
-          I think we’re just gonna have <br />
-          to be secretly in love with earch other <br />
-          and leave it that
+          {{ $t("LandingPage.i_think_we_re_just_gonna_have") }},
+          <br />
+          {{ $t("LandingPage.to_be_secretly_in_love_with_each_other") }}
+          <br />
+          {{ $t("LandingPage.and_leave_it_that") }}
         </h1>
 
-        <h2 class="text-grey text-3xl">The Royal Tenenbaums, 2001</h2>
+        <h2 class="text-grey text-3xl">
+          {{ $t("LandingPage.the_royal_tenenbaums") }}, 2001
+        </h2>
       </div>
     </div>
     <div
@@ -200,12 +207,14 @@
         /></span>
 
         <h1 class="text-white lg:text-5xl text-sm flex">
-          “I see in your eyes the same <br />
-          fear that would take the <br />
-          heart of me....”
+          “{{ $t("LandingPage.I_see_in_your_eyes_the_same") }} <br />
+          {{ $t("LandingPage.fear_that_would_take_the") }} <br />
+          {{ $t("LandingPage.heart_of_me") }}”
         </h1>
 
-        <h2 class="text-grey text-3xl">The Lord of the Rings, 2003</h2>
+        <h2 class="text-grey text-3xl">
+          {{ $t("LandingPage.the_lord_of_the_rings") }}, 2003
+        </h2>
       </div>
     </div>
   </div>
@@ -217,11 +226,13 @@
           ><img src="images/small-line.png" alt=""
         /></span>
         <h1 class="text-white text-xl flex">
-          “You have to leave something <br />
-          behind to go forward”
+          “ {{ $t("LandingPage.you_have_to_leave_something") }}<br />
+          {{ $t("LandingPage.behind_to_go_forward") }}”
         </h1>
 
-        <h2 class="text-grey text-lg">Interstellar, 2014</h2>
+        <h2 class="text-grey text-lg">
+          {{ $t("LandingPage.interstellar") }}, 2014
+        </h2>
       </div>
     </div>
 
@@ -232,13 +243,17 @@
           ><img src="images/small-line.png" alt=""
         /></span>
         <h1 class="text-white text-xl flex">
-          I think we’re just gonna have <br />
-          to be secretly in love <br />
-          with earch other and <br />
-          leave it that
+          {{ $t("LandingPage.i_think_we_re_just_gonna_have") }},
+          <br />
+          {{ $t("LandingPage.to_be_secretly_in_love") }}
+
+          <br />
+          {{ $t("LandingPage.and_leave_it_that") }}
         </h1>
 
-        <h2 class="text-grey text-lg">The Royal Tenenbaums, 2001</h2>
+        <h2 class="text-grey text-lg">
+          {{ $t("LandingPage.the_royal_tenenbaums") }}, 2001
+        </h2>
       </div>
     </div>
 
@@ -249,19 +264,22 @@
           ><img src="images/small-line.png" alt=""
         /></span>
         <h1 class="text-white text-xl flex">
-          “I see in your eyes the same <br />
-          fear that would take the <br />
-          heart of me....”
+          “{{ $t("LandingPage.I_see_in_your_eyes_the_same") }} <br />
+          {{ $t("LandingPage.fear_that_would_take_the") }} <br />
+          {{ $t("LandingPage.heart_of_me") }}”
         </h1>
 
-        <h2 class="text-grey text-lg">The Lord of the Rings, 2003</h2>
+        <h2 class="text-grey text-lg">
+          {{ $t("LandingPage.the_lord_of_the_rings") }}, 2003
+        </h2>
       </div>
     </div>
   </div>
 
   <footer class="p-4 bg-gradient-to-tr from-[#181623] to-[#191725]">
     <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400"
-      >© 2022 <a>MOVIE QUOTES</a>. ALL RIGHTS RESERVED
+      >© 2022 <a>{{ $t("LandingPage.movie_quotes") }}</a
+      >. {{ $t("LandingPage.all_rights_reserved") }}
     </span>
   </footer>
 </template>
@@ -275,7 +293,7 @@ import RegistrationForm from "./RegistrationForm.vue";
 import LoginForm from "./LoginForm.vue";
 import ResetPassword from "./notifications/ResetPassword.vue";
 import { useRoute } from "vue-router";
-
+import { i18n } from "../../i18n";
 import { setLocale } from "@vee-validate/i18n";
 
 const isOpenRegister = ref(false);
@@ -284,8 +302,11 @@ const canResetPassword = ref(false);
 const isHiddenDropdown = ref(true);
 const localeDefault = ref(true);
 
+const changeLocale = () => {
+  i18n.global.locale = activeLanguage.value;
+};
+
 const setLanguage = () => {
-  console.log(localeDefault.value);
   if (localeDefault.value == true) {
     setLocale("en");
   } else if (localeDefault.value == false) {
