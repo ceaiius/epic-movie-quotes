@@ -66,5 +66,11 @@ export default {
       write_comment: "დაწერე კომენტარი...",
       search: "ჩაწერე @ ფილმის მოსაძებნად, ჩაწერე # ციტატის მოძაძებნად",
     },
+    MovieList: {
+      my_list_of_movies: "ჩემი ფილმების სია",
+      total: "ჯამში",
+      search: "მოძებნა",
+      add_movie: "დამატება",
+    },
   },
 };

@@ -19,7 +19,16 @@
         account
       </h2>
       <button
-        class="text-white bg-red w-96 h-12 font-medium rounded-md text-sm mt-8"
+        class="
+          text-white
+          bg-default_red
+          w-96
+          h-12
+          font-medium
+          rounded-md
+          text-sm
+          mt-8
+        "
         @click="$emit('closeValidate')"
       >
         Please check your email

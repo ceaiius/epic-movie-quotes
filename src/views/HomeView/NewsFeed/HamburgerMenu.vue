@@ -16,7 +16,7 @@
       <div class="flex gap-4 items-center">
         <img src="/images/static.png" alt="" />
         <div>
-          <h2 class="text-white text-2xl">Nino Tabagari</h2>
+          <h2 class="text-white text-2xl">{{ username }}</h2>
           <h3 class="text-input_bg text-base cursor-pointer">
             {{ $t("NewsFeed.edit_profile") }}
           </h3>
@@ -33,3 +33,12 @@
     </div>
   </div>
 </template>
+
+<script setup>
+import axios from "@/config/axios/index.js";
+import { onMounted, ref } from "vue";
+const username = ref("");
+onMounted(() => {
+  axios.get("user").then((res) => (username.value = res.data));
+});
+</script>

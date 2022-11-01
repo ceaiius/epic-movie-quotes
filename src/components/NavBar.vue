@@ -77,7 +77,7 @@
               </div>
             </li>
 
-            <li class="mt-2 lg:block hidden" @click="toggleLanguageSelect">
+            <li class="mt-2" @click="toggleLanguageSelect">
               <a class="flex justify-center items-center gap-2"
                 >{{ activeLanguage }}
 
