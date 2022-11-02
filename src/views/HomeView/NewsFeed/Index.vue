@@ -62,6 +62,4 @@ onMounted(() => {
 const isActive = (name) => {
   return name === useRouter().currentRoute.value.name;
 };
-
-console.log(useRouter().currentRoute.value.name);
 </script>

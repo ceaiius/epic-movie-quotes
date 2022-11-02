@@ -46,9 +46,8 @@
                 v-bind="field"
                 v-model="username"
                 :class="[
-                  meta.valid && meta.touched
-                    ? 'border-2 border-green-500'
-                    : 'border-2 border-red-500',
+                  meta.valid && meta.touched ? 'border border-green-500' : '',
+                  !meta.valid && meta.touched ? 'border border-red-500' : '',
                 ]"
                 type="text"
                 class="
@@ -65,13 +64,19 @@
               />
               <span>
                 <img
-                  :class="[meta.valid && meta.touched ? 'block' : 'hidden']"
+                  :class="[
+                    meta.valid && meta.touched ? 'block' : 'hidden',
+                    !meta.valid && meta.touched ? 'hidden' : 'block',
+                  ]"
                   class="w-6 h-6 absolute top-14 right-2"
                   src="/images/valid.svg"
                   alt=""
                 />
                 <img
-                  :class="[meta.valid && meta.touched ? 'hidden' : 'block']"
+                  :class="[
+                    meta.valid && meta.touched ? 'hidden' : 'block',
+                    !meta.valid && meta.touched ? 'block' : 'hidden',
+                  ]"
                   class="w-6 h-6 absolute top-14 right-2"
                   src="/images/invalid.svg"
                   alt=""
@@ -113,9 +118,8 @@
                 type="email"
                 rules="required|email"
                 :class="[
-                  meta.valid && meta.touched
-                    ? 'border-2 border-green-500'
-                    : 'border-2 border-red-500',
+                  meta.valid && meta.touched ? 'border border-green-500' : '',
+                  !meta.valid && meta.touched ? 'border border-red-500' : '',
                 ]"
                 class="
                   bg-input_bg
@@ -130,13 +134,19 @@
               />
               <span>
                 <img
-                  :class="[meta.valid && meta.touched ? 'block' : 'hidden']"
+                  :class="[
+                    meta.valid && meta.touched ? 'block' : 'hidden',
+                    !meta.valid && meta.touched ? 'hidden' : 'block',
+                  ]"
                   class="w-6 h-6 absolute top-16 right-2"
                   src="/images/valid.svg"
                   alt=""
                 />
                 <img
-                  :class="[meta.valid && meta.touched ? 'hidden' : 'block']"
+                  :class="[
+                    meta.valid && meta.touched ? 'hidden' : 'block',
+                    !meta.valid && meta.touched ? 'block' : 'hidden',
+                  ]"
                   class="w-6 h-6 absolute top-16 right-2"
                   src="/images/invalid.svg"
                   alt=""
@@ -177,9 +187,8 @@
                 v-bind="field"
                 v-model="password"
                 :class="[
-                  meta.valid && meta.touched
-                    ? 'border-2 border-green-500'
-                    : 'border-2 border-red-500',
+                  meta.valid && meta.touched ? 'border border-green-500' : '',
+                  !meta.valid && meta.touched ? 'border border-red-500' : '',
                 ]"
                 :type="[showPassword ? 'text' : 'password']"
                 class="
@@ -270,9 +279,8 @@
                 v-model="password_confirmation"
                 :type="[showPasswordConfirm ? 'text' : 'password']"
                 :class="[
-                  meta.valid && meta.touched
-                    ? 'border-2 border-green-500'
-                    : 'border-2 border-red-500',
+                  meta.valid && meta.touched ? 'border border-green-500' : '',
+                  !meta.valid && meta.touched ? 'border border-red-500' : '',
                 ]"
                 class="
                   bg-input_bg
