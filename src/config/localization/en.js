@@ -67,5 +67,11 @@ export default {
       write_comment: "Write a comment",
       search: "Enter @ to search movies, Enter # to search quotes",
     },
+    MovieList: {
+      my_list_of_movies: "My list of movies",
+      total: "Total",
+      search: "Search",
+      add_movie: "Add movie",
+    },
   },
 };
