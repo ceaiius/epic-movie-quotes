@@ -25,7 +25,7 @@
           <div class="relative">
             <InputField
               placeholder="Movie name"
-              name="movieEn"
+              name="name_en"
               language="Eng"
               rules="required|min:3"
             />
@@ -34,7 +34,7 @@
             <InputField
               placeholder="ფილმის სახელი"
               language="ქარ"
-              name="movieKa"
+              name="name_ka"
               rules="required|min:3"
             />
           </div>
@@ -49,7 +49,7 @@
             <InputField
               placeholder="Director"
               language="En"
-              name="directorEn"
+              name="director_en"
               rules="required|min:3"
             />
           </div>
@@ -57,7 +57,7 @@
             <InputField
               placeholder="რეჟისორი"
               language="Ka"
-              name="directorKa"
+              name="director_ka"
               rules="required|min:3"
             />
           </div>
@@ -65,7 +65,7 @@
             <InputField
               placeholder="Movie description"
               language="En"
-              name="descriptionEn"
+              name="description_en"
               rules="required|min:3"
             />
           </div>
@@ -73,7 +73,7 @@
             <InputField
               placeholder="ფილმის აღწერა"
               language="ქარ"
-              name="descriptionKa"
+              name="description_ka"
               rules="required|min:3"
             />
           </div>
@@ -118,7 +118,7 @@
 </template>
 <script setup>
 import { Form } from "vee-validate";
-import axios from "axios";
+import axios from "@/config/axios/index.js";
 import InputField from "../Form/InputField.vue";
 
 const emit = defineEmits(["updateMovies", "closePopup"]);
@@ -133,9 +133,12 @@ const handleSubmit = (values) => {
     .post(
       url,
       {
-        name: values.movieEn,
-        director: values.directorEn,
-        description: values.descriptionEn,
+        name_en: values.name_en,
+        name_ka: values.name_ka,
+        director_en: values.director_en,
+        director_ka: values.director_ka,
+        description_en: values.description_en,
+        description_ka: values.description_ka,
         genre: values.genre,
         year: values.year,
         budget: values.budget,

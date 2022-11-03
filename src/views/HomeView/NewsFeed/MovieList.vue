@@ -62,7 +62,11 @@
             />
           </div>
           <div class="mt-2 text-white">
-            <h2>{{ item.name }} {{ item.year }}</h2>
+            <h2>
+              {{ i18n.global.locale == "En" ? item.name.en : item.name.ka }}
+              {{ item.year }}
+            </h2>
+
             <h3 class="flex gap-6 text-2xl mt-2">
               10 <span><img src="/images/chat.png" alt="" /></span>
             </h3>
@@ -75,16 +79,19 @@
 
 <script setup>
 import { computed, onMounted, ref } from "vue";
-import axios from "axios";
+import axios from "@/config/axios/index.js";
 import { i18n } from "../../../i18n";
 import DialogModal from "../../../components/DialogModal.vue";
 import MovieDialog from "./Dialogs/MovieDialog.vue";
+
 const data = ref();
+
 const count = ref();
 
 const placeholderSearch = computed(
   () => i18n.global.messages[i18n.global.locale].MovieList.search
 );
+
 const url = import.meta.env.VITE_API_BASE_URL + "get-movies";
 
 onMounted(() => {
@@ -94,7 +101,6 @@ const getMovies = () => {
   axios.get(url).then((res) => {
     data.value = res.data;
     count.value = res.data.length;
-    console.log(res);
   });
 };
 const addMovies = ref(false);
