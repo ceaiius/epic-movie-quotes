@@ -14,7 +14,9 @@
           <div class="flex items-center">
             <div class="lg:flex hidden">
               <img class="absolute" src="/images/search.svg" alt="" />
+
               <input
+                v-model="inputValue"
                 class="text-white bg-transparent pl-10 w-48 outline-none"
                 type="text"
                 :placeholder="placeholderSearch"
@@ -53,7 +55,7 @@
         </dialog-modal>
       </teleport>
       <div class="grid lg:grid-cols-3 gap-4 grid-cols-1 mt-6">
-        <div v-for="item in data" :key="item.id">
+        <div v-for="item in searched" :key="item.id">
           <div>
             <img
               class="max-h-64 rounded-2xl"
@@ -74,6 +76,11 @@
           </div>
         </div>
       </div>
+
+      <!-- <input v-model="inputValue" type="text" />
+      <div v-for="item in searched" :key="item">
+        {{ item }}
+      </div> -->
     </div>
   </div>
 </template>
@@ -86,10 +93,26 @@ import DialogModal from "../../../../components/DialogModal.vue";
 import MovieDialog from "../Dialogs/MovieDialog.vue";
 import router from "../../../../router";
 
-const data = ref();
+const stuff = ref(["nika", "gio", "achi"]);
+
+const searched = computed(() => {
+  if (inputValue.value) {
+    return data.value.filter((item) => {
+      if (i18n.global.locale == "En") {
+        return item.name.en.includes(inputValue.value);
+      } else {
+        return item.name.ka.includes(inputValue.value);
+      }
+    });
+  } else {
+    return data.value;
+  }
+});
+
+const data = ref([]);
 
 const count = ref();
-
+const inputValue = ref(null);
 const placeholderSearch = computed(
   () => i18n.global.messages[i18n.global.locale].MovieList.search
 );
