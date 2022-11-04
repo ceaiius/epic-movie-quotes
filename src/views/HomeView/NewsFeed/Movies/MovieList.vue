@@ -59,6 +59,7 @@
               class="max-h-64 rounded-2xl"
               :src="'http://localhost:8000/storage/' + item.thumbnail"
               alt=""
+              @click="handleClick(item.id)"
             />
           </div>
           <div class="mt-2 text-white">
@@ -80,9 +81,10 @@
 <script setup>
 import { computed, onMounted, ref } from "vue";
 import axios from "@/config/axios/index.js";
-import { i18n } from "../../../i18n";
-import DialogModal from "../../../components/DialogModal.vue";
-import MovieDialog from "./Dialogs/MovieDialog.vue";
+import { i18n } from "../../../../i18n";
+import DialogModal from "../../../../components/DialogModal.vue";
+import MovieDialog from "../Dialogs/MovieDialog.vue";
+import router from "../../../../router";
 
 const data = ref();
 
@@ -92,7 +94,11 @@ const placeholderSearch = computed(
   () => i18n.global.messages[i18n.global.locale].MovieList.search
 );
 
-const url = import.meta.env.VITE_API_BASE_URL + "get-movies";
+const url = import.meta.env.VITE_API_BASE_URL + "movies";
+
+const handleClick = (id) => {
+  router.push({ name: "movie", params: { id: id } });
+};
 
 onMounted(() => {
   getMovies();

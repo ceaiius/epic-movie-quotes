@@ -12,7 +12,7 @@
     "
   >
     <div class="flex flex-col items-center mt-6">
-      <h2 class="text-white">Add Movie</h2>
+      <h2 class="text-white">Edit Movie</h2>
       <hr class="w-full border-[#efefef4d] mt-6" />
     </div>
     <div class="flex justify-center">
@@ -109,20 +109,22 @@
               mt-6
             "
           >
-            Add movie
+            Save changes
           </button>
         </div>
       </Form>
     </div>
   </div>
 </template>
-<script setup>
+  <script setup>
 import { Form } from "vee-validate";
 import axios from "@/config/axios/index.js";
 import InputField from "../Form/InputField.vue";
-
+import { useRoute } from "vue-router";
 const emit = defineEmits(["updateMovies", "closePopup"]);
-const url = import.meta.env.VITE_API_BASE_URL + "movies";
+const route = useRoute();
+const id = route.params.id;
+const url = `${import.meta.env.VITE_API_BASE_URL}movies/${id}`;
 const header = {
   headers: {
     "Content-Type": "multipart/form-data",
@@ -154,5 +156,6 @@ const handleSubmit = (values) => {
     });
 };
 </script>
-
-
+  
+  
+  
