@@ -40,22 +40,13 @@
             <Field v-slot="{ meta, field }" name="email" rules="required|email">
               <input
                 v-model="email"
-                v-bind="field"
-                type="email"
-                rules="required|email"
+                class="bg-input_bg text-sm h-10 p-2 border-2 rounded"
                 :class="[
-                  meta.valid && meta.touched ? 'border border-green-500' : '',
-                  !meta.valid && meta.touched ? 'border border-red-500' : '',
+                  meta.valid && meta.touched ? 'border-green-500' : '',
+                  !meta.valid && meta.touched ? ' border-red-500' : '',
                 ]"
-                class="
-                  bg-input_bg
-                  text-sm
-                  h-10
-                  p-2
-                  border
-                  border-input_bg
-                  rounded
-                "
+                type="email"
+                v-bind="field"
                 :placeholder="placeholderEmail"
               />
               <span>
@@ -100,19 +91,11 @@
                 v-bind="field"
                 v-model="password"
                 :class="[
-                  meta.valid && meta.touched ? 'border border-green-500' : '',
-                  !meta.valid && meta.touched ? 'border border-red-500' : '',
+                  meta.valid && meta.touched ? ' border-green-500' : '',
+                  !meta.valid && meta.touched ? ' border-red-500' : '',
                 ]"
                 :type="[showPassword ? 'text' : 'password']"
-                class="
-                  bg-input_bg
-                  text-sm
-                  h-10
-                  p-2
-                  border
-                  border-input_bg
-                  rounded
-                "
+                class="bg-input_bg text-sm h-10 p-2 border-2 rounded"
                 :placeholder="placeholderPassword"
               />
             </Field>

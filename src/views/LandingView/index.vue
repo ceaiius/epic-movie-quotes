@@ -117,6 +117,12 @@
       </dialog-modal>
     </teleport>
 
+    <teleport to="body">
+      <dialog-modal v-if="emailValidated" @close="closeSuccess">
+        <ValidationSucessfull @close-validation-successful="closeSuccess" />
+      </dialog-modal>
+    </teleport>
+
     <div
       class="flex flex-col items-center justify-center"
       @click="isHiddenDropdown = true"
@@ -295,12 +301,21 @@ import ResetPassword from "./notifications/ResetPassword.vue";
 import { useRoute } from "vue-router";
 import { i18n } from "../../i18n";
 import { setLocale } from "@vee-validate/i18n";
+import router from "../../router";
+import ValidationSucessfull from "./notifications/ValidationSucessfull.vue";
 
 const isOpenRegister = ref(false);
 const isOpenLogin = ref(false);
 const canResetPassword = ref(false);
 const isHiddenDropdown = ref(true);
 const localeDefault = ref(true);
+const emailValidated = ref(false);
+
+const closeSuccess = () => {
+  emailValidated.value = false;
+
+  router.push({ name: "landing" });
+};
 
 const changeLocale = () => {
   i18n.global.locale = activeLanguage.value;
@@ -322,8 +337,11 @@ const onBlurBackground = computed(() => {
 onMounted(() => {
   const route = useRoute();
 
-  if (route.query.token) {
+  if (route.query.token && route.query.token !== "verified") {
     canResetPassword.value = true;
+  }
+  if (route.query.token == "verified") {
+    emailValidated.value = true;
   }
 });
 

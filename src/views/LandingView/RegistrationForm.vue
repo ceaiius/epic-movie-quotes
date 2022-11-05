@@ -46,20 +46,11 @@
                 v-bind="field"
                 v-model="username"
                 :class="[
-                  meta.valid && meta.touched ? 'border border-green-500' : '',
-                  !meta.valid && meta.touched ? 'border border-red-500' : '',
+                  meta.valid && meta.touched ? ' border-green-500' : '',
+                  !meta.valid && meta.touched ? ' border-red-500' : '',
                 ]"
                 type="text"
-                class="
-                  bg-input_bg
-                  text-sm
-                  h-10
-                  w-full
-                  p-2
-                  border
-                  border-input_bg
-                  rounded
-                "
+                class="bg-input_bg text-sm h-10 w-full p-2 border-2 rounded"
                 :placeholder="placeholderUsername"
               />
               <span>
@@ -118,18 +109,10 @@
                 type="email"
                 rules="required|email"
                 :class="[
-                  meta.valid && meta.touched ? 'border border-green-500' : '',
-                  !meta.valid && meta.touched ? 'border border-red-500' : '',
+                  meta.valid && meta.touched ? ' border-green-500' : '',
+                  !meta.valid && meta.touched ? ' border-red-500' : '',
                 ]"
-                class="
-                  bg-input_bg
-                  text-sm
-                  h-10
-                  p-2
-                  border
-                  border-input_bg
-                  rounded
-                "
+                class="bg-input_bg text-sm h-10 p-2 border-2 rounded"
                 :placeholder="placeholderEmail"
               />
               <span>
@@ -187,19 +170,11 @@
                 v-bind="field"
                 v-model="password"
                 :class="[
-                  meta.valid && meta.touched ? 'border border-green-500' : '',
-                  !meta.valid && meta.touched ? 'border border-red-500' : '',
+                  meta.valid && meta.touched ? ' border-green-500' : '',
+                  !meta.valid && meta.touched ? ' border-red-500' : '',
                 ]"
                 :type="[showPassword ? 'text' : 'password']"
-                class="
-                  bg-input_bg
-                  text-sm
-                  h-10
-                  p-2
-                  border
-                  border-input_bg
-                  rounded
-                "
+                class="bg-input_bg text-sm h-10 p-2 border-2 rounded"
                 :placeholder="placeholderPassword"
               />
             </Field>
@@ -279,18 +254,10 @@
                 v-model="password_confirmation"
                 :type="[showPasswordConfirm ? 'text' : 'password']"
                 :class="[
-                  meta.valid && meta.touched ? 'border border-green-500' : '',
-                  !meta.valid && meta.touched ? 'border border-red-500' : '',
+                  meta.valid && meta.touched ? ' border-green-500' : '',
+                  !meta.valid && meta.touched ? ' border-red-500' : '',
                 ]"
-                class="
-                  bg-input_bg
-                  text-sm
-                  h-10
-                  p-2
-                  border
-                  border-input_bg
-                  rounded
-                "
+                class="bg-input_bg text-sm h-10 p-2 border-2 rounded"
                 :placeholder="placeholderConfirm"
               />
             </Field>
@@ -407,7 +374,10 @@
       </div>
     </div>
     <teleport to="body">
-      <dialog-modal v-if="isOpenValidation" @close="isOpenValidation = false">
+      <dialog-modal
+        v-if="isOpenValidation"
+        @close="(isOpenValidation = false), (isNotRegistered = false)"
+      >
         <ValidateEmail
           @close-validate="
             (isOpenValidation = false), (isNotRegistered = false)

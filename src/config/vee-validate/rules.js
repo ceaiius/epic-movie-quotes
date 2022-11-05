@@ -23,3 +23,12 @@ defineRule("username", (value) => {
 
   return true;
 });
+
+defineRule("geo", (value) => {
+  const regex = /^[ა-ჰა-ჰ\s]*$/;
+  if (!regex.test(value)) {
+    return false;
+  }
+
+  return true;
+});

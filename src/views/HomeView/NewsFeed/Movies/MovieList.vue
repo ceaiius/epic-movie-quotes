@@ -76,11 +76,6 @@
           </div>
         </div>
       </div>
-
-      <!-- <input v-model="inputValue" type="text" />
-      <div v-for="item in searched" :key="item">
-        {{ item }}
-      </div> -->
     </div>
   </div>
 </template>
@@ -92,8 +87,6 @@ import { i18n } from "../../../../i18n";
 import DialogModal from "../../../../components/DialogModal.vue";
 import MovieDialog from "../Dialogs/MovieDialog.vue";
 import router from "../../../../router";
-
-const stuff = ref(["nika", "gio", "achi"]);
 
 const searched = computed(() => {
   if (inputValue.value) {

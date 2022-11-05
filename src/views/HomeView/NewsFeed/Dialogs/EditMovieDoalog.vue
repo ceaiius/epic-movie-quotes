@@ -35,7 +35,7 @@
               placeholder="ფილმის სახელი"
               language="ქარ"
               name="name_ka"
-              rules="required|min:3"
+              rules="required|min:3|geo"
             />
           </div>
           <div class="relative">
@@ -58,7 +58,7 @@
               placeholder="რეჟისორი"
               language="Ka"
               name="director_ka"
-              rules="required|min:3"
+              rules="required|min:3|geo"
             />
           </div>
           <div class="relative">
@@ -74,7 +74,7 @@
               placeholder="ფილმის აღწერა"
               language="ქარ"
               name="description_ka"
-              rules="required|min:3"
+              rules="required|min:3|geo"
             />
           </div>
           <div class="relative">
