@@ -20,9 +20,11 @@
           @click="$emit('closeSearch')"
         />
         <input
+          v-model="credentials.movie_search"
           type="text"
           placeholder="Search"
           class="border-none outline-none text-white bg-transparent"
+          @input="log"
         />
       </div>
     </div>
@@ -30,8 +32,14 @@
 </template>
   
   <script setup>
+import { useCredentials } from "@/stores/index.js";
+
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["closeSearch"]);
+const credentials = useCredentials();
+const log = () => {
+  console.log(credentials.movie_search);
+};
 </script>
   
   

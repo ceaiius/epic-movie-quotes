@@ -87,14 +87,20 @@ import { i18n } from "../../../../i18n";
 import DialogModal from "../../../../components/DialogModal.vue";
 import MovieDialog from "../Dialogs/MovieDialog.vue";
 import router from "../../../../router";
+import { useCredentials } from "@/stores/index.js";
 
+const credentials = useCredentials();
 const searched = computed(() => {
-  if (inputValue.value) {
+  if (inputValue.value || credentials.movie_search) {
     return data.value.filter((item) => {
       if (i18n.global.locale == "En") {
-        return item.name.en.includes(inputValue.value);
+        return item.name.en.includes(
+          inputValue.value || credentials.movie_search
+        );
       } else {
-        return item.name.ka.includes(inputValue.value);
+        return item.name.ka.includes(
+          inputValue.value || credentials.movie_search
+        );
       }
     });
   } else {
