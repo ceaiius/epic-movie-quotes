@@ -4,11 +4,7 @@
       <div class="flex-col lg:flex-row flex items-center lg:items-start">
         <div class="flex flex-col text-white gap-6">
           <h2>{{ $t("MovieList.movie_description") }}</h2>
-          <img
-            :src="'http://localhost:8000/storage/' + data?.thumbnail"
-            alt=""
-            class="rounded-2xl"
-          />
+          <img :src="url + data?.thumbnail" alt="" class="rounded-2xl" />
         </div>
         <div class="h-[52px] relative ml-6">
           <div class="flex flex-col text-white text-left mt-10 gap-6">
@@ -116,7 +112,7 @@ import { useRoute } from "vue-router";
 import router from "../../../../router";
 import DialogModal from "../../../../components/DialogModal.vue";
 import EditMovieDoalog from "../Dialogs/EditMovieDoalog.vue";
-
+const url = import.meta.env.VITE_API_STORAGE_URL;
 onBeforeMount(() => {
   getMovies();
 });

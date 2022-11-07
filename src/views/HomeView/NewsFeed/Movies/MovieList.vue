@@ -59,7 +59,7 @@
           <div>
             <img
               class="max-h-64 rounded-2xl"
-              :src="'http://localhost:8000/storage/' + item.thumbnail"
+              :src="url_thumbnail + item.thumbnail"
               alt=""
               @click="handleClick(item.id)"
             />
@@ -88,7 +88,7 @@ import DialogModal from "../../../../components/DialogModal.vue";
 import MovieDialog from "../Dialogs/MovieDialog.vue";
 import router from "../../../../router";
 import { useCredentials } from "@/stores/index.js";
-
+const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
 const credentials = useCredentials();
 const searched = computed(() => {
   if (inputValue.value || credentials.movie_search) {
