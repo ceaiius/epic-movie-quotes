@@ -71,6 +71,9 @@ export default {
       total: "ჯამში",
       search: "მოძებნა",
       add_movie: "დამატება",
+      movie_description: "ფილმის აღწერა",
+      budget: "შემოსავალი",
+      director: "რეჟისორი",
     },
   },
 };

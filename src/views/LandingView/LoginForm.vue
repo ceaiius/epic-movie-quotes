@@ -40,34 +40,30 @@
             <Field v-slot="{ meta, field }" name="email" rules="required|email">
               <input
                 v-model="email"
-                v-bind="field"
-                type="email"
-                rules="required|email"
+                class="bg-input_bg text-sm h-10 p-2 border-2 rounded"
                 :class="[
-                  meta.valid && meta.touched
-                    ? 'border-2 border-green-500'
-                    : 'border-2 border-red-500',
+                  meta.valid && meta.touched ? 'border-green-500' : '',
+                  !meta.valid && meta.touched ? ' border-red-500' : '',
                 ]"
-                class="
-                  bg-input_bg
-                  text-sm
-                  h-10
-                  p-2
-                  border
-                  border-input_bg
-                  rounded
-                "
+                type="email"
+                v-bind="field"
                 :placeholder="placeholderEmail"
               />
               <span>
                 <img
-                  :class="[meta.valid && meta.touched ? 'block' : 'hidden']"
+                  :class="[
+                    meta.valid && meta.touched ? 'block' : 'hidden',
+                    !meta.valid && meta.touched ? 'hidden' : 'block',
+                  ]"
                   class="w-6 h-6 absolute top-16 right-2"
                   src="/images/valid.svg"
                   alt=""
                 />
                 <img
-                  :class="[meta.valid && meta.touched ? 'hidden' : 'block']"
+                  :class="[
+                    meta.valid && meta.touched ? 'hidden' : 'block',
+                    !meta.valid && meta.touched ? 'block' : 'hidden',
+                  ]"
                   class="w-6 h-6 absolute top-16 right-2"
                   src="/images/invalid.svg"
                   alt=""
@@ -95,20 +91,11 @@
                 v-bind="field"
                 v-model="password"
                 :class="[
-                  meta.valid && meta.touched
-                    ? 'border-2 border-green-500'
-                    : 'border-2 border-red-500',
+                  meta.valid && meta.touched ? ' border-green-500' : '',
+                  !meta.valid && meta.touched ? ' border-red-500' : '',
                 ]"
                 :type="[showPassword ? 'text' : 'password']"
-                class="
-                  bg-input_bg
-                  text-sm
-                  h-10
-                  p-2
-                  border
-                  border-input_bg
-                  rounded
-                "
+                class="bg-input_bg text-sm h-10 p-2 border-2 rounded"
                 :placeholder="placeholderPassword"
               />
             </Field>

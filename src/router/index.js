@@ -1,23 +1,30 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LandingView from "../views/LandingView/index.vue";
 import HomeView from "../views/HomeView/index.vue";
-import { isAuthenticated } from "@/router/guards.js";
+import { isAuthenticated, isRemembered } from "@/router/guards.js";
 import RedirectView from "../views/ErrorView/RedirectView.vue";
 import PermissionDenied from "../views/ErrorView/PermissionDenied.vue";
 import UserPost from "../views/HomeView/NewsFeed/UserPost.vue";
-import MovieList from "../views/HomeView/NewsFeed/MovieList.vue";
+import MovieList from "../views/HomeView/NewsFeed/Movies/MovieList.vue";
+import SingleMovie from "../views/HomeView/NewsFeed/Movies/SingleMovie.vue";
+import NotFound from "../views/ErrorView/NotFound.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
       name: "landing",
+      beforeEnter: [isRemembered],
       component: LandingView,
     },
     {
       path: "/denied",
       name: "denied",
       component: PermissionDenied,
+    },
+    {
+      path: "/:pathMatch(.*)",
+      component: NotFound,
     },
     {
       path: "/home",
@@ -35,6 +42,11 @@ const router = createRouter({
           path: "list-of-movies",
           component: MovieList,
           name: "list-of-movies",
+        },
+        {
+          path: "movie/:id",
+          component: SingleMovie,
+          name: "movie",
         },
       ],
     },

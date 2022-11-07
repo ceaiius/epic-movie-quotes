@@ -5,3 +5,9 @@ export function isAuthenticated() {
     return "/denied";
   }
 }
+
+export function isRemembered() {
+  if (getJwtToken()) {
+    return "/home";
+  }
+}

@@ -72,6 +72,9 @@ export default {
       total: "Total",
       search: "Search",
       add_movie: "Add movie",
+      movie_description: "Movie Description",
+      budget: "Budget",
+      director: "Director",
     },
   },
 };

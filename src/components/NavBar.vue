@@ -36,14 +36,25 @@
         </span>
 
         <teleport to="body">
-          <dialog-modal v-if="isSearchClicked" @close="isSearchClicked = false">
-            <SearchDialog @close-search="isSearchClicked = false" />
+          <dialog-modal v-if="isQuoteSearch" @close="isQuoteSearch = false">
+            <SearchDialog @close-search="isQuoteSearch = false" />
+          </dialog-modal>
+        </teleport>
+
+        <teleport to="body">
+          <dialog-modal v-if="isMovieSearch" @close="isMovieSearch = false">
+            <SearchDialogMovie @close-search="isMovieSearch = false" />
           </dialog-modal>
         </teleport>
 
         <div id="navbar-default" class="">
           <ul class="flex p-4 rounded-lg text-white space-x-8">
-            <li class="lg:hidden block" @click="isSearchClicked = true">
+            <li
+              class="lg:hidden block"
+              @click="
+                routeIsMovie ? (isMovieSearch = true) : (isQuoteSearch = true)
+              "
+            >
               <img
                 class="w-6 h-6 relative top-2 cursor-pointer"
                 src="/images/search.svg"
@@ -123,17 +134,33 @@
 </template>
 
 <script setup>
-import { computed, onBeforeMount, ref } from "vue";
-import { useRoute } from "vue-router";
+import { computed, onBeforeMount, onMounted, ref } from "vue";
+
+import { useRoute, useRouter } from "vue-router";
 import { setJwtToken } from "../helpers/jwt";
 import DialogModal from "./DialogModal.vue";
 import HamburgerMenu from "../views/HomeView/NewsFeed/HamburgerMenu.vue";
 import SearchDialog from "../views/HomeView/NewsFeed/SearchDialog.vue";
+import SearchDialogMovie from "../views/HomeView/NewsFeed/Movies/SearchDialog.vue";
 import { i18n } from "../i18n";
 import router from "../router";
 
+const routeIsMovie = ref(false);
+const routeIsQuote = ref(false);
+
+router.beforeEach((from) => {
+  if (from.name == "news-feed") {
+    routeIsQuote.value = true;
+    routeIsMovie.value = false;
+  } else if (from.name == "list-of-movies") {
+    routeIsQuote.value = false;
+    routeIsMovie.value = true;
+  }
+});
+
 const isHamburgerClicked = ref(false);
-const isSearchClicked = ref(false);
+const isQuoteSearch = ref(false);
+const isMovieSearch = ref(false);
 
 const isOpenLogin = ref(false);
 
@@ -149,6 +176,15 @@ onBeforeMount(() => {
 
   if (route.query.token) {
     setJwtToken(route.query.token, route.query.expires_in, 1000);
+  }
+});
+
+onMounted(() => {
+  const router = useRouter();
+  if (router.currentRoute.value.name == "news-feed") {
+    routeIsQuote.value = true;
+  } else if (router.currentRoute.value.name == "list-of-movies") {
+    routeIsMovie.value = true;
   }
 });
 
