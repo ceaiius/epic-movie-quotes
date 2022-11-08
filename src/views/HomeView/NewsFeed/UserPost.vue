@@ -132,6 +132,8 @@ import { i18n } from "../../../i18n";
 import axios from "@/config/axios/index.js";
 import DialogModal from "../../../components/DialogModal.vue";
 import QuoteDialog from "./Dialogs/QuoteDialog.vue";
+import { useCredentials } from "@/stores/index.js";
+const credentials = useCredentials();
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
 const url = import.meta.env.VITE_API_BASE_URL + "quotes";
 const openQuote = ref(false);
@@ -144,37 +146,59 @@ const searchLocale = computed(
 );
 const data = ref([]);
 const searched = computed(() => {
-  if (inputValue.value) {
+  if (inputValue.value || credentials.quote_search) {
     return data.value.filter((item) => {
-      if (i18n.global.locale == "En" && inputValue.value.charAt(0) == "@") {
+      if (
+        i18n.global.locale == "En" &&
+        (inputValue.value.charAt(0) == "@" ||
+          credentials.quote_search.charAt(0) == "@")
+      ) {
         return item.movies.name.en
           .toLowerCase()
-          .includes(inputValue.value.toLowerCase().replace("@", ""));
+          .includes(
+            inputValue.value.toLowerCase().replace("@", "") ||
+              credentials.quote_search.toLowerCase().replace("@", "")
+          );
       } else if (
         i18n.global.locale == "En" &&
-        inputValue.value.charAt(0) == "#"
+        (inputValue.value.charAt(0) == "#" ||
+          credentials.quote_search.charAt(0) == "#")
       ) {
         return item.name.en
           .toLowerCase()
-          .includes(inputValue.value.toLowerCase().replace("#", ""));
+          .includes(
+            inputValue.value.toLowerCase().replace("#", "") ||
+              credentials.quote_search.toLowerCase().replace("#", "")
+          );
       } else if (
         i18n.global.locale == "Ka" &&
-        inputValue.value.charAt(0) == "@"
+        (inputValue.value.charAt(0) == "@" ||
+          credentials.quote_search.charAt(0) == "@")
       ) {
-        return item.movies.name.ka.includes(inputValue.value.replace("@", ""));
+        return item.movies.name.ka.includes(
+          inputValue.value.replace("@", "") ||
+            credentials.quote_search.replace("@", "")
+        );
       } else if (
         i18n.global.locale == "Ka" &&
-        inputValue.value.charAt(0) == "#"
+        (inputValue.value.charAt(0) == "#" ||
+          credentials.quote_search.charAt(0) == "#")
       ) {
-        return item.name.ka.includes(inputValue.value.replace("#", ""));
+        return item.name.ka.includes(
+          inputValue.value.replace("#", "") ||
+            credentials.quote_search.replace("#", "")
+        );
       } else if (i18n.global.locale == "En") {
         return item.name.en
           .toLowerCase()
-          .includes(inputValue.value.toLowerCase());
+          .includes(
+            inputValue.value.toLowerCase() ||
+              credentials.quote_search.toLowerCase()
+          );
       } else if (i18n.global.locale == "Ka") {
         return item.name.ka
           .toLowerCase()
-          .includes(inputValue.value.toLowerCase());
+          .includes(inputValue.value.toLowerCase() || credentials.quote_search);
       }
     });
   } else {
