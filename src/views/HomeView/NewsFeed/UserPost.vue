@@ -36,6 +36,7 @@
           <div class="flex items-center">
             <img class="absolute" src="/images/search.svg" alt="" />
             <input
+              v-model="inputValue"
               class="w-[686px] text-white bg-transparent pl-10 outline-none"
               type="text"
               :placeholder="searchLocale"
@@ -45,7 +46,7 @@
         </div>
       </div>
       <div
-        v-for="item in data"
+        v-for="item in searched"
         :key="item.id"
         class="w-auto flex flex-col bg-[#11101A] mt-6 rounded-xl md:mb-12"
       >
@@ -134,6 +135,7 @@ import QuoteDialog from "./Dialogs/QuoteDialog.vue";
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
 const url = import.meta.env.VITE_API_BASE_URL + "quotes";
 const openQuote = ref(false);
+const inputValue = ref("");
 const commentLocale = computed(
   () => i18n.global.messages[i18n.global.locale].NewsFeed.write_comment
 );
@@ -141,6 +143,44 @@ const searchLocale = computed(
   () => i18n.global.messages[i18n.global.locale].NewsFeed.search
 );
 const data = ref([]);
+const searched = computed(() => {
+  if (inputValue.value) {
+    return data.value.filter((item) => {
+      if (i18n.global.locale == "En" && inputValue.value.charAt(0) == "@") {
+        return item.movies.name.en
+          .toLowerCase()
+          .includes(inputValue.value.toLowerCase().replace("@", ""));
+      } else if (
+        i18n.global.locale == "En" &&
+        inputValue.value.charAt(0) == "#"
+      ) {
+        return item.name.en
+          .toLowerCase()
+          .includes(inputValue.value.toLowerCase().replace("#", ""));
+      } else if (
+        i18n.global.locale == "Ka" &&
+        inputValue.value.charAt(0) == "@"
+      ) {
+        return item.movies.name.ka.includes(inputValue.value.replace("@", ""));
+      } else if (
+        i18n.global.locale == "Ka" &&
+        inputValue.value.charAt(0) == "#"
+      ) {
+        return item.name.ka.includes(inputValue.value.replace("#", ""));
+      } else if (i18n.global.locale == "En") {
+        return item.name.en
+          .toLowerCase()
+          .includes(inputValue.value.toLowerCase());
+      } else if (i18n.global.locale == "Ka") {
+        return item.name.ka
+          .toLowerCase()
+          .includes(inputValue.value.toLowerCase());
+      }
+    });
+  } else {
+    return data.value;
+  }
+});
 onMounted(() => {
   getQuotes();
 });
