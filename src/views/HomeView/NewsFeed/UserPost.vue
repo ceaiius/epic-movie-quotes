@@ -48,7 +48,7 @@
       <div
         v-for="item in searched"
         :key="item.id"
-        class="w-auto flex flex-col bg-[#11101A] mt-6 rounded-xl md:mb-12"
+        class="w-auto flex flex-col bg-black_bg mt-6 rounded-xl md:mb-12"
       >
         <div>
           <div class="flex items-center gap-2 m-6 text-white w-12 h-12">

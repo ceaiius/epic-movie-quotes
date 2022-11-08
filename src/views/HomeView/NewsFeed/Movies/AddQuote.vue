@@ -8,14 +8,35 @@
       pb-12
       lg:ml-48 lg:mb-64
       w-screen
+      mt-20
       h-screen
       md:rounded-xl
       rounded-none
     "
   >
     <div class="flex flex-col items-center mt-6">
-      <h2 class="text-white">Write new quote</h2>
+      <h2 class="text-white">Add quote</h2>
       <hr class="w-full border-[#efefef4d] mt-6" />
+    </div>
+    <div
+      class="w-full flex justify-start gap-6 ml-6 lg:ml-32 mt-6 items-center"
+    >
+      <img class="w-40 h-40" :src="url_thumbnail + data?.thumbnail" alt="" />
+
+      <div class="flex flex-col gap-2">
+        <h1 class="text-brown">
+          {{ i18n.global.locale == "En" ? data?.name?.en : data?.name?.ka }} ({{
+            data?.year
+          }})
+        </h1>
+        <h2 class="text-white">{{ data?.genre }}</h2>
+        <h2 class="text-white">
+          Director :
+          {{
+            i18n.global.locale == "En" ? data?.director?.en : data?.director?.ka
+          }}
+        </h2>
+      </div>
     </div>
     <div class="flex justify-center">
       <Form
@@ -55,7 +76,6 @@
             <Field name="field">
               <select
                 id="countries"
-                v-model="selectValue"
                 class="
                   bg-black
                   text-white
@@ -67,9 +87,10 @@
                   h-20
                 "
               >
-                <option disabled value>Choose movie</option>
-                <option v-for="item in options" :key="item.id" :value="item.id">
-                  {{ i18n.global.locale == "En" ? item.name.en : item.name.ka }}
+                <option selected disabled :value="data.id">
+                  {{
+                    i18n.global.locale == "En" ? data?.name?.en : data?.name?.ka
+                  }}
                 </option>
               </select>
             </Field>
@@ -95,27 +116,32 @@
     </div>
   </div>
 </template>
-
-<script setup>
+  
+  <script setup>
 import InputTextArea from "../Form/InputTextArea.vue";
 import InputField from "../Form/InputField.vue";
 import axios from "@/config/axios/index.js";
 import { Form } from "vee-validate";
 import { i18n } from "../../../../i18n";
 import { onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
 // eslint-disable-next-line no-unused-vars
-const emit = defineEmits(["updateQuotes", "closePopup"]);
-const url = import.meta.env.VITE_API_BASE_URL + "movies";
+const emit = defineEmits(["closePopup", "updateQuotes"]);
+const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
+const route = useRoute();
+const id = route.params.id;
 const url_quotes = import.meta.env.VITE_API_BASE_URL + "quotes";
-const selectValue = ref("");
-const options = ref([]);
+
+const data = ref([]);
 
 onMounted(() => {
   getMovies();
 });
 const getMovies = () => {
+  const url = `${import.meta.env.VITE_API_BASE_URL}movies/${id}`;
   axios.get(url).then((res) => {
-    options.value = res.data;
+    data.value = res.data;
+    console.log(res.data);
   });
 };
 const header = {
@@ -131,14 +157,14 @@ const handleSubmit = (values) => {
         name_en: values.name_en,
         name_ka: values.name_ka,
         thumbnail: values.thumbnail,
-        movie_id: selectValue.value,
+        movie_id: data.value.id,
       },
       header
     )
     .then((res) => {
       if (res.status === 200) {
-        emit("updateQuotes");
         emit("closePopup");
+        emit("updateQuotes");
       }
     });
 };

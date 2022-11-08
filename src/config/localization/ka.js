@@ -74,6 +74,7 @@ export default {
       movie_description: "ფილმის აღწერა",
       budget: "შემოსავალი",
       director: "რეჟისორი",
+      add_quote: "დამატება",
     },
   },
 };

@@ -12,6 +12,7 @@ module.exports = {
         form_bg: "#222030",
         validation_color: "#F15524",
         default_red: "#E31221",
+        black_bg: "#11101A",
       },
       screens: {
         xs: "375px",

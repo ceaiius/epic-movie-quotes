@@ -128,11 +128,13 @@ const handleClick = (id) => {
 onMounted(() => {
   getMovies();
 });
+
 const getMovies = () => {
   axios.get(url).then((res) => {
     data.value = res.data;
     count.value = res.data.length;
   });
 };
+
 const addMovies = ref(false);
 </script>

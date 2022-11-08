@@ -2,7 +2,7 @@
   <div
     class="
       flex flex-col
-      bg-[#11101A]
+      bg-black_bg
       md:w-input_width md:h-fit
       pb-12
       w-screen
