@@ -9,6 +9,7 @@ export const useCredentials = defineStore("credentials", {
       password_confirmation: "",
       forgot_password_email: "",
       movie_search: "",
+      quote_search: "",
     };
   },
   actions: {

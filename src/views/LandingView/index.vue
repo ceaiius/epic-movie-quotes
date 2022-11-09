@@ -6,7 +6,7 @@
       h-screen
       relative
       bg-fixed bg-gradient-to-tr
-      from-[#11101A]
+      from-black_bg
       to-[#08080D]
     "
     :class="onBlurBackground"

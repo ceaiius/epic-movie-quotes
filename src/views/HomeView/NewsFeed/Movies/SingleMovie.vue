@@ -2,11 +2,160 @@
   <div class="flex flex-col w-full mt-8">
     <div class="w-[80%] ml-[10%]">
       <div class="flex-col lg:flex-row flex items-center lg:items-start">
+        <teleport to="body">
+          <dialog-modal v-if="addQuote" @close="addQuote = false">
+            <AddQuote
+              @close-popup="addQuote = false"
+              @update-quotes="getQuotes"
+            />
+          </dialog-modal>
+        </teleport>
         <div class="flex flex-col text-white gap-6">
           <h2>{{ $t("MovieList.movie_description") }}</h2>
           <img :src="url + data?.thumbnail" alt="" class="rounded-2xl" />
+          <div class="flex gap-6 items-center">
+            <h2>Quotes (total {{ count }})</h2>
+            <button
+              type="button"
+              class="
+                text-white
+                bg-default_red
+                w-32
+                h-10
+                flex
+                justify-center
+                items-center
+                gap-2
+                font-medium
+                rounded-md
+                text-sm
+                cursor-pointer
+              "
+              @click="addQuote = true"
+            >
+              <span><img src="/images/plus.svg" alt="" /></span>
+              {{ $t("MovieList.add_quote") }}
+            </button>
+          </div>
+
+          <template v-if="loadQuotes">
+            <div
+              v-for="item in data_quotes"
+              :id="item.id"
+              :key="item.id"
+              class="
+                bg-black_bg
+                flex flex-col
+                w-full
+                h-auto
+                justify-center
+                items-center
+                lg:items-start
+                rounded-2xl
+                mb-6
+                relative
+              "
+            >
+              <div
+                v-if="quoteCrud === item.id"
+                class="
+                  bg-[#24222F]
+                  rounded-2xl
+                  w-60
+                  h-40
+                  absolute
+                  top-12
+                  -right-36
+                "
+              >
+                <teleport to="body">
+                  <dialog-modal v-if="editQuote" @close="editQuote = false">
+                    <EditQuoteDialog
+                      :id="item.id"
+                      @delete="deleteQuote(item.id)"
+                      @exit="editQuote = false"
+                      @update-quotes="getQuotes"
+                      @close-popup="editQuote = false"
+                    />
+                  </dialog-modal>
+                </teleport>
+                <teleport to="body">
+                  <dialog-modal v-if="viewQuote" @close="viewQuote = false">
+                    <ViewQuoteDialog
+                      :id="item.id"
+                      @exit="viewQuote = false"
+                      @delete="deleteQuote(item.id)"
+                      @edit="(editQuote = true), (viewQuote = false)"
+                    />
+                  </dialog-modal>
+                </teleport>
+                <div class="text-sm">
+                  <div
+                    class="flex gap-4 pt-6 pl-6 cursor-pointer"
+                    @click="viewQuote = true"
+                  >
+                    <img src="/images/eye.svg" alt="" />
+                    <h2>View Quote</h2>
+                  </div>
+                  <div
+                    class="flex gap-4 pt-6 pl-6 cursor-pointer"
+                    @click="editQuote = true"
+                  >
+                    <img src="/images/pencil.svg" alt="" />
+                    <h2>Edit</h2>
+                  </div>
+                  <div
+                    class="flex gap-4 pt-6 pl-6 cursor-pointer"
+                    @click="deleteQuote(item.id)"
+                  >
+                    <img src="/images/delete.svg" alt="" />
+                    <h2>Delete</h2>
+                  </div>
+                </div>
+              </div>
+              <img
+                class="absolute right-6 top-6"
+                src="/images/dots.svg"
+                alt=""
+                @click="quoteCrud = item.id"
+              />
+              <div
+                class="
+                  flex flex-col
+                  lg:flex-row
+                  items-center
+                  justify-around
+                  w-full
+                  mt-8
+                "
+              >
+                <img
+                  class="object-contain w-64 h-36 ml-6 rounded-md"
+                  :src="url_thumbnail + item.thumbnail"
+                  alt=""
+                />
+                <h2 class="mt-2 lg:mt-0 ml-6">
+                  "{{
+                    i18n.global.locale == "En" ? item.name.en : item.name.ka
+                  }}"
+                </h2>
+              </div>
+              <hr class="border-[#efefef4d] mt-6 w-full" />
+              <div class="flex gap-6 items-center mt-6 mb-6 ml-0 lg:ml-28">
+                <div class="flex gap-6">
+                  <h2>3</h2>
+                  <img src="/images/comments.svg" alt="" />
+                </div>
+                <div class="flex gap-6">
+                  <h2>6</h2>
+                  <img src="/images/likes.svg" alt="" />
+                </div>
+              </div>
+            </div>
+          </template>
         </div>
-        <div class="h-[52px] relative ml-6">
+
+        <div class="h-[52px] relative ml-6 hidden lg:block">
           <div class="flex flex-col text-white text-left mt-10 gap-6">
             <div class="flex">
               <h1 class="text-3xl text-brown">
@@ -63,6 +212,7 @@
             </p>
           </div>
         </div>
+
         <div class="hidden lg:block mt-10">
           <div
             class="
@@ -105,17 +255,33 @@
 
 
 <script setup>
-import { onBeforeMount, ref } from "vue";
+import { computed, onBeforeMount, ref } from "vue";
 import axios from "@/config/axios/index.js";
 import { i18n } from "../../../../i18n";
 import { useRoute } from "vue-router";
 import router from "../../../../router";
 import DialogModal from "../../../../components/DialogModal.vue";
-import EditMovieDoalog from "../Dialogs/EditMovieDoalog.vue";
+import EditMovieDoalog from "../Dialogs/EditMovieDialog.vue";
+import AddQuote from "./AddQuote.vue";
+import EditQuoteDialog from "../Dialogs/EditQuoteDialog.vue";
+import ViewQuoteDialog from "../Dialogs/ViewQuoteDialog.vue";
+const quoteCrud = ref();
+const editQuote = ref(false);
+const addQuote = ref(false);
+const viewQuote = ref(false);
 const url = import.meta.env.VITE_API_STORAGE_URL;
+const url_quotes = import.meta.env.VITE_API_BASE_URL + "quotes";
+const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
+const data_quotes = ref([]);
+const loadQuotes = computed(() => {
+  return data_quotes.value.length > 0 ? true : false;
+});
+const count = ref();
 onBeforeMount(() => {
   getMovies();
+  getQuotes();
 });
+
 const editMovie = ref(false);
 const route = useRoute();
 const id = route.params.id;
@@ -124,6 +290,22 @@ const getMovies = () => {
   const url = `${import.meta.env.VITE_API_BASE_URL}movies/${id}`;
   axios.get(url).then((res) => {
     data.value = res.data;
+  });
+};
+const getQuotes = () => {
+  axios.get(url_quotes).then((res) => {
+    const filtered = res.data.filter((x) => x.movie_id == data?.value.id);
+    data_quotes.value = filtered;
+    count.value = filtered.length;
+  });
+};
+
+const deleteQuote = (id) => {
+  const url = `${import.meta.env.VITE_API_BASE_URL}quotes/${id}`;
+  axios.delete(url).then((res) => {
+    if (res.status === 200) {
+      getQuotes();
+    }
   });
 };
 

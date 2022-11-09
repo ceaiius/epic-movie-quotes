@@ -75,6 +75,7 @@ export default {
       movie_description: "Movie Description",
       budget: "Budget",
       director: "Director",
+      add_quote: "Add quote",
     },
   },
 };

@@ -140,8 +140,8 @@ import { useRoute, useRouter } from "vue-router";
 import { setJwtToken } from "../helpers/jwt";
 import DialogModal from "./DialogModal.vue";
 import HamburgerMenu from "../views/HomeView/NewsFeed/HamburgerMenu.vue";
-import SearchDialog from "../views/HomeView/NewsFeed/SearchDialog.vue";
-import SearchDialogMovie from "../views/HomeView/NewsFeed/Movies/SearchDialog.vue";
+import SearchDialog from "../views/HomeView/NewsFeed/Dialogs/SearchQuote.vue";
+import SearchDialogMovie from "../views/HomeView/NewsFeed/Dialogs/SearchMovie.vue";
 import { i18n } from "../i18n";
 import router from "../router";
 

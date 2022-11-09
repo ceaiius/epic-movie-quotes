@@ -94,9 +94,12 @@ const searched = computed(() => {
   if (inputValue.value || credentials.movie_search) {
     return data.value.filter((item) => {
       if (i18n.global.locale == "En") {
-        return item.name.en.includes(
-          inputValue.value || credentials.movie_search
-        );
+        return item.name.en
+          .toLowerCase()
+          .includes(
+            inputValue.value.toLowerCase() ||
+              credentials.movie_search.toLowerCase()
+          );
       } else {
         return item.name.ka.includes(
           inputValue.value || credentials.movie_search
@@ -125,11 +128,13 @@ const handleClick = (id) => {
 onMounted(() => {
   getMovies();
 });
+
 const getMovies = () => {
   axios.get(url).then((res) => {
     data.value = res.data;
     count.value = res.data.length;
   });
 };
+
 const addMovies = ref(false);
 </script>
