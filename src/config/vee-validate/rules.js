@@ -32,3 +32,12 @@ defineRule("geo", (value) => {
 
   return true;
 });
+
+defineRule("eng", (value) => {
+  const regex = /^[a-zA-Z\s]*$/;
+  if (!regex.test(value)) {
+    return false;
+  }
+
+  return true;
+});

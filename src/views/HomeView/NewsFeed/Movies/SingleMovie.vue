@@ -70,7 +70,13 @@
               >
                 <teleport to="body">
                   <dialog-modal v-if="editQuote" @close="editQuote = false">
-                    <EditQuoteDialog :id="item.id" />
+                    <EditQuoteDialog
+                      :id="item.id"
+                      @delete="deleteQuote(item.id)"
+                      @exit="editQuote = false"
+                      @update-quotes="getQuotes"
+                      @close-popup="editQuote = false"
+                    />
                   </dialog-modal>
                 </teleport>
                 <div class="text-sm">
@@ -115,7 +121,7 @@
                   :src="url_thumbnail + item.thumbnail"
                   alt=""
                 />
-                <h2 class="mt-2 lg:mt-0">
+                <h2 class="mt-2 lg:mt-0 ml-6">
                   "{{
                     i18n.global.locale == "En" ? item.name.en : item.name.ka
                   }}"

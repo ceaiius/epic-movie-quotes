@@ -50,7 +50,7 @@
               placeholder="New Quote"
               name="name_en"
               language="Eng"
-              rules="required|min:3"
+              rules="required|min:3|eng"
             />
           </div>
           <div class="relative">

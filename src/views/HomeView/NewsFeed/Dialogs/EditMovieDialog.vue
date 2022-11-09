@@ -27,7 +27,7 @@
               placeholder="Movie name"
               name="name_en"
               language="Eng"
-              rules="required|min:3"
+              rules="required|min:3|eng"
             />
           </div>
           <div class="relative">
@@ -42,7 +42,7 @@
             <InputField
               placeholder="Genre"
               name="genre"
-              rules="required|min:3"
+              rules="required|min:3|eng"
             />
           </div>
           <div class="relative">
@@ -50,7 +50,7 @@
               placeholder="Director"
               language="En"
               name="director_en"
-              rules="required|min:3"
+              rules="required|min:3|eng"
             />
           </div>
           <div class="relative">
@@ -66,7 +66,7 @@
               placeholder="Movie description"
               language="En"
               name="description_en"
-              rules="required|min:3"
+              rules="required|min:3|eng"
             />
           </div>
           <div class="relative">
