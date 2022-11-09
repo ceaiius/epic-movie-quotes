@@ -79,8 +79,21 @@
                     />
                   </dialog-modal>
                 </teleport>
+                <teleport to="body">
+                  <dialog-modal v-if="viewQuote" @close="viewQuote = false">
+                    <ViewQuoteDialog
+                      :id="item.id"
+                      @exit="viewQuote = false"
+                      @delete="deleteQuote(item.id)"
+                      @edit="(editQuote = true), (viewQuote = false)"
+                    />
+                  </dialog-modal>
+                </teleport>
                 <div class="text-sm">
-                  <div class="flex gap-4 pt-6 pl-6 cursor-pointer">
+                  <div
+                    class="flex gap-4 pt-6 pl-6 cursor-pointer"
+                    @click="viewQuote = true"
+                  >
                     <img src="/images/eye.svg" alt="" />
                     <h2>View Quote</h2>
                   </div>
@@ -251,9 +264,11 @@ import DialogModal from "../../../../components/DialogModal.vue";
 import EditMovieDoalog from "../Dialogs/EditMovieDialog.vue";
 import AddQuote from "./AddQuote.vue";
 import EditQuoteDialog from "../Dialogs/EditQuoteDialog.vue";
+import ViewQuoteDialog from "../Dialogs/ViewQuoteDialog.vue";
 const quoteCrud = ref();
 const editQuote = ref(false);
 const addQuote = ref(false);
+const viewQuote = ref(false);
 const url = import.meta.env.VITE_API_STORAGE_URL;
 const url_quotes = import.meta.env.VITE_API_BASE_URL + "quotes";
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
@@ -275,7 +290,6 @@ const getMovies = () => {
   const url = `${import.meta.env.VITE_API_BASE_URL}movies/${id}`;
   axios.get(url).then((res) => {
     data.value = res.data;
-    console.log(res.data);
   });
 };
 const getQuotes = () => {

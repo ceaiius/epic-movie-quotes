@@ -36,6 +36,7 @@ const props = defineProps([
   "rules",
   "type",
   "modelValue",
+  "isReadOnly",
 ]);
 
 // eslint-disable-next-line no-unused-vars
