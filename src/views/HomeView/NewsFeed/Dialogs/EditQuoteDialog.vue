@@ -93,7 +93,7 @@ const emit = defineEmits(["delete", "exit", "updateQuotes", "closePopup"]);
 const data = ref([]);
 const name_en = ref();
 const name_ka = ref();
-const url_quotes = import.meta.env.VITE_API_BASE_URL + "quotes";
+const url_quotes = import.meta.env.VITE_API_BASE_URL + "quotes-all";
 onMounted(() => {
   getQuotes();
 });

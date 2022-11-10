@@ -93,7 +93,7 @@ const url = import.meta.env.VITE_API_STORAGE_URL;
 const data = ref([]);
 const name_en = ref();
 const name_ka = ref();
-const url_quotes = import.meta.env.VITE_API_BASE_URL + "quotes";
+const url_quotes = import.meta.env.VITE_API_BASE_URL + "quotes-all";
 onMounted(() => {
   getQuotes();
 });

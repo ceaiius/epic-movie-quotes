@@ -1,5 +1,8 @@
 <template>
-  <div class="flex flex-col mt-4 justify-around items-center w-full">
+  <div
+    class="flex flex-col mt-4 justify-around items-center w-full"
+    @scroll="onScroll"
+  >
     <div>
       <div class="flex">
         <div
@@ -133,10 +136,13 @@ import axios from "@/config/axios/index.js";
 import DialogModal from "../../../components/DialogModal.vue";
 import QuoteDialog from "./Dialogs/QuoteDialog.vue";
 import { useCredentials } from "@/stores/index.js";
+
+const count = ref(2);
 const credentials = useCredentials();
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
-const url = import.meta.env.VITE_API_BASE_URL + "quotes";
+const url = import.meta.env.VITE_API_BASE_URL + `quotes?page=1`;
 const openQuote = ref(false);
+
 const inputValue = ref("");
 const commentLocale = computed(
   () => i18n.global.messages[i18n.global.locale].NewsFeed.write_comment
@@ -205,13 +211,42 @@ const searched = computed(() => {
     return data.value;
   }
 });
+
+const loadMorePosts = () => {
+  let url = import.meta.env.VITE_API_BASE_URL + `quotes?page=${count.value}`;
+
+  axios.get(url).then((res) => {
+    data.value.push(...res.data.data);
+    count.value = count.value + 1;
+    console.log(url);
+  });
+};
 onMounted(() => {
   getQuotes();
+  onScroll();
 });
+
+const onScroll = () => {
+  window.onscroll = () => {
+    let bottomOfWindow =
+      Math.max(
+        window.pageYOffset,
+        document.documentElement.scrollTop,
+        document.body.scrollTop
+      ) +
+        window.innerHeight ===
+      document.documentElement.offsetHeight;
+
+    if (bottomOfWindow) {
+      loadMorePosts();
+    }
+  };
+};
+
 const getQuotes = () => {
   axios.get(url).then((res) => {
-    data.value = res.data;
-    console.log(res.data);
+    data.value = res.data.data;
+    console.log(res.data.data);
   });
 };
 </script>

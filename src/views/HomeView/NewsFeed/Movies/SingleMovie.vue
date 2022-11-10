@@ -270,7 +270,7 @@ const editQuote = ref(false);
 const addQuote = ref(false);
 const viewQuote = ref(false);
 const url = import.meta.env.VITE_API_STORAGE_URL;
-const url_quotes = import.meta.env.VITE_API_BASE_URL + "quotes";
+const url_quotes = import.meta.env.VITE_API_BASE_URL + "quotes-all";
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
 const data_quotes = ref([]);
 const loadQuotes = computed(() => {
