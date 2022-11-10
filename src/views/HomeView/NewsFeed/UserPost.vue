@@ -94,34 +94,37 @@
           </div>
           <div>
             <h2>Nina Baldadze</h2>
-            <p class="max-w-2xl">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Pellentesque nunc vel massa facilisis consequat elit morbi
-              convallis convallis. Volutpat vitae et nisl et. Adipiscing enim
-              integer mi leo nisl. Arcu vitae mauris odio eget.
-            </p>
-            <hr class="border-[#efefef4d] mt-6" />
+            <p class="max-w-2xl"></p>
+            <div v-for="items in item.comments" :key="items.id">
+              {{ items.body }}
+              <hr class="border-[#efefef4d] mt-6" />
+            </div>
           </div>
         </div>
         <div>
           <div class="m-6 flex">
             <img src="/images/static.png" class="w-12 h-12" alt="" />
-            <textarea
-              id=""
-              class="
-                w-full
-                bg-[#24222F]
-                pt-4
-                pl-4
-                ml-6
-                rounded-xl
-                outline-none
-                text-white
-              "
-              cols="30"
-              rows="2"
-              :placeholder="commentLocale"
-            ></textarea>
+            <form class="w-full" @submit.prevent="handleComment(item.id)">
+              <input
+                id=""
+                v-model="commentValue"
+                class="
+                  w-full
+                  h-16
+                  bg-[#24222F]
+                  pt-4
+                  pl-4
+                  ml-6
+                  rounded-xl
+                  outline-none
+                  text-white
+                "
+                cols="30"
+                rows="2"
+                :placeholder="commentLocale"
+              />
+              <input type="submit" hidden />
+            </form>
           </div>
         </div>
       </div>
@@ -141,8 +144,9 @@ const count = ref(2);
 const credentials = useCredentials();
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
 const url = import.meta.env.VITE_API_BASE_URL + `quotes?page=1`;
-const openQuote = ref(false);
 
+const openQuote = ref(false);
+const commentValue = ref("");
 const inputValue = ref("");
 const commentLocale = computed(
   () => i18n.global.messages[i18n.global.locale].NewsFeed.write_comment
@@ -151,6 +155,7 @@ const searchLocale = computed(
   () => i18n.global.messages[i18n.global.locale].NewsFeed.search
 );
 const data = ref([]);
+
 const searched = computed(() => {
   if (inputValue.value || credentials.quote_search) {
     return data.value.filter((item) => {
@@ -211,6 +216,14 @@ const searched = computed(() => {
     return data.value;
   }
 });
+console.log(searched);
+const handleComment = (id) => {
+  const url_comment = `${import.meta.env.VITE_API_BASE_URL}comment/${id}`;
+  axios.post(url_comment, {
+    body: commentValue.value,
+  });
+  getQuotes();
+};
 
 const loadMorePosts = () => {
   let url = import.meta.env.VITE_API_BASE_URL + `quotes?page=${count.value}`;
@@ -218,7 +231,6 @@ const loadMorePosts = () => {
   axios.get(url).then((res) => {
     data.value.push(...res.data.data);
     count.value = count.value + 1;
-    console.log(url);
   });
 };
 onMounted(() => {
