@@ -71,7 +71,8 @@
             </h2>
 
             <h3 class="flex gap-6 text-2xl mt-2">
-              10 <span><img src="/images/chat.png" alt="" /></span>
+              {{ item.comments.length }}
+              <span><img src="/images/chat.png" alt="" /></span>
             </h3>
           </div>
         </div>
@@ -133,6 +134,7 @@ const getMovies = () => {
   axios.get(url).then((res) => {
     data.value = res.data;
     count.value = res.data.length;
+    console.log(res.data);
   });
 };
 

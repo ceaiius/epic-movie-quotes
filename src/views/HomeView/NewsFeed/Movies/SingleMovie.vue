@@ -143,7 +143,7 @@
               <hr class="border-[#efefef4d] mt-6 w-full" />
               <div class="flex gap-6 items-center mt-6 mb-6 ml-0 lg:ml-28">
                 <div class="flex gap-6">
-                  <h2>3</h2>
+                  <h2>{{ item.comments.length }}</h2>
                   <img src="/images/comments.svg" alt="" />
                 </div>
                 <div class="flex gap-6">
@@ -297,6 +297,7 @@ const getQuotes = () => {
     const filtered = res.data.filter((x) => x.movie_id == data?.value.id);
     data_quotes.value = filtered;
     count.value = filtered.length;
+    console.log(res.data);
   });
 };
 

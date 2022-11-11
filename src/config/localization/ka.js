@@ -65,6 +65,7 @@ export default {
       write_new_quote: "შექმენი პოსტი",
       write_comment: "დაწერე კომენტარი...",
       search: "ჩაწერე @ ფილმის მოსაძებნად, ჩაწერე # ციტატის მოძაძებნად",
+      post: "დაპოსტვა",
     },
     MovieList: {
       my_list_of_movies: "ჩემი ფილმების სია",
@@ -75,6 +76,11 @@ export default {
       budget: "შემოსავალი",
       director: "რეჟისორი",
       add_quote: "დამატება",
+      edit_quote: "ციტატის რედაქტირება",
+      save_changes: "შენახვა",
+      edit_movie: "ფილმის რედაქტირება",
+      genre: "ჟანრი",
+      year: "წელი",
     },
   },
 };

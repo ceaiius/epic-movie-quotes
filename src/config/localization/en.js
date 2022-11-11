@@ -66,6 +66,7 @@ export default {
       write_new_quote: "Write new quote",
       write_comment: "Write a comment",
       search: "Enter @ to search movies, Enter # to search quotes",
+      post: "Post",
     },
     MovieList: {
       my_list_of_movies: "My list of movies",
@@ -76,6 +77,11 @@ export default {
       budget: "Budget",
       director: "Director",
       add_quote: "Add quote",
+      edit_quote: "Edit quote",
+      save_changes: "Save changes",
+      edit_movie: "Edit movie",
+      genre: "Genre",
+      year: "Year",
     },
   },
 };

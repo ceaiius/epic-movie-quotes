@@ -12,7 +12,7 @@
     "
   >
     <div class="flex flex-col items-center mt-6">
-      <h2 class="text-white">Edit Movie</h2>
+      <h2 class="text-white">{{ $t("MovieList.edit_movie") }}</h2>
       <hr class="w-full border-[#efefef4d] mt-6" />
     </div>
     <div class="flex justify-center">
@@ -40,7 +40,7 @@
           </div>
           <div class="relative">
             <InputField
-              placeholder="Genre"
+              :placeholder="$t('MovieList.genre')"
               name="genre"
               rules="required|min:3|eng"
             />
@@ -78,11 +78,15 @@
             />
           </div>
           <div class="relative">
-            <InputField placeholder="Year" name="year" rules="required|num" />
+            <InputField
+              :placeholder="$t('MovieList.year')"
+              name="year"
+              rules="required|num"
+            />
           </div>
           <div class="relative">
             <InputField
-              placeholder="Budget"
+              :placeholder="$t('MovieList.budget')"
               name="budget"
               rules="required|num"
             />
@@ -109,7 +113,7 @@
               mt-6
             "
           >
-            Save changes
+            {{ $t("MovieList.save_changes") }}
           </button>
         </div>
       </Form>

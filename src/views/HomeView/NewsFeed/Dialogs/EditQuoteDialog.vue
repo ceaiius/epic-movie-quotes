@@ -23,7 +23,7 @@
           alt=""
           @click="$emit('delete')"
         />
-        <h2 class="text-white">Edit quote</h2>
+        <h2 class="text-white">{{ $t("MovieList.edit_quote") }}</h2>
         <img src="/images/exit.svg" alt="" @click="$emit('exit')" />
       </div>
       <hr class="w-full border-[#efefef4d] mt-6" />
@@ -72,7 +72,7 @@
               mt-6
             "
           >
-            Save changes
+            {{ $t("MovieList.save_changes") }}
           </button>
         </div>
       </Form>

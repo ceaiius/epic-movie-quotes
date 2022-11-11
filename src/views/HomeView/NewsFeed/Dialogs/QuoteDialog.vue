@@ -14,7 +14,16 @@
     "
   >
     <div class="flex flex-col items-center mt-6">
-      <h2 class="text-white">Write new quote</h2>
+      <div class="flex justify-around w-full items-center">
+        <img
+          class="cursor-pointer"
+          src="/images/back-arrow.svg"
+          alt=""
+          @click="$emit('closePopup')"
+        />
+        <h2 class="text-white">{{ $t("NewsFeed.write_new_quote") }}</h2>
+        <p class="invisible"></p>
+      </div>
       <hr class="w-full border-[#efefef4d] mt-6" />
     </div>
     <div class="flex justify-center">
@@ -88,7 +97,7 @@
               mt-6
             "
           >
-            Post
+            {{ $t("NewsFeed.post") }}
           </button>
         </div>
       </Form>

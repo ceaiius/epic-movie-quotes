@@ -78,7 +78,8 @@
 
             <div class="flex gap-6 text-white m-6">
               <div class="flex gap-2 cursor-pointer">
-                2 <img src="/images/comments.svg" alt="" />
+                {{ item.comments.length }}
+                <img src="/images/comments.svg" alt="" />
               </div>
               <div class="flex gap-2 cursor-pointer">
                 10 <img src="/images/likes.svg" alt="" />
@@ -88,28 +89,51 @@
           </div>
         </div>
 
-        <div class="m-6 flex gap-6 relative text-white">
-          <div>
-            <img src="/images/static.png" class="md:w-12 md:h-12" alt="" />
-          </div>
-          <div>
-            <h2>Nina Baldadze</h2>
-            <p class="max-w-2xl"></p>
-            <div v-for="items in item.comments" :key="items.id">
-              {{ items.body }}
-              <hr class="border-[#efefef4d] mt-6" />
+        <div
+          v-for="items in item.comments"
+          :key="items.id"
+          class="m-6 flex flex-col gap-6 relative text-white"
+        >
+          <div class="flex gap-6">
+            <div class="">
+              <img
+                src="/images/static.png"
+                class="md:w-12 md:h-12 w-10 h-10 object-contain"
+                alt=""
+              />
+            </div>
+            <div>
+              <h2 class="mt-2 font-extrabold">{{ items.author.username }}</h2>
+              <p class="max-w-2xl"></p>
+              <div class="max-w-sm mt-5 flex lg:max-w-prose break-words">
+                <p class="text-grey text-clip overflow-hidden">
+                  {{ items.body }}
+                </p>
+                <img
+                  class="absolute right-0 cursor-pointer"
+                  src="/images/delete.svg"
+                  alt=""
+                  @click="deleteQuote(items.id)"
+                />
+              </div>
             </div>
           </div>
+          <hr class="border-[#efefef4d] mt-6 w-full" />
         </div>
         <div>
           <div class="m-6 flex">
-            <img src="/images/static.png" class="w-12 h-12" alt="" />
+            <img
+              src="/images/static.png"
+              class="hidden lg:block w-12 h-12"
+              alt=""
+            />
             <form class="w-full" @submit.prevent="handleComment(item.id)">
               <input
                 id=""
                 v-model="commentValue"
                 class="
-                  w-full
+                  lg:w-full
+                  w-96
                   h-16
                   bg-[#24222F]
                   pt-4
@@ -154,6 +178,8 @@ const commentLocale = computed(
 const searchLocale = computed(
   () => i18n.global.messages[i18n.global.locale].NewsFeed.search
 );
+const usernameAuthor = ref("");
+
 const data = ref([]);
 
 const searched = computed(() => {
@@ -216,13 +242,17 @@ const searched = computed(() => {
     return data.value;
   }
 });
-console.log(searched);
+
 const handleComment = (id) => {
   const url_comment = `${import.meta.env.VITE_API_BASE_URL}comment/${id}`;
-  axios.post(url_comment, {
-    body: commentValue.value,
-  });
+  axios
+    .post(url_comment, {
+      body: commentValue.value,
+    })
+    .then((res) => (usernameAuthor.value = res.data));
+
   getQuotes();
+  commentValue.value = "";
 };
 
 const loadMorePosts = () => {
@@ -259,6 +289,15 @@ const getQuotes = () => {
   axios.get(url).then((res) => {
     data.value = res.data.data;
     console.log(res.data.data);
+  });
+};
+
+const deleteQuote = (id) => {
+  const url = `${import.meta.env.VITE_API_BASE_URL}comment/${id}`;
+  axios.delete(url).then((res) => {
+    if (res.status === 200) {
+      getQuotes();
+    }
   });
 };
 </script>
