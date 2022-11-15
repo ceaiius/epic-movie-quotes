@@ -23,7 +23,7 @@
           alt=""
           @click="$emit('delete')"
         />
-        <h2 class="text-white">Edit quote</h2>
+        <h2 class="text-white">{{ $t("MovieList.edit_quote") }}</h2>
         <img src="/images/exit.svg" alt="" @click="$emit('exit')" />
       </div>
       <hr class="w-full border-[#efefef4d] mt-6" />
@@ -72,7 +72,7 @@
               mt-6
             "
           >
-            Save changes
+            {{ $t("MovieList.save_changes") }}
           </button>
         </div>
       </Form>
@@ -93,7 +93,7 @@ const emit = defineEmits(["delete", "exit", "updateQuotes", "closePopup"]);
 const data = ref([]);
 const name_en = ref();
 const name_ka = ref();
-const url_quotes = import.meta.env.VITE_API_BASE_URL + "quotes";
+const url_quotes = import.meta.env.VITE_API_BASE_URL + "quotes-all";
 onMounted(() => {
   getQuotes();
 });

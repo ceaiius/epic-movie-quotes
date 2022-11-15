@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col mt-4 justify-around items-center w-full">
+  <div class="flex flex-col mt-10 items-center w-full" @scroll="onScroll">
     <div>
       <div class="flex">
         <div
@@ -75,50 +75,86 @@
 
             <div class="flex gap-6 text-white m-6">
               <div class="flex gap-2 cursor-pointer">
-                2 <img src="/images/comments.svg" alt="" />
+                {{ item.comments.length }}
+                <img src="/images/comments.svg" alt="" />
               </div>
               <div class="flex gap-2 cursor-pointer">
-                10 <img src="/images/likes.svg" alt="" />
+                {{ item.users_count }}
+
+                <img
+                  :src="liked ? '/images/red-like.svg' : '/images/likes.svg'"
+                  alt=""
+                  @click="handleLike(item.id)"
+                />
               </div>
             </div>
             <hr class="border-[#efefef4d]" />
           </div>
         </div>
 
-        <div class="m-6 flex gap-6 relative text-white">
-          <div>
-            <img src="/images/static.png" class="md:w-12 md:h-12" alt="" />
+        <div
+          v-for="items in item.comments"
+          :key="items.id"
+          class="m-6 flex flex-col gap-6 relative text-white"
+        >
+          <div class="flex gap-6">
+            <div class="">
+              <img
+                src="/images/static.png"
+                class="md:w-12 md:h-12 w-10 h-10 object-contain"
+                alt=""
+              />
+            </div>
+            <div>
+              <h2 class="mt-2 font-extrabold">{{ items.author.username }}</h2>
+              <p class="max-w-2xl"></p>
+              <div class="max-w-sm mt-5 flex lg:max-w-prose break-words">
+                <p class="text-grey text-clip overflow-hidden">
+                  {{ items.body }}
+                </p>
+                <img
+                  :class="
+                    username == items.author.username ? 'block' : 'hidden'
+                  "
+                  class="absolute right-0 cursor-pointer"
+                  src="/images/delete.svg"
+                  alt=""
+                  @click="deleteQuote(items.id)"
+                />
+              </div>
+            </div>
           </div>
-          <div>
-            <h2>Nina Baldadze</h2>
-            <p class="max-w-2xl">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Pellentesque nunc vel massa facilisis consequat elit morbi
-              convallis convallis. Volutpat vitae et nisl et. Adipiscing enim
-              integer mi leo nisl. Arcu vitae mauris odio eget.
-            </p>
-            <hr class="border-[#efefef4d] mt-6" />
-          </div>
+          <hr class="border-[#efefef4d] mt-6 w-full" />
         </div>
         <div>
           <div class="m-6 flex">
-            <img src="/images/static.png" class="w-12 h-12" alt="" />
-            <textarea
-              id=""
-              class="
-                w-full
-                bg-[#24222F]
-                pt-4
-                pl-4
-                ml-6
-                rounded-xl
-                outline-none
-                text-white
-              "
-              cols="30"
-              rows="2"
-              :placeholder="commentLocale"
-            ></textarea>
+            <img
+              src="/images/static.png"
+              class="hidden lg:block w-12 h-12"
+              alt=""
+            />
+            <form class="w-full" @submit.prevent="handleComment(item.id)">
+              <input
+                id=""
+                v-model="commentValue"
+                class="
+                  lg:w-full
+                  w-96
+                  h-16
+                  bg-[#24222F]
+                  pt-4
+                  pl-4
+                  ml-6
+                  rounded-xl
+                  outline-none
+                  text-white
+                "
+                cols="30"
+                rows="2"
+                :placeholder="commentLocale"
+              />
+              <input type="submit" hidden />
+            </form>
           </div>
         </div>
       </div>
@@ -127,24 +163,65 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { i18n } from "../../../i18n";
 import axios from "@/config/axios/index.js";
 import DialogModal from "../../../components/DialogModal.vue";
 import QuoteDialog from "./Dialogs/QuoteDialog.vue";
+import Echo from "laravel-echo";
+import { isAuthenticated } from "../../../router/guards";
 import { useCredentials } from "@/stores/index.js";
+
+// eslint-disable-next-line no-unused-vars
+const watchAuth = watch(() => {
+  if (isAuthenticated) {
+    window.Echo = new Echo({
+      authEndpoint: `${import.meta.env.VITE_API_BASE_URL}broadcasting/auth`,
+      broadcaster: "pusher",
+      key: import.meta.env.VITE_PUSHER_APP_KEY,
+      cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
+      forceTLS: true,
+      withCredentials: true,
+      enabledTransports: ["ws", "wss"],
+      auth: {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      },
+    });
+  }
+});
+window.Echo.channel(`comment-channel`).listen(".new-comment", () => {
+  getQuotes();
+});
+
+window.Echo.channel(`delete-comment-channel`).listen(".delete-comment", () => {
+  getQuotes();
+});
+
+window.Echo.channel(`like-channel`).listen(".add-like", () => {
+  getQuotes();
+});
+
+const count = ref(2);
 const credentials = useCredentials();
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
-const url = import.meta.env.VITE_API_BASE_URL + "quotes";
+const url = import.meta.env.VITE_API_BASE_URL + `quotes?page=1`;
+
 const openQuote = ref(false);
+const commentValue = ref("");
 const inputValue = ref("");
+const username = ref("");
+
 const commentLocale = computed(
   () => i18n.global.messages[i18n.global.locale].NewsFeed.write_comment
 );
 const searchLocale = computed(
   () => i18n.global.messages[i18n.global.locale].NewsFeed.search
 );
+
 const data = ref([]);
+const liked = ref(false);
 const searched = computed(() => {
   if (inputValue.value || credentials.quote_search) {
     return data.value.filter((item) => {
@@ -205,13 +282,77 @@ const searched = computed(() => {
     return data.value;
   }
 });
+
+const handleComment = (id) => {
+  const url_comment = `${import.meta.env.VITE_API_BASE_URL}comment/${id}`;
+  axios.post(url_comment, {
+    body: commentValue.value,
+  });
+
+  commentValue.value = "";
+};
+console.log(data);
+const loadMorePosts = () => {
+  let url = import.meta.env.VITE_API_BASE_URL + `quotes?page=${count.value}`;
+
+  axios.get(url).then((res) => {
+    data.value.push(...res.data.data);
+    count.value = count.value + 1;
+  });
+};
 onMounted(() => {
+  axios.get("user").then((res) => (username.value = res.data.username));
+
   getQuotes();
+  onScroll();
 });
+
+const onScroll = () => {
+  window.onscroll = () => {
+    let bottomOfWindow =
+      Math.max(
+        window.pageYOffset,
+        document.documentElement.scrollTop,
+        document.body.scrollTop
+      ) +
+        window.innerHeight ===
+      document.documentElement.offsetHeight;
+
+    if (bottomOfWindow) {
+      loadMorePosts();
+    }
+  };
+};
+
 const getQuotes = () => {
   axios.get(url).then((res) => {
-    data.value = res.data;
-    console.log(res.data);
+    data.value = res.data.data;
   });
+};
+
+const deleteQuote = (id) => {
+  const url = `${import.meta.env.VITE_API_BASE_URL}comment/${id}`;
+  axios.delete(url).then((res) => {
+    if (res.status === 200) {
+      getQuotes();
+    }
+  });
+};
+
+const handleLike = async (id) => {
+  const url_like = `${import.meta.env.VITE_API_BASE_URL}quotes-like`;
+  axios
+    .post(url_like, {
+      quote_id: id,
+      user_id: credentials.user_id,
+    })
+    .then((res) => {
+      getQuotes();
+      if (res.data.message == "unlike") {
+        liked.value = false;
+      } else if (res.data.message == "like") {
+        liked.value = true;
+      }
+    });
 };
 </script>

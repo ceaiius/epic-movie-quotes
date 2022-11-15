@@ -10,6 +10,9 @@ export const useCredentials = defineStore("credentials", {
       forgot_password_email: "",
       movie_search: "",
       quote_search: "",
+      user_name: "",
+      user_id: null,
+      liked: false,
     };
   },
   actions: {

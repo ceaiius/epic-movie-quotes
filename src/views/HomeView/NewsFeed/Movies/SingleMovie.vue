@@ -143,11 +143,11 @@
               <hr class="border-[#efefef4d] mt-6 w-full" />
               <div class="flex gap-6 items-center mt-6 mb-6 ml-0 lg:ml-28">
                 <div class="flex gap-6">
-                  <h2>3</h2>
+                  <h2>{{ item.comments.length }}</h2>
                   <img src="/images/comments.svg" alt="" />
                 </div>
                 <div class="flex gap-6">
-                  <h2>6</h2>
+                  <h2>{{ item.likes }}</h2>
                   <img src="/images/likes.svg" alt="" />
                 </div>
               </div>
@@ -270,7 +270,7 @@ const editQuote = ref(false);
 const addQuote = ref(false);
 const viewQuote = ref(false);
 const url = import.meta.env.VITE_API_STORAGE_URL;
-const url_quotes = import.meta.env.VITE_API_BASE_URL + "quotes";
+const url_quotes = import.meta.env.VITE_API_BASE_URL + "quotes-all";
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
 const data_quotes = ref([]);
 const loadQuotes = computed(() => {
@@ -297,6 +297,7 @@ const getQuotes = () => {
     const filtered = res.data.filter((x) => x.movie_id == data?.value.id);
     data_quotes.value = filtered;
     count.value = filtered.length;
+    console.log(res.data);
   });
 };
 

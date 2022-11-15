@@ -12,7 +12,16 @@
     "
   >
     <div class="flex flex-col items-center mt-6">
-      <h2 class="text-white">Add Movie</h2>
+      <div class="flex justify-around w-full items-center">
+        <img
+          class="cursor-pointer"
+          src="/images/back-arrow.svg"
+          alt=""
+          @click="$emit('closePopup')"
+        />
+        <h2 class="text-white">Add Movie</h2>
+        <p class="invisible"></p>
+      </div>
       <hr class="w-full border-[#efefef4d] mt-6" />
     </div>
     <div class="flex justify-center">
@@ -40,7 +49,7 @@
           </div>
           <div class="relative">
             <InputField
-              placeholder="Genre"
+              :placeholder="$t('MovieList.genre')"
               name="genre"
               rules="required|min:3"
             />
@@ -78,22 +87,21 @@
             />
           </div>
           <div class="relative">
-            <InputField placeholder="Year" name="year" rules="required|num" />
-          </div>
-          <div class="relative">
             <InputField
-              placeholder="Budget"
-              name="budget"
+              :placeholder="$t('MovieList.year')"
+              name="year"
               rules="required|num"
             />
           </div>
           <div class="relative">
             <InputField
-              placeholder="thumbnail"
-              name="thumbnail"
-              type="file"
-              rules="required"
+              :placeholder="$t('MovieList.budget')"
+              name="budget"
+              rules="required|num"
             />
+          </div>
+          <div class="relative">
+            <InputFile />
           </div>
 
           <button
@@ -120,6 +128,7 @@
 import { Form } from "vee-validate";
 import axios from "@/config/axios/index.js";
 import InputField from "../Form/InputField.vue";
+import InputFile from "../Form/InputFile.vue";
 
 const emit = defineEmits(["updateMovies", "closePopup"]);
 const url = import.meta.env.VITE_API_BASE_URL + "movies";

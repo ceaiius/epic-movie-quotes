@@ -60,7 +60,7 @@
         </div>
         <div class="flex gap-6 text-white m-6">
           <div class="flex gap-2 cursor-pointer">
-            2 <img src="/images/comments.svg" alt="" />
+            {{ comment_count }} <img src="/images/comments.svg" alt="" />
           </div>
           <div class="flex gap-2 cursor-pointer">
             10 <img src="/images/likes.svg" alt="" />
@@ -71,8 +71,8 @@
             <img src="/images/static.png" class="md:w-12 md:h-12" alt="" />
           </div>
           <div>
-            <h2>Nina Baldadze</h2>
-            <p class="max-w-2xl">რამე</p>
+            <h2>{{ username }}</h2>
+            <p class="max-w-2xl">{{ comment }}</p>
             <hr class="border-[#efefef4d] mt-6" />
           </div>
         </div>
@@ -91,9 +91,12 @@ const emit = defineEmits(["delete", "exit"]);
 const thumbnail = ref();
 const url = import.meta.env.VITE_API_STORAGE_URL;
 const data = ref([]);
+const username = ref("");
+const comment = ref("No comments yet");
 const name_en = ref();
+const comment_count = ref(0);
 const name_ka = ref();
-const url_quotes = import.meta.env.VITE_API_BASE_URL + "quotes";
+const url_quotes = import.meta.env.VITE_API_BASE_URL + "quotes-all";
 onMounted(() => {
   getQuotes();
 });
@@ -104,6 +107,10 @@ const getQuotes = () => {
     name_en.value = data.value[0].name.en;
     name_ka.value = data.value[0].name.ka;
     thumbnail.value = data.value[0].thumbnail;
+    comment_count.value = data.value[0].comments.length;
+    username.value = data.value[0].comments[0].author.username;
+    comment.value = data.value[0].comments[0].body;
+    console.log(data.value);
   });
 };
 </script>

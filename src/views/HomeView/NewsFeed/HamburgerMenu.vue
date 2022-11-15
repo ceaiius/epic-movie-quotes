@@ -85,7 +85,7 @@ import { useRouter } from "vue-router";
 import router from "../../../router";
 const username = ref("");
 onMounted(() => {
-  axios.get("user").then((res) => (username.value = res.data));
+  axios.get("user").then((res) => (username.value = res.data.username));
 });
 const isActive = (name) => {
   return name === useRouter().currentRoute.value.name;

@@ -14,7 +14,16 @@
     "
   >
     <div class="flex flex-col items-center mt-6">
-      <h2 class="text-white">Write new quote</h2>
+      <div class="flex justify-around w-full items-center">
+        <img
+          class="cursor-pointer"
+          src="/images/back-arrow.svg"
+          alt=""
+          @click="$emit('closePopup')"
+        />
+        <h2 class="text-white">{{ $t("NewsFeed.write_new_quote") }}</h2>
+        <p class="invisible"></p>
+      </div>
       <hr class="w-full border-[#efefef4d] mt-6" />
     </div>
     <div class="flex justify-center">
@@ -40,8 +49,8 @@
               rules="required|min:3|geo"
             />
           </div>
-          <div class="relative">
-            <InputField name="thumbnail" type="file" rules="required|min:3" />
+          <div>
+            <InputFile />
           </div>
 
           <div class="relative">
@@ -54,7 +63,7 @@
             </div>
             <Field name="field">
               <select
-                id="countries"
+                id="movies"
                 v-model="selectValue"
                 class="
                   bg-black
@@ -88,7 +97,7 @@
               mt-6
             "
           >
-            Post
+            {{ $t("NewsFeed.post") }}
           </button>
         </div>
       </Form>
@@ -98,11 +107,12 @@
 
 <script setup>
 import InputTextArea from "../Form/InputTextArea.vue";
-import InputField from "../Form/InputField.vue";
+
 import axios from "@/config/axios/index.js";
 import { Form } from "vee-validate";
 import { i18n } from "../../../../i18n";
 import { onMounted, ref } from "vue";
+import InputFile from "../Form/InputFile.vue";
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["updateQuotes", "closePopup"]);
 const url = import.meta.env.VITE_API_BASE_URL + "movies";
