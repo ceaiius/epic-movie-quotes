@@ -110,6 +110,9 @@
                   {{ items.body }}
                 </p>
                 <img
+                  :class="
+                    username == items.author.username ? 'block' : 'hidden'
+                  "
                   class="absolute right-0 cursor-pointer"
                   src="/images/delete.svg"
                   alt=""
@@ -157,12 +160,40 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { i18n } from "../../../i18n";
 import axios from "@/config/axios/index.js";
 import DialogModal from "../../../components/DialogModal.vue";
 import QuoteDialog from "./Dialogs/QuoteDialog.vue";
+import Echo from "laravel-echo";
+import { isAuthenticated } from "../../../router/guards";
 import { useCredentials } from "@/stores/index.js";
+
+// eslint-disable-next-line no-unused-vars
+const watchAuth = watch(() => {
+  if (isAuthenticated) {
+    window.Echo = new Echo({
+      authEndpoint: `${import.meta.env.VITE_API_BASE_URL}broadcasting/auth`,
+      broadcaster: "pusher",
+      key: import.meta.env.VITE_PUSHER_APP_KEY,
+      cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
+      forceTLS: true,
+      withCredentials: true,
+      auth: {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      },
+    });
+  }
+});
+window.Echo.channel(`comment-channel`).listen(".new-comment", () => {
+  getQuotes();
+});
+
+window.Echo.channel(`delete-comment-channel`).listen(".delete-comment", () => {
+  getQuotes();
+});
 
 const count = ref(2);
 const credentials = useCredentials();
@@ -172,13 +203,14 @@ const url = import.meta.env.VITE_API_BASE_URL + `quotes?page=1`;
 const openQuote = ref(false);
 const commentValue = ref("");
 const inputValue = ref("");
+const username = ref("");
+
 const commentLocale = computed(
   () => i18n.global.messages[i18n.global.locale].NewsFeed.write_comment
 );
 const searchLocale = computed(
   () => i18n.global.messages[i18n.global.locale].NewsFeed.search
 );
-const usernameAuthor = ref("");
 
 const data = ref([]);
 
@@ -245,13 +277,10 @@ const searched = computed(() => {
 
 const handleComment = (id) => {
   const url_comment = `${import.meta.env.VITE_API_BASE_URL}comment/${id}`;
-  axios
-    .post(url_comment, {
-      body: commentValue.value,
-    })
-    .then((res) => (usernameAuthor.value = res.data));
+  axios.post(url_comment, {
+    body: commentValue.value,
+  });
 
-  getQuotes();
   commentValue.value = "";
 };
 
@@ -264,6 +293,8 @@ const loadMorePosts = () => {
   });
 };
 onMounted(() => {
+  axios.get("user").then((res) => (username.value = res.data));
+
   getQuotes();
   onScroll();
 });
@@ -288,7 +319,6 @@ const onScroll = () => {
 const getQuotes = () => {
   axios.get(url).then((res) => {
     data.value = res.data.data;
-    console.log(res.data.data);
   });
 };
 

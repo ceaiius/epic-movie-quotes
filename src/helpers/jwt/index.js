@@ -20,6 +20,6 @@ export const setJwtToken = (token, expires_in, time) => {
   expires.setTime(expires.getTime() + expires_in * time);
 
   document.cookie = `jwt_token=${token}; expires=${expires.toUTCString()}; path=/`;
-
+  localStorage.setItem("token", token);
   axios.defaults.headers["Authorization"] = `Bearer ${token}`;
 };
