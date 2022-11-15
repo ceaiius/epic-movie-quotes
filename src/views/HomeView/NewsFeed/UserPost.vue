@@ -82,7 +82,13 @@
                 <img src="/images/comments.svg" alt="" />
               </div>
               <div class="flex gap-2 cursor-pointer">
-                10 <img src="/images/likes.svg" alt="" />
+                {{ item.users_count }}
+
+                <img
+                  :src="liked ? '/images/red-like.svg' : '/images/likes.svg'"
+                  alt=""
+                  @click="handleLike(item.id)"
+                />
               </div>
             </div>
             <hr class="border-[#efefef4d]" />
@@ -179,6 +185,7 @@ const watchAuth = watch(() => {
       cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
       forceTLS: true,
       withCredentials: true,
+      enabledTransports: ["ws", "wss"],
       auth: {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -213,7 +220,7 @@ const searchLocale = computed(
 );
 
 const data = ref([]);
-
+const liked = ref(false);
 const searched = computed(() => {
   if (inputValue.value || credentials.quote_search) {
     return data.value.filter((item) => {
@@ -283,7 +290,7 @@ const handleComment = (id) => {
 
   commentValue.value = "";
 };
-
+console.log(data);
 const loadMorePosts = () => {
   let url = import.meta.env.VITE_API_BASE_URL + `quotes?page=${count.value}`;
 
@@ -293,7 +300,7 @@ const loadMorePosts = () => {
   });
 };
 onMounted(() => {
-  axios.get("user").then((res) => (username.value = res.data));
+  axios.get("user").then((res) => (username.value = res.data.username));
 
   getQuotes();
   onScroll();
@@ -329,5 +336,22 @@ const deleteQuote = (id) => {
       getQuotes();
     }
   });
+};
+
+const handleLike = (id) => {
+  const url_like = `${import.meta.env.VITE_API_BASE_URL}quotes-like`;
+  axios
+    .post(url_like, {
+      quote_id: id,
+      user_id: credentials.user_id,
+    })
+    .then((res) => {
+      if (res.data.message == "unlike") {
+        liked.value = false;
+      } else if (res.data.message == "like") {
+        liked.value = true;
+      }
+      getQuotes();
+    });
 };
 </script>

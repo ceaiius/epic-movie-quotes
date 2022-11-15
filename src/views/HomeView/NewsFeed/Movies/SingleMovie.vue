@@ -147,7 +147,7 @@
                   <img src="/images/comments.svg" alt="" />
                 </div>
                 <div class="flex gap-6">
-                  <h2>6</h2>
+                  <h2>{{ item.likes }}</h2>
                   <img src="/images/likes.svg" alt="" />
                 </div>
               </div>
