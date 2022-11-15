@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="flex flex-col mt-4 justify-around items-center w-full"
-    @scroll="onScroll"
-  >
+  <div class="flex flex-col mt-10 items-center w-full" @scroll="onScroll">
     <div>
       <div class="flex">
         <div
@@ -202,6 +199,10 @@ window.Echo.channel(`delete-comment-channel`).listen(".delete-comment", () => {
   getQuotes();
 });
 
+window.Echo.channel(`like-channel`).listen(".add-like", () => {
+  getQuotes();
+});
+
 const count = ref(2);
 const credentials = useCredentials();
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
@@ -338,7 +339,7 @@ const deleteQuote = (id) => {
   });
 };
 
-const handleLike = (id) => {
+const handleLike = async (id) => {
   const url_like = `${import.meta.env.VITE_API_BASE_URL}quotes-like`;
   axios
     .post(url_like, {
@@ -346,12 +347,12 @@ const handleLike = (id) => {
       user_id: credentials.user_id,
     })
     .then((res) => {
+      getQuotes();
       if (res.data.message == "unlike") {
         liked.value = false;
       } else if (res.data.message == "like") {
         liked.value = true;
       }
-      getQuotes();
     });
 };
 </script>

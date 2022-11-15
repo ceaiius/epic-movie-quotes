@@ -49,8 +49,8 @@
               rules="required|min:3|geo"
             />
           </div>
-          <div class="relative">
-            <InputField name="thumbnail" type="file" rules="required|min:3" />
+          <div>
+            <InputFile />
           </div>
 
           <div class="relative">
@@ -107,11 +107,12 @@
 
 <script setup>
 import InputTextArea from "../Form/InputTextArea.vue";
-import InputField from "../Form/InputField.vue";
+
 import axios from "@/config/axios/index.js";
 import { Form } from "vee-validate";
 import { i18n } from "../../../../i18n";
 import { onMounted, ref } from "vue";
+import InputFile from "../Form/InputFile.vue";
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["updateQuotes", "closePopup"]);
 const url = import.meta.env.VITE_API_BASE_URL + "movies";

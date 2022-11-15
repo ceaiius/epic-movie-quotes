@@ -101,12 +101,7 @@
             />
           </div>
           <div class="relative">
-            <InputField
-              placeholder="thumbnail"
-              name="thumbnail"
-              type="file"
-              rules="required"
-            />
+            <InputFile />
           </div>
 
           <button
@@ -133,6 +128,7 @@
 import { Form } from "vee-validate";
 import axios from "@/config/axios/index.js";
 import InputField from "../Form/InputField.vue";
+import InputFile from "../Form/InputFile.vue";
 
 const emit = defineEmits(["updateMovies", "closePopup"]);
 const url = import.meta.env.VITE_API_BASE_URL + "movies";
