@@ -3,11 +3,21 @@
   <div class="flex justify-start min-h-screen">
     <div class="lg:flex flex-col ml-6 mt-10 hidden">
       <div class="flex gap-4 items-center">
-        <img src="/images/static.png" alt="" />
+        <img
+          :class="
+            isActive('profile') ? 'border rounded-full border-red-500' : ''
+          "
+          src="/images/static.png"
+          alt=""
+        />
         <div>
           <h2 class="text-white text-2xl">{{ credentials.user_name }}</h2>
           <h3 class="text-input_bg text-base cursor-pointer">
-            {{ $t("NewsFeed.edit_profile") }}
+            <router-link :to="{ name: 'profile' }"
+              ><h2 class="cursor-pointer">
+                {{ $t("NewsFeed.edit_profile") }}
+              </h2></router-link
+            >
           </h3>
         </div>
       </div>
@@ -29,9 +39,9 @@
       <div class="ml-4 mt-6 flex gap-8 items-center text-white">
         <img
           :src="
-            isActive('news-feed')
-              ? '/images/camera.svg'
-              : '/images/camera-white.png'
+            isActive('list-of-movies')
+              ? '/images/camera-white.png'
+              : '/images/camera.svg'
           "
           alt=""
         />

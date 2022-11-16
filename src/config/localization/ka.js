@@ -82,5 +82,12 @@ export default {
       genre: "ჟანრი",
       year: "წელი",
     },
+    Profile: {
+      my_profile: "ჩემი პროფილი",
+      upload_new_photo: "ატვირთე ახალი ფოტო",
+      edit: "შეცვლა",
+      username: "სახელი",
+      email: "იმეილი",
+    },
   },
 };

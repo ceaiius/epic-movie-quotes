@@ -83,5 +83,12 @@ export default {
       genre: "Genre",
       year: "Year",
     },
+    Profile: {
+      my_profile: "My profile",
+      upload_new_photo: "Upload new photo",
+      edit: "Edit",
+      username: "Username",
+      email: "Email",
+    },
   },
 };
