@@ -15,11 +15,29 @@
     "
   >
     <div class="flex flex-col items-center mt-6">
-      <h2 class="text-white">Add quote</h2>
-      <hr class="w-full border-[#efefef4d] mt-6" />
+      <div class="flex items-center justify-between w-full">
+        <img
+          class="cursor-pointer pl-6"
+          src="/images/back-arrow.svg"
+          alt=""
+          @click="$emit('closePopup')"
+        />
+        <h2 class="text-white">{{ $t("MovieList.add_quote") }}</h2>
+        <div></div>
+      </div>
     </div>
     <div
-      class="w-full flex justify-start gap-6 ml-6 lg:ml-32 mt-6 items-center"
+      class="
+        w-full
+        flex
+        justify-center
+        lg:justify-start
+        gap-6
+        ml-6
+        lg:ml-32
+        mt-6
+        items-center
+      "
     >
       <img class="w-40 h-40" :src="url_thumbnail + data?.thumbnail" alt="" />
 

@@ -88,6 +88,13 @@ export default {
       edit: "შეცვლა",
       username: "სახელი",
       email: "იმეილი",
+      primary_email: "მთავარი იმეილი",
+      add_new_email: "იმეილის დამატება",
+      password: "პაროლი",
+      remove: "წაშლა",
+      make_this_primary: "გახადე მთავარი",
+      are_you_sure_to_make_changes: "დარწმუნებული ხართ ცვლილებებში?",
+      confirm: "დადასტურება",
     },
   },
 };

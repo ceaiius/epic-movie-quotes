@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="flex flex-col mt-10 items-center gap-20 w-full">
+  <div class="lg:flex flex-col mt-10 items-center gap-20 w-full hidden">
     <h2 class="text-white lg:block hidden">{{ $t("Profile.my_profile") }}</h2>
     <div class="flex w-full h-full lg:h-auto items-center justify-center">
       <div
@@ -90,11 +90,11 @@
     </div>
   </div>
 </template>
-
-<script setup>
+  
+  <script setup>
 import { onBeforeMount, ref } from "vue";
 import axios from "@/config/axios/index.js";
-import { i18n } from "../../../i18n";
+
 const username = ref();
 const email = ref();
 const isNotEditable = ref(true);
@@ -106,3 +106,4 @@ onBeforeMount(() => {
   });
 });
 </script>
+  

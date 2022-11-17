@@ -15,16 +15,22 @@
     <div class="p-6">
       <div class="flex gap-4 items-center">
         <img
-          :class="
-            isActive('profile') ? 'border rounded-full border-red-500' : ''
-          "
+          :class="[
+            isActive('google_profile')
+              ? 'border rounded-full border-red-500'
+              : '',
+            isActive('email_profile')
+              ? 'border rounded-full border-red-500'
+              : '',
+          ]"
           src="/images/static.png"
           alt=""
         />
         <div>
           <h2 class="text-white text-2xl">{{ username }}</h2>
           <h3 class="text-input_bg text-base cursor-pointer">
-            <router-link :to="{ name: 'profile' }"
+            <router-link
+              :to="{ name: googleUser ? 'google_profile' : 'email_profile' }"
               ><h2 class="cursor-pointer">
                 {{ $t("NewsFeed.edit_profile") }}
               </h2></router-link
@@ -94,8 +100,16 @@ import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import router from "../../../router";
 const username = ref("");
+const googleUser = ref(false);
 onMounted(() => {
-  axios.get("user").then((res) => (username.value = res.data.username));
+  axios.get("user").then((res) => {
+    username.value = res.data.username;
+    if (res.data.email_verified_at == null) {
+      googleUser.value = true;
+    } else {
+      googleUser.value = false;
+    }
+  });
 });
 const isActive = (name) => {
   return name === useRouter().currentRoute.value.name;
