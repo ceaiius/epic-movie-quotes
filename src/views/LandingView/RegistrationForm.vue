@@ -391,77 +391,30 @@
 <script setup>
 import axios from "@/config/axios/index.js";
 import { Form, Field, ErrorMessage } from "vee-validate";
-import { computed, onMounted, ref } from "vue";
+import { computed, ref } from "vue";
 import { i18n } from "../../i18n";
 import DialogModal from "@/components/DialogModal.vue";
-import { useCredentials } from "@/stores/index.js";
+
 import ValidateEmail from "./notifications/ValidateEmail.vue";
 
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["openLogin", "closeDialog"]);
-const credentials = useCredentials();
+
 const isOpenValidation = ref(false);
 const isNotRegistered = ref(true);
 const url = import.meta.env.VITE_API_GOOGLE_URL;
-const username = computed({
-  get() {
-    return credentials.username ? credentials.username : "";
-  },
-
-  set(value) {
-    credentials.setUsername(value);
-  },
-});
-
-const email = computed({
-  get() {
-    return credentials.email ? credentials.email : "";
-  },
-
-  set(value) {
-    credentials.setEmail(value);
-  },
-});
-
-const password = computed({
-  get() {
-    return credentials.password ? credentials.password : "";
-  },
-
-  set(value) {
-    credentials.setPassword(value);
-  },
-});
-
-const password_confirmation = computed({
-  get() {
-    return credentials.password_confirmation
-      ? credentials.password_confirmation
-      : "";
-  },
-
-  set(value) {
-    credentials.setPasswordConfirmation(value);
-  },
-});
-onMounted(() => {
-  credentials.getUsername();
-  credentials.getEmail();
-  credentials.getPassword();
-  credentials.getPasswordConfirmation();
-});
 
 const showPassword = ref(false);
 const showPasswordConfirm = ref(false);
 const nameTaken = ref(false);
 const emailTaken = ref(false);
-const handleRegister = () => {
+const handleRegister = (values) => {
   axios
     .post("register", {
-      username: credentials.username,
-      email: credentials.email,
-      password: credentials.password,
-      password_confirmation: credentials.password_confirmation,
+      username: values.username,
+      email: values.email,
+      password: values.password,
+      password_confirmation: values.password_confirmation,
     })
     .then(() => {
       isOpenValidation.value = true;

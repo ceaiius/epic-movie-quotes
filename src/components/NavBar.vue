@@ -50,6 +50,7 @@
         <div id="navbar-default" class="">
           <ul class="flex p-4 rounded-lg text-white space-x-8">
             <li
+              :class="hideSearch ? 'hidden' : ''"
               class="lg:hidden block"
               @click="
                 routeIsMovie ? (isMovieSearch = true) : (isQuoteSearch = true)
@@ -147,14 +148,18 @@ import router from "../router";
 
 const routeIsMovie = ref(false);
 const routeIsQuote = ref(false);
-
+const hideSearch = ref(false);
 router.beforeEach((from) => {
   if (from.name == "news-feed") {
     routeIsQuote.value = true;
     routeIsMovie.value = false;
+    hideSearch.value = false;
   } else if (from.name == "list-of-movies") {
     routeIsQuote.value = false;
     routeIsMovie.value = true;
+    hideSearch.value = false;
+  } else {
+    hideSearch.value = true;
   }
 });
 
@@ -183,8 +188,15 @@ onMounted(() => {
   const router = useRouter();
   if (router.currentRoute.value.name == "news-feed") {
     routeIsQuote.value = true;
+    hideSearch.value = false;
   } else if (router.currentRoute.value.name == "list-of-movies") {
     routeIsMovie.value = true;
+    hideSearch.value = false;
+  } else if (
+    router.currentRoute.value.name !== "list-of-movies" ||
+    router.currentRoute.value.name !== "news-feed"
+  ) {
+    hideSearch.value = true;
   }
 });
 

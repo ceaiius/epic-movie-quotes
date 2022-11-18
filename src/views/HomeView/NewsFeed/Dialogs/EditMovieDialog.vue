@@ -12,7 +12,17 @@
     "
   >
     <div class="flex flex-col items-center mt-6">
-      <h2 class="text-white">{{ $t("MovieList.edit_movie") }}</h2>
+      <div class="flex items-center justify-between w-full">
+        <img
+          class="cursor-pointer pl-6"
+          src="/images/back-arrow.svg"
+          alt=""
+          @click="$emit('closePopup')"
+        />
+        <h2 class="text-white">{{ $t("MovieList.edit_movie") }}</h2>
+        <div></div>
+      </div>
+
       <hr class="w-full border-[#efefef4d] mt-6" />
     </div>
     <div class="flex justify-center">

@@ -13,6 +13,8 @@ module.exports = {
         validation_color: "#F15524",
         default_red: "#E31221",
         black_bg: "#11101A",
+        rgba: "rgba(25, 135, 84, 0.2)",
+        border_rgba: "rgba(206, 212, 218, 0.2)",
       },
       screens: {
         xs: "375px",

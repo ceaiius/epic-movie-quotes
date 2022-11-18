@@ -13,6 +13,55 @@
         <div class="flex flex-col text-white gap-6">
           <h2>{{ $t("MovieList.movie_description") }}</h2>
           <img :src="url + data?.thumbnail" alt="" class="rounded-2xl" />
+          <div class="block lg:hidden">
+            <h1 class="text-3xl text-brown">
+              {{ i18n.global.locale == "En" ? data?.name?.en : data?.name?.ka }}
+              ({{ data?.year }})
+            </h1>
+            <h2>{{ data?.genre }}</h2>
+            <p>
+              {{ $t("MovieList.director") }}:
+              {{
+                i18n.global.locale == "En"
+                  ? data?.director?.en
+                  : data?.director?.ka
+              }}
+            </p>
+            <p>{{ $t("MovieList.budget") }}: {{ data?.budget }}$</p>
+            <p>
+              {{
+                i18n.global.locale == "En"
+                  ? data?.description?.en
+                  : data?.description?.ka
+              }}
+            </p>
+          </div>
+          <div class="block lg:hidden mt-10">
+            <div
+              class="
+                bg-form_bg
+                w-32
+                h-10
+                items-center
+                grid grid-cols-2
+                divide-x
+              "
+            >
+              <img
+                src="/images/pencil.svg"
+                class="h-5 pl-6 cursor-pointer"
+                alt=""
+                @click="editMovie = true"
+              />
+
+              <img
+                src="/images/delete.svg"
+                class="h-5 pl-4 cursor-pointer"
+                alt=""
+                @click="deleteMovie"
+              />
+            </div>
+          </div>
           <div class="flex gap-6 items-center">
             <h2>Quotes (total {{ count }})</h2>
             <button
@@ -164,33 +213,6 @@
                 }}
                 ({{ data?.year }})
               </h1>
-              <div class="block lg:hidden mt-10">
-                <div
-                  class="
-                    bg-form_bg
-                    ml-20
-                    w-32
-                    h-10
-                    items-center
-                    grid grid-cols-2
-                    divide-x
-                  "
-                >
-                  <img
-                    src="/images/pencil.svg"
-                    class="h-5 pl-6 cursor-pointer"
-                    alt=""
-                    @click="editMovie = true"
-                  />
-
-                  <img
-                    src="/images/delete.svg"
-                    class="h-5 pl-4 cursor-pointer"
-                    alt=""
-                    @click="deleteMovie"
-                  />
-                </div>
-              </div>
             </div>
 
             <h2>{{ data?.genre }}</h2>
