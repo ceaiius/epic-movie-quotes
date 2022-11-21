@@ -102,12 +102,8 @@
             />
           </div>
           <div class="relative">
-            <InputField
-              placeholder="thumbnail"
-              name="thumbnail"
-              type="file"
-              rules="required"
-            />
+            <!-- <InputField placeholder="thumbnail" name="thumbnail" type="file" /> -->
+            <InputFile />
           </div>
 
           <button
@@ -134,6 +130,7 @@
 import { Form } from "vee-validate";
 import axios from "@/config/axios/index.js";
 import InputField from "../Form/InputField.vue";
+import InputFile from "../Form/InputFile.vue";
 import { useRoute } from "vue-router";
 const emit = defineEmits(["updateMovies", "closePopup"]);
 const route = useRoute();

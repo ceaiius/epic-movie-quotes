@@ -15,7 +15,7 @@
       >
         Choose file
       </p>
-      <Field v-slot="{ field }" name="thumbnail" rules="required">
+      <Field v-slot="{ field }" name="thumbnail">
         <input
           v-bind="field"
           id="input"

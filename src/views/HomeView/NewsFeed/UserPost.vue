@@ -1,11 +1,14 @@
 <template>
-  <div class="flex flex-col mt-10 items-center w-full" @scroll="onScroll">
+  <div
+    class="flex flex-col mt-0 lg:mt-10 items-center w-full"
+    @scroll="onScroll"
+  >
     <div>
       <div class="flex">
         <div
           class="
             lg:w-56
-            w-full
+            w-screen
             lg:h-14
             h-32
             flex
@@ -291,7 +294,7 @@ const handleComment = (id) => {
 
   commentValue.value = "";
 };
-console.log(data);
+
 const loadMorePosts = () => {
   let url = import.meta.env.VITE_API_BASE_URL + `quotes?page=${count.value}`;
 
