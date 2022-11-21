@@ -87,14 +87,13 @@
                 <img
                   :src="liked ? '/images/red-like.svg' : '/images/likes.svg'"
                   alt=""
-                  @click="handleLike(item.id)"
+                  @click="handleLike(item.id, item.user_id)"
                 />
               </div>
             </div>
             <hr class="border-[#efefef4d]" />
           </div>
         </div>
-
         <div
           v-for="items in item.comments"
           :key="items.id"
@@ -162,6 +161,9 @@
         </div>
       </div>
     </div>
+    <div v-for="notification in notifications" :key="notification.id">
+      <h2>{{ notification }}</h2>
+    </div>
   </div>
 </template>
 
@@ -174,6 +176,8 @@ import QuoteDialog from "./Dialogs/QuoteDialog.vue";
 import Echo from "laravel-echo";
 import { isAuthenticated } from "../../../router/guards";
 import { useCredentials } from "@/stores/index.js";
+const credentials = useCredentials();
+const notifications = ref([]);
 
 // eslint-disable-next-line no-unused-vars
 const watchAuth = watch(() => {
@@ -202,12 +206,25 @@ window.Echo.channel(`delete-comment-channel`).listen(".delete-comment", () => {
   getQuotes();
 });
 
+// window.Echo.channel(`like-private.` + credentials.user_id).listen(
+//   ".add-private-like",
+//   () => {}
+// );
+
 window.Echo.channel(`like-channel`).listen(".add-like", () => {
   getQuotes();
 });
 
+setTimeout(() => {
+  window.Echo.private("like-notification." + credentials.user_id).listen(
+    ".notify-like",
+
+    () => handleNotifications()
+  );
+}, 500);
+
 const count = ref(2);
-const credentials = useCredentials();
+
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
 const url = import.meta.env.VITE_API_BASE_URL + `quotes?page=1`;
 
@@ -222,7 +239,7 @@ const commentLocale = computed(
 const searchLocale = computed(
   () => i18n.global.messages[i18n.global.locale].NewsFeed.search
 );
-
+const id = ref();
 const data = ref([]);
 const liked = ref(false);
 const searched = computed(() => {
@@ -304,10 +321,15 @@ const loadMorePosts = () => {
   });
 };
 onMounted(() => {
-  axios.get("user").then((res) => (username.value = res.data.username));
+  axios.get("user").then((res) => {
+    username.value = res.data.username;
+    id.value = res.data.id;
+  });
 
   getQuotes();
   onScroll();
+
+  handleNotifications();
 });
 
 const onScroll = () => {
@@ -342,12 +364,19 @@ const deleteQuote = (id) => {
   });
 };
 
-const handleLike = async (id) => {
+const handleNotifications = async () => {
+  const url_notifications = `${import.meta.env.VITE_API_BASE_URL}notifications`;
+  axios.get(url_notifications).then((res) => (notifications.value = res.data));
+};
+
+const handleLike = async (id, author) => {
   const url_like = `${import.meta.env.VITE_API_BASE_URL}quotes-like`;
   axios
     .post(url_like, {
       quote_id: id,
       user_id: credentials.user_id,
+      username: credentials.user_name,
+      author_id: author,
     })
     .then((res) => {
       getQuotes();
