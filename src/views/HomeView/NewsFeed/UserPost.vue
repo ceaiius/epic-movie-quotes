@@ -94,40 +94,43 @@
             <hr class="border-[#efefef4d]" />
           </div>
         </div>
-        <div
-          v-for="items in item.comments"
-          :key="items.id"
-          class="m-6 flex flex-col gap-6 relative text-white"
-        >
-          <div class="flex gap-6">
-            <div class="">
-              <img
-                src="/images/static.png"
-                class="md:w-12 md:h-12 w-10 h-10 object-contain"
-                alt=""
-              />
-            </div>
-            <div>
-              <h2 class="mt-2 font-extrabold">{{ items.author.username }}</h2>
-              <p class="max-w-2xl"></p>
-              <div class="max-w-sm mt-5 flex lg:max-w-prose break-words">
-                <p class="text-grey text-clip overflow-hidden">
-                  {{ items.body }}
-                </p>
+        <div class="max-h-[450px] overflow-auto">
+          <div
+            v-for="items in item.comments"
+            :key="items.id"
+            class="m-6 flex flex-col gap-6 relative text-white"
+          >
+            <div class="flex gap-6">
+              <div class="">
                 <img
-                  :class="
-                    username == items.author.username ? 'block' : 'hidden'
-                  "
-                  class="absolute right-0 cursor-pointer"
-                  src="/images/delete.svg"
+                  src="/images/static.png"
+                  class="md:w-12 md:h-12 w-10 h-10 object-contain"
                   alt=""
-                  @click="deleteQuote(items.id)"
                 />
               </div>
+              <div>
+                <h2 class="mt-2 font-extrabold">{{ items.author.username }}</h2>
+                <p class="max-w-2xl"></p>
+                <div class="max-w-sm mt-5 flex lg:max-w-prose break-words">
+                  <p class="text-grey text-clip overflow-hidden">
+                    {{ items.body }}
+                  </p>
+                  <img
+                    :class="
+                      username == items.author.username ? 'block' : 'hidden'
+                    "
+                    class="absolute right-0 cursor-pointer"
+                    src="/images/delete.svg"
+                    alt=""
+                    @click="deleteQuote(items.id)"
+                  />
+                </div>
+              </div>
             </div>
+            <hr class="border-[#efefef4d] mt-6 w-full" />
           </div>
-          <hr class="border-[#efefef4d] mt-6 w-full" />
         </div>
+
         <div>
           <div class="m-6 flex">
             <img
@@ -135,7 +138,10 @@
               class="hidden lg:block w-12 h-12"
               alt=""
             />
-            <form class="w-full" @submit.prevent="handleComment(item.id)">
+            <form
+              class="w-full"
+              @submit.prevent="handleComment(item.id, item.user_id)"
+            >
               <input
                 id=""
                 v-model="commentValue"
@@ -161,9 +167,6 @@
         </div>
       </div>
     </div>
-    <div v-for="notification in notifications" :key="notification.id">
-      <h2>{{ notification }}</h2>
-    </div>
   </div>
 </template>
 
@@ -177,7 +180,6 @@ import Echo from "laravel-echo";
 import { isAuthenticated } from "../../../router/guards";
 import { useCredentials } from "@/stores/index.js";
 const credentials = useCredentials();
-const notifications = ref([]);
 
 // eslint-disable-next-line no-unused-vars
 const watchAuth = watch(() => {
@@ -206,22 +208,9 @@ window.Echo.channel(`delete-comment-channel`).listen(".delete-comment", () => {
   getQuotes();
 });
 
-// window.Echo.channel(`like-private.` + credentials.user_id).listen(
-//   ".add-private-like",
-//   () => {}
-// );
-
 window.Echo.channel(`like-channel`).listen(".add-like", () => {
   getQuotes();
 });
-
-setTimeout(() => {
-  window.Echo.private("like-notification." + credentials.user_id).listen(
-    ".notify-like",
-
-    () => handleNotifications()
-  );
-}, 500);
 
 const count = ref(2);
 
@@ -303,10 +292,14 @@ const searched = computed(() => {
   }
 });
 
-const handleComment = (id) => {
+const handleComment = (id, author) => {
   const url_comment = `${import.meta.env.VITE_API_BASE_URL}comment/${id}`;
   axios.post(url_comment, {
     body: commentValue.value,
+    quote_id: id,
+    user_id: credentials.user_id,
+    username: credentials.user_name,
+    author_id: author,
   });
 
   commentValue.value = "";
@@ -328,8 +321,6 @@ onMounted(() => {
 
   getQuotes();
   onScroll();
-
-  handleNotifications();
 });
 
 const onScroll = () => {
@@ -362,11 +353,6 @@ const deleteQuote = (id) => {
       getQuotes();
     }
   });
-};
-
-const handleNotifications = async () => {
-  const url_notifications = `${import.meta.env.VITE_API_BASE_URL}notifications`;
-  axios.get(url_notifications).then((res) => (notifications.value = res.data));
 };
 
 const handleLike = async (id, author) => {

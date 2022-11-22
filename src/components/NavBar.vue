@@ -63,7 +63,7 @@
               />
             </li>
             <li>
-              <div class="relative">
+              <div class="relative" @click="openNotifications = true">
                 <img
                   src="/images/bell.svg"
                   class="w-6 h-6 relative top-2 cursor-pointer"
@@ -84,8 +84,17 @@
                     text-sm
                   "
                 >
-                  0
+                  {{ credentials.count }}
                 </div>
+                <teleport to="body">
+                  <dialog-modal
+                    v-if="openNotifications"
+                    top="lg:-translate-x-1/4 lg:-translate-y-1/3 lg:top-1/4 lg:mt-0 mt-28"
+                    @close="openNotifications = false"
+                  >
+                    <NotificationDialog />
+                  </dialog-modal>
+                </teleport>
               </div>
             </li>
 
@@ -136,16 +145,19 @@
 
 <script setup>
 import { computed, onBeforeMount, onMounted, ref } from "vue";
-
+import axios from "@/config/axios/index.js";
 import { useRoute, useRouter } from "vue-router";
 import { setJwtToken } from "../helpers/jwt";
 import DialogModal from "./DialogModal.vue";
 import HamburgerMenu from "../views/HomeView/NewsFeed/HamburgerMenu.vue";
 import SearchDialog from "../views/HomeView/NewsFeed/Dialogs/SearchQuote.vue";
 import SearchDialogMovie from "../views/HomeView/NewsFeed/Dialogs/SearchMovie.vue";
+import NotificationDialog from "./NotificationDialog.vue";
 import { i18n } from "../i18n";
 import router from "../router";
-
+import { useCredentials } from "@/stores/index.js";
+const credentials = useCredentials();
+const openNotifications = ref(false);
 const routeIsMovie = ref(false);
 const routeIsQuote = ref(false);
 const hideSearch = ref(false);
@@ -166,7 +178,7 @@ router.beforeEach((from) => {
 const isHamburgerClicked = ref(false);
 const isQuoteSearch = ref(false);
 const isMovieSearch = ref(false);
-
+const notifications = ref([]);
 const isOpenLogin = ref(false);
 
 const isHiddenDropdown = ref(true);
@@ -186,6 +198,8 @@ onBeforeMount(() => {
 
 onMounted(() => {
   const router = useRouter();
+  handleNotifications();
+  handleCount();
   if (router.currentRoute.value.name == "news-feed") {
     routeIsQuote.value = true;
     hideSearch.value = false;
@@ -199,6 +213,33 @@ onMounted(() => {
     hideSearch.value = true;
   }
 });
+
+const handleCount = () => {
+  const url_notifications = `${
+    import.meta.env.VITE_API_BASE_URL
+  }notifications-count`;
+  axios.get(url_notifications).then((res) => {
+    credentials.count = res.data;
+  });
+};
+
+const handleNotifications = async () => {
+  const url_notifications = `${import.meta.env.VITE_API_BASE_URL}notifications`;
+  axios.get(url_notifications).then((res) => {
+    notifications.value = res.data;
+  });
+};
+
+setTimeout(() => {
+  window.Echo.private("like-notification." + credentials.user_id).listen(
+    ".notify-like",
+
+    () => {
+      handleNotifications();
+      handleCount();
+    }
+  );
+}, 500);
 
 const changeLocale = () => {
   i18n.global.locale = activeLanguage.value;

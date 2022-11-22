@@ -96,5 +96,13 @@ export default {
       are_you_sure_to_make_changes: "დარწმუნებული ხართ ცვლილებებში?",
       confirm: "დადასტურება",
     },
+    Notification: {
+      notifications: "შეტყობინებები",
+      no_notifications_yet: "ცარიელია",
+      mark_as_all_read: "მონიშნე წაკითხულად",
+      commented_to_your_movie_quote: "დატოვა კომენტარი შენს პოსტზე",
+      reacted_to_your_quote: "დაგილაიქა ციტატა",
+      new: "ახალი",
+    },
   },
 };

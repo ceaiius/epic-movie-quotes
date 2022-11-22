@@ -196,7 +196,7 @@
                   <img src="/images/comments.svg" alt="" />
                 </div>
                 <div class="flex gap-6">
-                  <h2>{{ item.likes }}</h2>
+                  <h2>{{ item.users_count }}</h2>
                   <img src="/images/likes.svg" alt="" />
                 </div>
               </div>
@@ -295,6 +295,7 @@ const url = import.meta.env.VITE_API_STORAGE_URL;
 const url_quotes = import.meta.env.VITE_API_BASE_URL + "quotes-all";
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
 const data_quotes = ref([]);
+console.log(data_quotes);
 const loadQuotes = computed(() => {
   return data_quotes.value.length > 0 ? true : false;
 });
@@ -319,7 +320,6 @@ const getQuotes = () => {
     const filtered = res.data.filter((x) => x.movie_id == data?.value.id);
     data_quotes.value = filtered;
     count.value = filtered.length;
-    console.log(res.data);
   });
 };
 
@@ -334,9 +334,8 @@ const deleteQuote = (id) => {
 
 const deleteMovie = () => {
   const url = `${import.meta.env.VITE_API_BASE_URL}movies/${id}`;
-  axios.delete(url).then((res) => {
+  axios.delete(url).then(() => {
     router.push({ name: "list-of-movies" });
-    console.log(res);
   });
 };
 </script>
