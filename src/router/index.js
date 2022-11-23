@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import LandingView from "../views/LandingView/index.vue";
 import HomeView from "../views/HomeView/index.vue";
 import { isAuthenticated, isRemembered } from "@/router/guards.js";
-import RedirectView from "../views/ErrorView/RedirectView.vue";
+
 import PermissionDenied from "../views/ErrorView/PermissionDenied.vue";
 import UserPost from "../views/HomeView/NewsFeed/UserPost.vue";
 import MovieList from "../views/HomeView/NewsFeed/Movies/MovieList.vue";
@@ -10,13 +10,16 @@ import SingleMovie from "../views/HomeView/NewsFeed/Movies/SingleMovie.vue";
 import NotFound from "../views/ErrorView/NotFound.vue";
 import GoogleProfile from "../views/HomeView/Profile/GoogleProfile/Index.vue";
 import EmailProfile from "../views/HomeView/Profile/EmailProfile/Index.vue";
+import { useAuthStore } from "@/stores/auth";
+import axios from "axios";
+axios.defaults.withCredentials = true;
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
       name: "landing",
-      beforeEnter: [isRemembered],
+      beforeEnter: isRemembered,
       component: LandingView,
     },
     {
@@ -33,7 +36,7 @@ const router = createRouter({
       name: "home",
       redirect: "/home/news-feed",
       component: HomeView,
-      beforeEnter: [isAuthenticated],
+      beforeEnter: isAuthenticated,
       children: [
         {
           name: "news-feed",
@@ -62,12 +65,24 @@ const router = createRouter({
         },
       ],
     },
-    {
-      path: "/redirect",
-      name: "redirect",
-      component: RedirectView,
-    },
   ],
+});
+
+router.beforeEach(async (to, from, next) => {
+  const authStore = useAuthStore();
+
+  if (authStore.authenticated === null) {
+    try {
+      await axios.get(`${import.meta.env.VITE_API_BASE_URL}me`);
+      authStore.authenticated = true;
+    } catch (err) {
+      authStore.authenticated = false;
+    } finally {
+      // eslint-disable-next-line no-unsafe-finally
+      return next();
+    }
+  }
+  return next();
 });
 
 export default router;

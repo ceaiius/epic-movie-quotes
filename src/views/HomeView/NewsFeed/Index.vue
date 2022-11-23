@@ -81,6 +81,7 @@ onMounted(() => {
       googleUser.value = false;
     }
   });
+  console.log(document);
 });
 
 const isActive = (name) => {

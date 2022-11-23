@@ -62,7 +62,7 @@
             <h2>{{ notification.from.username }}</h2>
             <div v-if="notification.type == 'like'" class="flex gap-2">
               <img src="/images/heart.svg" alt="" />
-              <h3 class="text-sm lg:text-base">
+              <h3 class="text-sm lg:text-base whitespace-nowrap">
                 {{ $t("Notification.reacted_to_your_quote") }}
               </h3>
             </div>

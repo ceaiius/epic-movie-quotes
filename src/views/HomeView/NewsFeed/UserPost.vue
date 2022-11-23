@@ -194,7 +194,7 @@ const watchAuth = watch(() => {
       enabledTransports: ["ws", "wss"],
       auth: {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },
       },
     });

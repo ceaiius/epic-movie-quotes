@@ -23,7 +23,7 @@
         @submit="$emit('openPasswordSent')"
       >
         <Field
-          v-model="email"
+          v-model="credentials.forgot_password_email"
           type="email"
           name="email"
           :rules="validateEmail"
@@ -82,25 +82,9 @@
 import { Field, Form, ErrorMessage } from "vee-validate";
 import { useCredentials } from "@/stores/index.js";
 
-import { computed, onMounted } from "vue";
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["openPasswordSent", "backToLogin"]);
 const credentials = useCredentials();
-const email = computed({
-  get() {
-    return credentials.forgot_password_email
-      ? credentials.forgot_password_email
-      : "";
-  },
-
-  set(value) {
-    credentials.setForgotPasswordEmail(value);
-  },
-});
-
-onMounted(() => {
-  credentials.getForgotPasswordEmail();
-});
 
 const validateEmail = (value) => {
   // if the field is empty
