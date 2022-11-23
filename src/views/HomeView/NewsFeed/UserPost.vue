@@ -1,11 +1,14 @@
 <template>
-  <div class="flex flex-col mt-10 items-center w-full" @scroll="onScroll">
+  <div
+    class="flex flex-col mt-0 lg:mt-10 items-center w-full"
+    @scroll="onScroll"
+  >
     <div>
       <div class="flex">
         <div
           class="
             lg:w-56
-            w-full
+            w-screen
             lg:h-14
             h-32
             flex
@@ -84,48 +87,50 @@
                 <img
                   :src="liked ? '/images/red-like.svg' : '/images/likes.svg'"
                   alt=""
-                  @click="handleLike(item.id)"
+                  @click="handleLike(item.id, item.user_id)"
                 />
               </div>
             </div>
             <hr class="border-[#efefef4d]" />
           </div>
         </div>
-
-        <div
-          v-for="items in item.comments"
-          :key="items.id"
-          class="m-6 flex flex-col gap-6 relative text-white"
-        >
-          <div class="flex gap-6">
-            <div class="">
-              <img
-                src="/images/static.png"
-                class="md:w-12 md:h-12 w-10 h-10 object-contain"
-                alt=""
-              />
-            </div>
-            <div>
-              <h2 class="mt-2 font-extrabold">{{ items.author.username }}</h2>
-              <p class="max-w-2xl"></p>
-              <div class="max-w-sm mt-5 flex lg:max-w-prose break-words">
-                <p class="text-grey text-clip overflow-hidden">
-                  {{ items.body }}
-                </p>
+        <div class="max-h-[450px] overflow-auto">
+          <div
+            v-for="items in item.comments"
+            :key="items.id"
+            class="m-6 flex flex-col gap-6 relative text-white"
+          >
+            <div class="flex gap-6">
+              <div class="">
                 <img
-                  :class="
-                    username == items.author.username ? 'block' : 'hidden'
-                  "
-                  class="absolute right-0 cursor-pointer"
-                  src="/images/delete.svg"
+                  src="/images/static.png"
+                  class="md:w-12 md:h-12 w-10 h-10 object-contain"
                   alt=""
-                  @click="deleteQuote(items.id)"
                 />
               </div>
+              <div>
+                <h2 class="mt-2 font-extrabold">{{ items.author.username }}</h2>
+                <p class="max-w-2xl"></p>
+                <div class="max-w-sm mt-5 flex lg:max-w-prose break-words">
+                  <p class="text-grey text-clip overflow-hidden">
+                    {{ items.body }}
+                  </p>
+                  <img
+                    :class="
+                      username == items.author.username ? 'block' : 'hidden'
+                    "
+                    class="absolute right-0 cursor-pointer"
+                    src="/images/delete.svg"
+                    alt=""
+                    @click="deleteQuote(items.id)"
+                  />
+                </div>
+              </div>
             </div>
+            <hr class="border-[#efefef4d] mt-6 w-full" />
           </div>
-          <hr class="border-[#efefef4d] mt-6 w-full" />
         </div>
+
         <div>
           <div class="m-6 flex">
             <img
@@ -133,7 +138,10 @@
               class="hidden lg:block w-12 h-12"
               alt=""
             />
-            <form class="w-full" @submit.prevent="handleComment(item.id)">
+            <form
+              class="w-full"
+              @submit.prevent="handleComment(item.id, item.user_id)"
+            >
               <input
                 id=""
                 v-model="commentValue"
@@ -171,6 +179,7 @@ import QuoteDialog from "./Dialogs/QuoteDialog.vue";
 import Echo from "laravel-echo";
 import { isAuthenticated } from "../../../router/guards";
 import { useCredentials } from "@/stores/index.js";
+const credentials = useCredentials();
 
 // eslint-disable-next-line no-unused-vars
 const watchAuth = watch(() => {
@@ -204,7 +213,7 @@ window.Echo.channel(`like-channel`).listen(".add-like", () => {
 });
 
 const count = ref(2);
-const credentials = useCredentials();
+
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
 const url = import.meta.env.VITE_API_BASE_URL + `quotes?page=1`;
 
@@ -219,7 +228,7 @@ const commentLocale = computed(
 const searchLocale = computed(
   () => i18n.global.messages[i18n.global.locale].NewsFeed.search
 );
-
+const id = ref();
 const data = ref([]);
 const liked = ref(false);
 const searched = computed(() => {
@@ -283,15 +292,19 @@ const searched = computed(() => {
   }
 });
 
-const handleComment = (id) => {
+const handleComment = (id, author) => {
   const url_comment = `${import.meta.env.VITE_API_BASE_URL}comment/${id}`;
   axios.post(url_comment, {
     body: commentValue.value,
+    quote_id: id,
+    user_id: credentials.user_id,
+    username: credentials.user_name,
+    author_id: author,
   });
 
   commentValue.value = "";
 };
-console.log(data);
+
 const loadMorePosts = () => {
   let url = import.meta.env.VITE_API_BASE_URL + `quotes?page=${count.value}`;
 
@@ -301,7 +314,10 @@ const loadMorePosts = () => {
   });
 };
 onMounted(() => {
-  axios.get("user").then((res) => (username.value = res.data.username));
+  axios.get("user").then((res) => {
+    username.value = res.data.username;
+    id.value = res.data.id;
+  });
 
   getQuotes();
   onScroll();
@@ -339,12 +355,14 @@ const deleteQuote = (id) => {
   });
 };
 
-const handleLike = async (id) => {
+const handleLike = async (id, author) => {
   const url_like = `${import.meta.env.VITE_API_BASE_URL}quotes-like`;
   axios
     .post(url_like, {
       quote_id: id,
       user_id: credentials.user_id,
+      username: credentials.user_name,
+      author_id: author,
     })
     .then((res) => {
       getQuotes();

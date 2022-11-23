@@ -16,7 +16,9 @@
           alt=""
         />
         <div>
-          <h2 class="text-white text-2xl">{{ credentials.user_name }}</h2>
+          <h2 class="text-white text-2xl whitespace-nowrap">
+            {{ credentials.user_name }}
+          </h2>
           <h3 class="text-input_bg text-base cursor-pointer">
             <router-link
               :to="{ name: googleUser ? 'google_profile' : 'email_profile' }"

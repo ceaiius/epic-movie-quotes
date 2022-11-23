@@ -56,7 +56,7 @@
             />
           </div>
           <div class="relative">
-            <InputField name="thumbnail" type="file" rules="required|min:3" />
+            <InputFile />
           </div>
 
           <button
@@ -81,11 +81,11 @@
 </template>
     
 <script setup>
-import InputField from "../Form/InputField.vue";
 import { Form } from "vee-validate";
 import InputTextAreaNew from "../Form/InputTextAreaNew.vue";
 import { onMounted, ref } from "vue";
 import axios from "@/config/axios/index.js";
+import InputFile from "../Form/InputFile.vue";
 const props = defineProps(["id"]);
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["delete", "exit", "updateQuotes", "closePopup"]);

@@ -99,5 +99,13 @@ export default {
       are_you_sure_to_make_changes: "Are you sure to make changes",
       confirm: "Confirm",
     },
+    Notification: {
+      notifications: "Notifications",
+      no_notifications_yet: "No notifications yet",
+      mark_as_all_read: "Mark as all read",
+      commented_to_your_movie_quote: "Commented to your movie quote",
+      reacted_to_your_quote: "Reacted to your quote",
+      new: "New",
+    },
   },
 };

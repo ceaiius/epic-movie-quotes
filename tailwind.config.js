@@ -15,6 +15,7 @@ module.exports = {
         black_bg: "#11101A",
         rgba: "rgba(25, 135, 84, 0.2)",
         border_rgba: "rgba(206, 212, 218, 0.2)",
+        notification_border: "rgba(108,117,125,0.5)",
       },
       screens: {
         xs: "375px",
