@@ -299,12 +299,13 @@ const handleForgotPassword = async () => {
 
 const handleLogin = async () => {
   try {
-    await axios.post(`login`, {
+    const res = await axios.post(`login`, {
       email: email.value,
       password: password.value,
       remember: remember.value,
     });
     authStore.authenticated = true;
+    localStorage.setItem("access_token", res.data);
     router.push({ name: "home" });
   } catch (err) {
     console.log(err);

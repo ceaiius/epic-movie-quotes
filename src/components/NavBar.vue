@@ -181,7 +181,6 @@ router.beforeEach((from) => {
 const isHamburgerClicked = ref(false);
 const isQuoteSearch = ref(false);
 const isMovieSearch = ref(false);
-const notifications = ref([]);
 const isOpenLogin = ref(false);
 
 const isHiddenDropdown = ref(true);
@@ -199,7 +198,6 @@ const handleLogout = async () => {
 
 onMounted(() => {
   const router = useRouter();
-  handleNotifications();
   handleCount();
   if (router.currentRoute.value.name == "news-feed") {
     routeIsQuote.value = true;
@@ -224,19 +222,11 @@ const handleCount = () => {
   });
 };
 
-const handleNotifications = async () => {
-  const url_notifications = `${import.meta.env.VITE_API_BASE_URL}notifications`;
-  axios.get(url_notifications).then((res) => {
-    notifications.value = res.data;
-  });
-};
-
 setTimeout(() => {
   window.Echo.private("like-notification." + credentials.user_id).listen(
     ".notify-like",
 
     () => {
-      handleNotifications();
       handleCount();
     }
   );

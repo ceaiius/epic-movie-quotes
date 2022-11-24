@@ -19,7 +19,7 @@
     />
     <div class="flex justify-between items-center text-white pl-12 pr-12 pt-12">
       <h1>{{ $t("Notification.notifications") }}</h1>
-      <div v-if="notifications.length == 0">
+      <div v-if="credentials.notifications.length == 0">
         <h2 class="text-white">
           {{ $t("Notification.no_notifications_yet") }}
         </h2>
@@ -29,7 +29,10 @@
       </h2>
     </div>
 
-    <div v-for="notification in notifications" :key="notification.id">
+    <div
+      v-for="notification in credentials.notifications"
+      :key="notification.id"
+    >
       <div
         class="
           flex
@@ -96,11 +99,10 @@
 <script setup>
 // eslint-disable-next-line no-unused-vars
 import axios from "@/config/axios/index.js";
-import { onMounted, ref } from "vue";
+import { onMounted } from "vue";
 import { useCredentials } from "@/stores/index.js";
 const credentials = useCredentials();
 
-const notifications = ref([]);
 const url_notifications = `${import.meta.env.VITE_API_BASE_URL}notifications`;
 function timeAgo(input) {
   const date = input instanceof Date ? input : new Date(input);
@@ -136,12 +138,12 @@ setTimeout(() => {
 }, 500);
 const handleNotifications = async () => {
   axios.get(url_notifications).then((res) => {
-    notifications.value = res.data;
+    credentials.notifications = res.data;
   });
 };
 
 const handleRead = () => {
-  let ids = notifications.value.map((x) => x.id);
+  let ids = credentials.notifications.map((x) => x.id);
   axios
     .post(url_notifications, {
       ids: ids,

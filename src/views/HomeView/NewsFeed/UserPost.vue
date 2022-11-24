@@ -192,16 +192,13 @@ const watchAuth = watch(() => {
       forceTLS: true,
       withCredentials: true,
       enabledTransports: ["ws", "wss"],
-      auth: {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        },
-      },
     });
   }
 });
 window.Echo.channel(`comment-channel`).listen(".new-comment", () => {
   getQuotes();
+  handleCount();
+  handleNotifications();
 });
 
 window.Echo.channel(`delete-comment-channel`).listen(".delete-comment", () => {
@@ -210,7 +207,18 @@ window.Echo.channel(`delete-comment-channel`).listen(".delete-comment", () => {
 
 window.Echo.channel(`like-channel`).listen(".add-like", () => {
   getQuotes();
+  handleCount();
+  handleNotifications();
 });
+
+const handleCount = () => {
+  const url_notifications = `${
+    import.meta.env.VITE_API_BASE_URL
+  }notifications-count`;
+  axios.get(url_notifications).then((res) => {
+    credentials.count = res.data;
+  });
+};
 
 const count = ref(2);
 
@@ -338,6 +346,13 @@ const onScroll = () => {
       loadMorePosts();
     }
   };
+};
+
+const handleNotifications = async () => {
+  const url_notifications = `${import.meta.env.VITE_API_BASE_URL}notifications`;
+  axios.get(url_notifications).then((res) => {
+    credentials.notifications = res.data;
+  });
 };
 
 const getQuotes = () => {
