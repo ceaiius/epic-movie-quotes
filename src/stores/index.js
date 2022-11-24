@@ -13,6 +13,8 @@ export const useCredentials = defineStore("credentials", {
       user_id: null,
       liked: false,
       count: 0,
+      token: "",
+      notifications: [],
     };
   },
 });
