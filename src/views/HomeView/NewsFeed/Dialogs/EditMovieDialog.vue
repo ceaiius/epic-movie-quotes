@@ -34,75 +34,83 @@
         <div class="flex flex-col gap-6">
           <div class="relative">
             <InputField
+              v-model="name_en"
               placeholder="Movie name"
               name="name_en"
               language="Eng"
-              rules="required|min:3|eng"
+              rules="min:3|eng"
             />
           </div>
           <div class="relative">
             <InputField
+              v-model="name_ka"
               placeholder="ფილმის სახელი"
               language="ქარ"
               name="name_ka"
-              rules="required|min:3|geo"
+              rules="min:3|geo"
             />
           </div>
           <div class="relative">
             <InputField
+              v-model="genre"
               :placeholder="$t('MovieList.genre')"
               name="genre"
-              rules="required|min:3|eng"
+              rules="min:3|eng"
             />
           </div>
           <div class="relative">
             <InputField
+              v-model="director_en"
               placeholder="Director"
               language="En"
               name="director_en"
-              rules="required|min:3|eng"
+              rules="min:3|eng"
             />
           </div>
           <div class="relative">
             <InputField
+              v-model="director_ka"
               placeholder="რეჟისორი"
               language="Ka"
               name="director_ka"
-              rules="required|min:3|geo"
+              rules="min:3|geo"
             />
           </div>
           <div class="relative">
             <InputField
+              v-model="description_en"
               placeholder="Movie description"
               language="En"
               name="description_en"
-              rules="required|min:3|eng"
+              rules="min:3|eng"
             />
           </div>
           <div class="relative">
             <InputField
+              v-model="description_ka"
               placeholder="ფილმის აღწერა"
               language="ქარ"
               name="description_ka"
-              rules="required|min:3|geo"
+              rules="min:3|geo"
             />
           </div>
           <div class="relative">
             <InputField
+              v-model="year"
               :placeholder="$t('MovieList.year')"
               name="year"
-              rules="required|num"
+              rules="num"
             />
           </div>
           <div class="relative">
             <InputField
+              v-model="budget"
               :placeholder="$t('MovieList.budget')"
               name="budget"
-              rules="required|num"
+              rules="num"
             />
           </div>
           <div class="relative">
-            <!-- <InputField placeholder="thumbnail" name="thumbnail" type="file" /> -->
             <InputFile />
           </div>
 
@@ -132,15 +140,47 @@ import axios from "@/config/axios/index.js";
 import InputField from "../Form/InputField.vue";
 import InputFile from "../Form/InputFile.vue";
 import { useRoute } from "vue-router";
+import { onMounted, ref } from "vue";
 const emit = defineEmits(["updateMovies", "closePopup"]);
 const route = useRoute();
 const id = route.params.id;
 const url = `${import.meta.env.VITE_API_BASE_URL}movies/${id}`;
+const name_en = ref("");
+const name_ka = ref("");
+const director_en = ref("");
+const director_ka = ref("");
+const description_en = ref("");
+const description_ka = ref("");
+const genre = ref("");
+const budget = ref();
+const year = ref();
 const header = {
   headers: {
     "Content-Type": "multipart/form-data",
   },
 };
+
+const data = ref([]);
+
+onMounted(() => {
+  getMovies();
+});
+const getMovies = () => {
+  const url = `${import.meta.env.VITE_API_BASE_URL}movies/${id}`;
+  axios.get(url).then((res) => {
+    data.value = res.data;
+    name_en.value = data.value.name.en;
+    name_ka.value = data.value.name.ka;
+    director_en.value = data.value.director.en;
+    director_ka.value = data.value.director.ka;
+    description_en.value = data.value.description.en;
+    description_ka.value = data.value.description.ka;
+    genre.value = data.value.genre;
+    year.value = data.value.year;
+    budget.value = data.value.budget;
+  });
+};
+
 const handleSubmit = (values) => {
   axios
     .post(
