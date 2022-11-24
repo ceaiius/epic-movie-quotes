@@ -95,11 +95,13 @@
 </template>
 
 <script setup>
-import axios from "@/config/axios/index.js";
+import axios from "@/config/axios/jwt.js";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import router from "../../../router";
+import { useAuthStore } from "@/stores/auth";
 const username = ref("");
+const authStore = useAuthStore();
 const googleUser = ref(false);
 onMounted(() => {
   axios.get("user").then((res) => {
@@ -115,8 +117,14 @@ const isActive = (name) => {
   return name === useRouter().currentRoute.value.name;
 };
 
-const handleLogout = () => {
-  document.cookie = `jwt_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
-  router.push({ name: "landing" });
+const handleLogout = async () => {
+  try {
+    await axios.get("logout");
+    authStore.authenticated = false;
+  } catch (err) {
+    console.log(err);
+  } finally {
+    router.push({ name: "landing" });
+  }
 };
 </script>

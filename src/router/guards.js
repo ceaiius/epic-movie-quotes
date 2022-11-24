@@ -1,13 +1,20 @@
-import { getJwtToken } from "@/helpers/jwt/index.js";
+// export function isRemembered() {
+//   if (getJwtToken()) {
+//     return "/home";
+//   }
+// }
 
-export function isAuthenticated() {
-  if (!getJwtToken()) {
+import { useAuthStore } from "@/stores/auth";
+export const isAuthenticated = () => {
+  const authStore = useAuthStore();
+  if (!authStore.authenticated) {
     return "/denied";
   }
-}
+};
 
-export function isRemembered() {
-  if (getJwtToken()) {
+export const isRemembered = () => {
+  const authStore = useAuthStore();
+  if (authStore.authenticated) {
     return "/home";
   }
-}
+};

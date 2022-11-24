@@ -144,19 +144,22 @@
 </template>
 
 <script setup>
-import { computed, onBeforeMount, onMounted, ref } from "vue";
-import axios from "@/config/axios/index.js";
-import { useRoute, useRouter } from "vue-router";
-import { setJwtToken } from "../helpers/jwt";
+import { computed, onMounted, ref } from "vue";
+import axios from "@/config/axios/jwt.js";
+import { useRouter } from "vue-router";
+
 import DialogModal from "./DialogModal.vue";
 import HamburgerMenu from "../views/HomeView/NewsFeed/HamburgerMenu.vue";
 import SearchDialog from "../views/HomeView/NewsFeed/Dialogs/SearchQuote.vue";
 import SearchDialogMovie from "../views/HomeView/NewsFeed/Dialogs/SearchMovie.vue";
 import NotificationDialog from "./NotificationDialog.vue";
+import { useAuthStore } from "@/stores/auth";
+
 import { i18n } from "../i18n";
 import router from "../router";
 import { useCredentials } from "@/stores/index.js";
 const credentials = useCredentials();
+const authStore = useAuthStore();
 const openNotifications = ref(false);
 const routeIsMovie = ref(false);
 const routeIsQuote = ref(false);
@@ -183,18 +186,16 @@ const isOpenLogin = ref(false);
 
 const isHiddenDropdown = ref(true);
 
-const handleLogout = () => {
-  document.cookie = `jwt_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
-  router.push({ name: "landing" });
-};
-
-onBeforeMount(() => {
-  const route = useRoute();
-
-  if (route.query.token) {
-    setJwtToken(route.query.token, route.query.expires_in, 1000);
+const handleLogout = async () => {
+  try {
+    await axios.get("logout");
+    authStore.authenticated = false;
+  } catch (err) {
+    console.log(err);
+  } finally {
+    router.push({ name: "landing" });
   }
-});
+};
 
 onMounted(() => {
   const router = useRouter();

@@ -263,19 +263,21 @@
 </template>
 
 <script setup>
-import axios from "@/config/axios/index.js";
+import axios from "@/config/axios/jwt.js";
 import { Field, Form, ErrorMessage } from "vee-validate";
 import DialogModal from "@/components/DialogModal.vue";
 import ForgotPassword from "./notifications/ForgotPassword.vue";
 import { computed, ref } from "vue";
 
-import { setJwtToken } from "../../helpers/jwt";
 import router from "../../router";
 import PasswordSent from "./notifications/PasswordSent.vue";
 import { useCredentials } from "@/stores/index.js";
 import { i18n } from "../../i18n";
+import { useAuthStore } from "@/stores/auth";
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["openRegistration", "closeDialog"]);
+const authStore = useAuthStore();
+
 const email = ref("");
 const password = ref("");
 const errorInput = ref(false);
@@ -296,27 +298,17 @@ const handleForgotPassword = async () => {
 };
 
 const handleLogin = async () => {
-  axios
-    .post("login", {
+  try {
+    await axios.post(`login`, {
       email: email.value,
       password: password.value,
-    })
-    .then((response) => {
-      router.push({ name: "home" });
-      if (remember.value == "yes") {
-        setJwtToken(
-          response.data.access_token,
-          response.data.expires_in,
-          365000
-        );
-      } else {
-        setJwtToken(response.data.access_token, response.data.expires_in, 1000);
-      }
-    })
-    .catch((error) => {
-      errorInput.value = true;
-      errorMessage.value = error.response.data.error;
+      remember: remember.value,
     });
+    authStore.authenticated = true;
+    router.push({ name: "home" });
+  } catch (err) {
+    console.log(err);
+  }
 };
 const placeholderPassword = computed(
   () => i18n.global.messages[i18n.global.locale].LoginForm.password_placeholder
