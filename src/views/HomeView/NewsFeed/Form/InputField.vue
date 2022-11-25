@@ -14,11 +14,14 @@
       :class="[
         meta.valid && meta.touched ? 'border border-green-500' : '',
         !meta.valid && meta.touched ? 'border border-red-500' : '',
+        height,
       ]"
       v-bind="field"
       :placeholder="placeholder"
       :type="type"
-    /><span class="absolute text-white top-2 right-2">{{ language }}</span>
+    /><span class="absolute text-white top-2 right-2" :class="span">{{
+      language
+    }}</span>
   </Field>
 </template>
 
@@ -26,5 +29,13 @@
 import { Field } from "vee-validate";
 
 // eslint-disable-next-line no-unused-vars
-const props = defineProps(["placeholder", "language", "name", "rules", "type"]);
+const props = defineProps([
+  "placeholder",
+  "language",
+  "name",
+  "rules",
+  "type",
+  "height",
+  "span",
+]);
 </script>

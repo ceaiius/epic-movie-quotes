@@ -376,11 +376,13 @@
     <teleport to="body">
       <dialog-modal
         v-if="isOpenValidation"
-        @close="(isOpenValidation = false), (isNotRegistered = false)"
+        @close="
+          (isOpenValidation = false), (credentials.isOpenRegister = false)
+        "
       >
         <ValidateEmail
           @close-validate="
-            (isOpenValidation = false), (isNotRegistered = false)
+            (isOpenValidation = false), (credentials.isOpenRegister = false)
           "
         />
       </dialog-modal>
@@ -396,7 +398,8 @@ import { i18n } from "../../i18n";
 import DialogModal from "@/components/DialogModal.vue";
 
 import ValidateEmail from "./notifications/ValidateEmail.vue";
-
+import { useCredentials } from "@/stores/index.js";
+const credentials = useCredentials();
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["openLogin", "closeDialog"]);
 

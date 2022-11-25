@@ -177,12 +177,14 @@
               </div>
             </div>
 
-            <img
-              class="absolute right-6 bottom-6 lg:top-6 z-50 cursor-pointer"
-              src="/images/dots.svg"
-              alt=""
-              @click="quoteCrud = item.id"
-            />
+            <div>
+              <img
+                class="absolute right-6 bottom-6 lg:top-6 z-50 cursor-pointer"
+                src="/images/dots.svg"
+                alt=""
+                @click="quoteCrud = item.id"
+              />
+            </div>
             <div
               class="
                 flex flex-col
@@ -244,13 +246,16 @@
                   : data?.director?.ka
               }}
             </p>
-            <p>{{ $t("MovieList.budget") }}: {{ data?.budget }}$</p>
+
+            <p>{{ $t("MovieList.budget") }}: {{ data?.budget }} $</p>
+
             <p>
               {{
                 i18n.global.locale == "En"
                   ? data?.description?.en
                   : data?.description?.ka
               }}
+              {{}}
             </p>
           </div>
         </div>
@@ -310,6 +315,7 @@ import ViewQuoteDialog from "../Dialogs/ViewQuoteDialog.vue";
 const quoteCrud = ref();
 const editQuote = ref(false);
 const addQuote = ref(false);
+
 const viewQuote = ref(false);
 const url = import.meta.env.VITE_API_STORAGE_URL;
 const url_quotes = import.meta.env.VITE_API_BASE_URL + "quotes-all";
@@ -330,6 +336,7 @@ const getMovies = () => {
   const url = `${import.meta.env.VITE_API_BASE_URL}movies/${id}`;
   axios.get(url).then((res) => {
     data.value = res.data;
+
     genres.value = JSON.parse(res.data.genre);
   });
 };

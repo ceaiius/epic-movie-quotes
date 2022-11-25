@@ -102,7 +102,7 @@
               v-model="budget"
               :placeholder="$t('MovieList.budget')"
               name="budget"
-              rules="num"
+              rules="numeric"
             />
           </div>
           <div class="relative">

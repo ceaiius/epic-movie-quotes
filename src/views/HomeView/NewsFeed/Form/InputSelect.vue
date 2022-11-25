@@ -26,7 +26,7 @@
         @click="toggleGenres"
       >
         <div
-          v-for="(chip, index) of chips"
+          v-for="(chip, index) in credentials.chip"
           :key="chip.label"
           class="bg-default_red flex items-center ml-2 pl-2 rounded-sm w-max"
         >
@@ -78,17 +78,20 @@
 
 <script setup>
 import { Field } from "vee-validate";
-import { onMounted, ref } from "vue";
+import { onBeforeMount, ref } from "vue";
+import { useCredentials } from "@/stores/index.js";
+const credentials = useCredentials();
 const chips = ref([]);
 const open = ref(false);
 const genres = ref();
 // eslint-disable-next-line no-unused-vars
 const props = defineProps(["name", "values"]);
 
-onMounted(() => {
+onBeforeMount(() => {
   setTimeout(() => {
     props.values.map((x) => chips.value.push(x));
-  }, 64);
+    credentials.chip = props.values;
+  }, 100);
 });
 
 const movieGenres = [

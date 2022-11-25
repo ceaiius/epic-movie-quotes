@@ -1,9 +1,10 @@
 import { defineRule } from "vee-validate";
-import { required, min, max, confirmed } from "@vee-validate/rules";
+import { required, min, max, confirmed, numeric } from "@vee-validate/rules";
 defineRule("min", min);
 defineRule("max", max);
 defineRule("required", required);
 defineRule("confirmed", confirmed);
+defineRule("numeric", numeric);
 
 defineRule("email", (value) => {
   const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
@@ -42,7 +43,7 @@ defineRule("eng", (value) => {
 });
 
 defineRule("num", (value) => {
-  const regex = /^(195\d|200\d|2022)$/;
+  const regex = /^(19[5-9]\d|20[0-4]\d|2022)$/;
   if (!regex.test(value)) {
     return false;
   }
