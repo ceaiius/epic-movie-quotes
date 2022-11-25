@@ -51,12 +51,7 @@
             />
           </div>
           <div class="relative">
-            <InputField
-              v-model="genre"
-              :placeholder="$t('MovieList.genre')"
-              name="genre"
-              rules="min:3|eng"
-            />
+            <InputSelect name="genre" :values="genre" />
           </div>
           <div class="relative">
             <InputField
@@ -139,6 +134,7 @@ import { Form } from "vee-validate";
 import axios from "@/config/axios/index.js";
 import InputField from "../Form/InputField.vue";
 import InputFile from "../Form/InputFile.vue";
+import InputSelect from "../Form/InputSelect.vue";
 import { useRoute } from "vue-router";
 import { onMounted, ref } from "vue";
 const emit = defineEmits(["updateMovies", "closePopup"]);
@@ -151,9 +147,10 @@ const director_en = ref("");
 const director_ka = ref("");
 const description_en = ref("");
 const description_ka = ref("");
-const genre = ref("");
+const genre = ref([]);
 const budget = ref();
 const year = ref();
+
 const header = {
   headers: {
     "Content-Type": "multipart/form-data",
@@ -175,7 +172,7 @@ const getMovies = () => {
     director_ka.value = data.value.director.ka;
     description_en.value = data.value.description.en;
     description_ka.value = data.value.description.ka;
-    genre.value = data.value.genre;
+    genre.value = JSON.parse(data.value.genre);
     year.value = data.value.year;
     budget.value = data.value.budget;
   });

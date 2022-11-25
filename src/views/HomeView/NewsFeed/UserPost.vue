@@ -171,30 +171,17 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { i18n } from "../../../i18n";
 import axios from "@/config/axios/index.js";
 import DialogModal from "../../../components/DialogModal.vue";
 import QuoteDialog from "./Dialogs/QuoteDialog.vue";
-import Echo from "laravel-echo";
-import { isAuthenticated } from "../../../router/guards";
+
 import { useCredentials } from "@/stores/index.js";
 const credentials = useCredentials();
 
 // eslint-disable-next-line no-unused-vars
-const watchAuth = watch(() => {
-  if (isAuthenticated) {
-    window.Echo = new Echo({
-      authEndpoint: `${import.meta.env.VITE_API_BASE_URL}broadcasting/auth`,
-      broadcaster: "pusher",
-      key: import.meta.env.VITE_PUSHER_APP_KEY,
-      cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
-      forceTLS: true,
-      withCredentials: true,
-      enabledTransports: ["ws", "wss"],
-    });
-  }
-});
+
 window.Echo.channel(`comment-channel`).listen(".new-comment", () => {
   getQuotes();
   handleCount();
