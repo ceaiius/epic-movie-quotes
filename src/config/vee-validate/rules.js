@@ -4,7 +4,7 @@ defineRule("min", min);
 defineRule("max", max);
 defineRule("required", required);
 defineRule("confirmed", confirmed);
-defineRule("num", numeric);
+defineRule("numeric", numeric);
 
 defineRule("email", (value) => {
   const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
@@ -25,7 +25,7 @@ defineRule("username", (value) => {
 });
 
 defineRule("geo", (value) => {
-  const regex = /^[ა-ჰა-ჰ\s]*$/;
+  const regex = /^[ა-ჰა-ჰ\s][ა-ჰა-ჰ0-9\s]*$/;
   if (!regex.test(value)) {
     return false;
   }
@@ -34,7 +34,16 @@ defineRule("geo", (value) => {
 });
 
 defineRule("eng", (value) => {
-  const regex = /^[a-zA-Z\s]*$/;
+  const regex = /^[A-Za-z\s][A-Za-z0-9\s]*$/;
+  if (!regex.test(value)) {
+    return false;
+  }
+
+  return true;
+});
+
+defineRule("num", (value) => {
+  const regex = /^(19[5-9]\d|20[0-4]\d|2022)$/;
   if (!regex.test(value)) {
     return false;
   }

@@ -238,10 +238,14 @@
     <teleport to="body">
       <dialog-modal
         v-if="isOpenForgotPassword"
-        @close="(isOpenForgotPassword = false), (isNotLogged = false)"
+        @close="
+          (isOpenForgotPassword = false), (credentials.isOpenLogin = false)
+        "
       >
         <ForgotPassword
-          @back-to-login="(isOpenForgotPassword = false), (isNotLogged = true)"
+          @back-to-login="
+            (isOpenForgotPassword = false), (credentials.isOpenLogin = true)
+          "
           @open-password-sent="handleForgotPassword"
         />
       </dialog-modal>
@@ -249,12 +253,12 @@
     <teleport to="body">
       <dialog-modal
         v-if="isOpenPasswordSent"
-        @close="isOpenPasswordSent = false"
+        @close="(isOpenPasswordSent = false), (credentials.isOpenLogin = false)"
       >
         <PasswordSent
-          @skip="(isOpenPasswordSent = false), (isNotLogged = true)"
+          @skip="(isOpenPasswordSent = false), (credentials.isOpenLogin = true)"
           @close-password-sent="
-            (isOpenPasswordSent = false), (isNotLogged = false)
+            (isOpenPasswordSent = false), (credentials.isOpenLogin = false)
           "
         />
       </dialog-modal>
@@ -299,13 +303,12 @@ const handleForgotPassword = async () => {
 
 const handleLogin = async () => {
   try {
-    const res = await axios.post(`login`, {
+    await axios.post(`login`, {
       email: email.value,
       password: password.value,
       remember: remember.value,
     });
     authStore.authenticated = true;
-    localStorage.setItem("access_token", res.data);
     router.push({ name: "home" });
   } catch (err) {
     console.log(err);

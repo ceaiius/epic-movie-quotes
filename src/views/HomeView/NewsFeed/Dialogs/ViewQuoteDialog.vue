@@ -31,7 +31,7 @@
             @click="$emit('delete')"
           />
         </div>
-        <h2 class="text-white">Edit quote</h2>
+        <h2 class="text-white">{{ $t("MovieList.view_quote") }}</h2>
         <img src="/images/exit.svg" alt="" @click="$emit('exit')" />
       </div>
       <hr class="w-full border-[#efefef4d] mt-6" />
@@ -63,7 +63,7 @@
             {{ comment_count }} <img src="/images/comments.svg" alt="" />
           </div>
           <div class="flex gap-2 cursor-pointer">
-            10 <img src="/images/likes.svg" alt="" />
+            {{ likes }} <img src="/images/likes.svg" alt="" />
           </div>
         </div>
         <div class="m-6 flex gap-6 relative text-white">
@@ -96,6 +96,7 @@ const comment = ref("No comments yet");
 const name_en = ref();
 const comment_count = ref(0);
 const name_ka = ref();
+const likes = ref(0);
 const url_quotes = import.meta.env.VITE_API_BASE_URL + "quotes-all";
 onMounted(() => {
   getQuotes();
@@ -110,7 +111,7 @@ const getQuotes = () => {
     comment_count.value = data.value[0].comments.length;
     username.value = data.value[0].comments[0].author.username;
     comment.value = data.value[0].comments[0].body;
-    console.log(data.value);
+    likes.value = data.value[0].users_count;
   });
 };
 </script>

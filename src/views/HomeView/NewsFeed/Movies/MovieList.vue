@@ -111,7 +111,7 @@ const searched = computed(() => {
     return data.value;
   }
 });
-
+const addMovies = ref(false);
 const data = ref([]);
 
 const count = ref();
@@ -136,6 +136,4 @@ const getMovies = () => {
     count.value = res.data.length;
   });
 };
-
-const addMovies = ref(false);
 </script>

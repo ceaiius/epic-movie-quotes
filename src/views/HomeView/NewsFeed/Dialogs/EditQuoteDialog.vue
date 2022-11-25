@@ -24,7 +24,12 @@
           @click="$emit('delete')"
         />
         <h2 class="text-white">{{ $t("MovieList.edit_quote") }}</h2>
-        <img src="/images/exit.svg" alt="" @click="$emit('exit')" />
+        <img
+          class="cursor-pointer"
+          src="/images/exit.svg"
+          alt=""
+          @click="$emit('exit')"
+        />
       </div>
       <hr class="w-full border-[#efefef4d] mt-6" />
     </div>
@@ -37,26 +42,31 @@
       >
         <div class="flex flex-col gap-6">
           <div class="relative">
-            <InputTextAreaNew
+            <InputField
               v-model="name_en"
-              placeholder="New Quote"
+              placeholder="Movie name"
               name="name_en"
               language="Eng"
-              rules="required|min:3|eng"
+              rules="min:3|eng"
+              height="h-16"
+              span="top-4"
             />
           </div>
 
           <div class="relative">
-            <InputTextAreaNew
+            <InputField
               v-model="name_ka"
-              placeholder="ახალი ციტატა"
+              placeholder="ფილმის სახელი"
               language="ქარ"
               name="name_ka"
-              rules="required|min:3|geo"
+              rules="min:3|geo"
+              height="h-16"
+              span="top-4"
             />
           </div>
           <div class="relative">
-            <InputFile />
+            <!-- <InputFile /> -->
+            <InputFileEdit />
           </div>
 
           <button
@@ -82,10 +92,13 @@
     
 <script setup>
 import { Form } from "vee-validate";
-import InputTextAreaNew from "../Form/InputTextAreaNew.vue";
 import { onMounted, ref } from "vue";
 import axios from "@/config/axios/index.js";
-import InputFile from "../Form/InputFile.vue";
+
+import InputFileEdit from "../Form/InputFileEdit.vue";
+import InputField from "../Form/InputField.vue";
+import { useCredentials } from "@/stores/index.js";
+const credentials = useCredentials();
 const props = defineProps(["id"]);
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["delete", "exit", "updateQuotes", "closePopup"]);
@@ -103,6 +116,7 @@ const getQuotes = () => {
     data.value = res.data.filter((x) => x.id == props.id);
     name_en.value = data.value[0].name.en;
     name_ka.value = data.value[0].name.ka;
+    credentials.thumbnail = data.value[0].thumbnail;
   });
 };
 

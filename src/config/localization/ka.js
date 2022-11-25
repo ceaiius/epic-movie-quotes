@@ -80,6 +80,7 @@ export default {
       save_changes: "შენახვა",
       edit_movie: "ფილმის რედაქტირება",
       genre: "ჟანრი",
+      view_quote: "ციტატის ნახვა",
       year: "წელი",
     },
     Profile: {

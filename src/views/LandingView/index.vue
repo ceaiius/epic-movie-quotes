@@ -63,7 +63,7 @@
                   rounded-md
                   text-sm
                 "
-                @click="isOpenRegister = true"
+                @click="credentials.isOpenRegister = true"
               >
                 {{ $t("LandingPage.sign_up") }}
               </button>
@@ -81,7 +81,7 @@
                   rounded-md
                   text-sm
                 "
-                @click="isOpenLogin = true"
+                @click="credentials.isOpenLogin = true"
               >
                 {{ $t("LandingPage.log_in") }}
               </button>
@@ -92,19 +92,31 @@
     </nav>
 
     <teleport to="body">
-      <dialog-modal v-if="isOpenRegister" @close="isOpenRegister = false">
+      <dialog-modal
+        v-if="credentials.isOpenRegister"
+        @close="credentials.isOpenRegister = false"
+      >
         <RegistrationForm
-          @open-login="(isOpenRegister = false), (isOpenLogin = true)"
-          @close-dialog="isOpenRegister = false"
+          @open-login="
+            (credentials.isOpenRegister = false),
+              (credentials.isOpenLogin = true)
+          "
+          @close-dialog="credentials.isOpenRegister = false"
         />
       </dialog-modal>
     </teleport>
 
     <teleport to="body">
-      <dialog-modal v-if="isOpenLogin" @close="isOpenLogin = false">
+      <dialog-modal
+        v-if="credentials.isOpenLogin"
+        @close="credentials.isOpenLogin = false"
+      >
         <LoginForm
-          @open-registration="(isOpenRegister = true), (isOpenLogin = false)"
-          @close-dialog="isOpenLogin = false"
+          @open-registration="
+            (credentials.isOpenRegister = true),
+              (credentials.isOpenLogin = false)
+          "
+          @close-dialog="credentials.isOpenLogin = false"
         />
       </dialog-modal>
     </teleport>
@@ -112,7 +124,9 @@
     <teleport to="body">
       <dialog-modal v-if="canResetPassword" @close="canResetPassword = false">
         <ResetPassword
-          @back-to-login="(canResetPassword = false), (isOpenLogin = true)"
+          @back-to-login="
+            (canResetPassword = false), (credentials.isOpenLogin = true)
+          "
         />
       </dialog-modal>
     </teleport>
@@ -157,7 +171,7 @@
           text-sm
           mt-6
         "
-        @click="isOpenRegister = true"
+        @click="credentials.isOpenRegister = true"
       >
         {{ $t("LandingPage.get_started") }}
       </button>
@@ -303,9 +317,9 @@ import { i18n } from "../../i18n";
 import { setLocale } from "@vee-validate/i18n";
 import router from "../../router";
 import ValidationSucessfull from "./notifications/ValidationSucessfull.vue";
+import { useCredentials } from "@/stores/index.js";
+const credentials = useCredentials();
 
-const isOpenRegister = ref(false);
-const isOpenLogin = ref(false);
 const canResetPassword = ref(false);
 const isHiddenDropdown = ref(true);
 const localeDefault = ref(true);
@@ -329,7 +343,9 @@ const setLanguage = () => {
   }
 };
 const onBlurBackground = computed(() => {
-  return isOpenRegister.value || isOpenLogin.value || canResetPassword.value
+  return credentials.isOpenRegister ||
+    credentials.isOpenLogin ||
+    canResetPassword.value
     ? "blur-[2px]"
     : "blur-none";
 });

@@ -78,6 +78,7 @@ export default {
       director: "Director",
       add_quote: "Add quote",
       edit_quote: "Edit quote",
+      view_quote: "View quote",
       save_changes: "Save changes",
       edit_movie: "Edit movie",
       genre: "Genre",

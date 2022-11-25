@@ -36,7 +36,7 @@
               placeholder="Movie name"
               name="name_en"
               language="Eng"
-              rules="required|min:3"
+              rules="required|min:3|eng"
             />
           </div>
           <div class="relative">
@@ -48,18 +48,15 @@
             />
           </div>
           <div class="relative">
-            <InputField
-              :placeholder="$t('MovieList.genre')"
-              name="genre"
-              rules="required|min:3"
-            />
+            <InputSelect name="genre" />
           </div>
+
           <div class="relative">
             <InputField
               placeholder="Director"
               language="En"
               name="director_en"
-              rules="required|min:3"
+              rules="required|min:3|eng"
             />
           </div>
           <div class="relative">
@@ -75,7 +72,7 @@
               placeholder="Movie description"
               language="En"
               name="description_en"
-              rules="required|min:3"
+              rules="required|min:3|eng"
             />
           </div>
           <div class="relative">
@@ -129,6 +126,7 @@ import { Form } from "vee-validate";
 import axios from "@/config/axios/index.js";
 import InputField from "../Form/InputField.vue";
 import InputFile from "../Form/InputFile.vue";
+import InputSelect from "../Form/InputSelect.vue";
 
 const emit = defineEmits(["updateMovies", "closePopup"]);
 const url = import.meta.env.VITE_API_BASE_URL + "movies";

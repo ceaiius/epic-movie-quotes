@@ -15,6 +15,10 @@ export const useCredentials = defineStore("credentials", {
       count: 0,
       token: "",
       notifications: [],
+      thumbnail: "",
+      chip: [],
+      isOpenRegister: false,
+      isOpenLogin: false,
     };
   },
 });

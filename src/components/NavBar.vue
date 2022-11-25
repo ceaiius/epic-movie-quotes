@@ -97,8 +97,12 @@
                 </teleport>
               </div>
             </li>
-
-            <li class="mt-2" @click="toggleLanguageSelect">
+            <div
+              v-if="!isHiddenDropdown"
+              class="z-10 w-screen h-screen fixed top-0 left-0"
+              @click="toggleLanguageSelect"
+            ></div>
+            <li class="mt-2 z-20" @click="toggleLanguageSelect">
               <a class="flex justify-center items-center gap-2"
                 >{{ activeLanguage }}
 
