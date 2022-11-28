@@ -137,6 +137,8 @@ import InputFile from "../Form/InputFile.vue";
 import InputSelect from "../Form/InputSelect.vue";
 import { useRoute } from "vue-router";
 import { onMounted, ref } from "vue";
+import { useCredentials } from "@/stores/index.js";
+const credentials = useCredentials();
 const emit = defineEmits(["updateMovies", "closePopup"]);
 const route = useRoute();
 const id = route.params.id;
@@ -189,7 +191,7 @@ const handleSubmit = (values) => {
         director_ka: values.director_ka,
         description_en: values.description_en,
         description_ka: values.description_ka,
-        genre: values.genre,
+        genre: credentials.chip,
         year: values.year,
         budget: values.budget,
         thumbnail: values.thumbnail,

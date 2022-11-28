@@ -94,7 +94,7 @@
             <InputField
               :placeholder="$t('MovieList.budget')"
               name="budget"
-              rules="required|num"
+              rules="required|numeric"
             />
           </div>
           <div class="relative">
