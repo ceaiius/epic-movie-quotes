@@ -68,7 +68,11 @@
         </div>
         <div class="m-6 flex gap-6 relative text-white">
           <div>
-            <img src="/images/static.png" class="md:w-12 md:h-12" alt="" />
+            <img
+              :src="url + avatar"
+              class="md:w-12 md:h-12 rounded-full object-cover"
+              alt=""
+            />
           </div>
           <div>
             <h2>{{ username }}</h2>
@@ -97,7 +101,9 @@ const name_en = ref();
 const comment_count = ref(0);
 const name_ka = ref();
 const likes = ref(0);
+const avatar = ref("");
 const url_quotes = import.meta.env.VITE_API_BASE_URL + "quotes-all";
+
 onMounted(() => {
   getQuotes();
 });
@@ -112,6 +118,8 @@ const getQuotes = () => {
     username.value = data.value[0].comments[0].author.username;
     comment.value = data.value[0].comments[0].body;
     likes.value = data.value[0].users_count;
+    avatar.value = data.value[0].comments[0].author.thumbnail;
+    console.log(res.data);
   });
 };
 </script>

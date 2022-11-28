@@ -4,6 +4,7 @@
     <div class="lg:flex flex-col ml-6 mt-10 hidden">
       <div class="flex gap-4 items-center">
         <img
+          class="w-20 h-20 object-cover rounded-full"
           :class="[
             isActive('google_profile')
               ? 'border rounded-full border-red-500'
@@ -12,14 +13,20 @@
               ? 'border rounded-full border-red-500'
               : '',
           ]"
-          src="/images/static.png"
+          :src="[
+            credentials.avatar == null
+              ? '/images/static.png'
+              : credentials.avatar.includes('https')
+              ? credentials.avatar
+              : url_thumbnail + credentials.avatar,
+          ]"
           alt=""
         />
         <div>
-          <h2 class="text-white text-2xl whitespace-nowrap">
+          <h2 class="text-white text-xl whitespace-nowrap">
             {{ credentials.user_name }}
           </h2>
-          <h3 class="text-input_bg text-base cursor-pointer">
+          <h3 class="text-input_bg text-sm cursor-pointer">
             <router-link
               :to="{ name: googleUser ? 'google_profile' : 'email_profile' }"
               ><h2 class="cursor-pointer">
@@ -70,11 +77,13 @@ import { onMounted, ref } from "vue";
 import { useCredentials } from "@/stores/index.js";
 import { useRouter } from "vue-router";
 const credentials = useCredentials();
+const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
 const googleUser = ref(false);
 onMounted(() => {
   axios.get("user").then((res) => {
     credentials.user_name = res.data.username;
     credentials.user_id = res.data.id;
+    credentials.avatar = res.data.thumbnail;
     if (res.data.email_verified_at == null) {
       googleUser.value = true;
     } else {
