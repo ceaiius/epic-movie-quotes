@@ -236,7 +236,8 @@ import router from "../../../router";
 import { useRoute } from "vue-router";
 import ResetSuccess from "../notifications/ResetSuccess.vue";
 import DialogModal from "@/components/DialogModal.vue";
-
+import { useCredentials } from "@/stores/index.js";
+const credentials = useCredentials();
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["closePasswordSent", "backToLogin"]);
 const errorPassword = ref(false);
@@ -251,6 +252,7 @@ const passwordNotReset = ref(true);
 const closeSuccess = () => {
   isResetSuccessful.value = false;
   passwordNotReset.value = false;
+  credentials.isOpenResetPassword = false;
   router.push({ name: "landing" });
 };
 const validatePassword = (value) => {

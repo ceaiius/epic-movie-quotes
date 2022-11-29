@@ -19,7 +19,7 @@
             rounded-none
           "
         >
-          <div class="flex w-full pl-8 md:pl-4 gap-4 cursor-pointer">
+          <div class="flex w-screen pl-8 md:pl-4 gap-4 cursor-pointer">
             <img src="/images/pencil.svg" alt="" />
             <h2 class="text-white" @click="openQuote = true">
               {{ $t("NewsFeed.write_new_quote") }}
@@ -59,11 +59,9 @@
             <img
               class="w-12 h-12 object-cover rounded-full"
               :src="[
-                credentials.avatar == null
-                  ? '/images/static.png'
-                  : credentials.avatar.includes('https')
-                  ? credentials.avatar
-                  : url_thumbnail + credentials.avatar,
+                item.author.thumbnail.includes('https')
+                  ? item.author.thumbnail
+                  : url_thumbnail + item.author.thumbnail,
               ]"
               alt=""
             />
@@ -115,11 +113,9 @@
               <div class="">
                 <img
                   :src="[
-                    credentials.avatar == null
-                      ? '/images/static.png'
-                      : credentials.avatar.includes('https')
-                      ? credentials.avatar
-                      : url_thumbnail + credentials.avatar,
+                    items.author.thumbnail.includes('https')
+                      ? items.author.thumbnail
+                      : url_thumbnail + items.author.thumbnail,
                   ]"
                   class="md:w-12 md:h-12 w-10 h-10 rounded-full object-contain"
                   alt=""
@@ -153,7 +149,7 @@
             <img
               :src="[
                 credentials.avatar == null
-                  ? '/images/static.png'
+                  ? '/images/avatar-default.jpg'
                   : credentials.avatar.includes('https')
                   ? credentials.avatar
                   : url_thumbnail + credentials.avatar,

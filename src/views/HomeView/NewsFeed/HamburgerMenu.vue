@@ -33,7 +33,7 @@
           "
           :src="
             credentials.avatar == null
-              ? '/images/static.png'
+              ? '/images/avatar-default.jpg'
               : credentials.avatar.includes('https')
               ? credentials.avatar
               : url_thumbnail + credentials.avatar

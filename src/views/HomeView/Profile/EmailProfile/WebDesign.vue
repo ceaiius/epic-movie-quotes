@@ -1,7 +1,12 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="lg:flex flex-col mt-10 items-center gap-20 w-full hidden">
+  <div
+    class="lg:flex flex-col mt-10 items-center gap-20 w-full hidden relative"
+  >
     <h2 class="text-white lg:block hidden">{{ $t("Profile.my_profile") }}</h2>
+    <div v-if="success" class="z-20 right-20 fixed">
+      <SuccessDialog @exit="success = false" />
+    </div>
     <div class="flex w-full h-full lg:h-auto items-center justify-center">
       <Form
         class="
@@ -44,7 +49,7 @@
                 "
                 :src="
                   credentials.avatar == null
-                    ? '/images/static.png'
+                    ? '/images/avatar-default.jpg'
                     : credentials.avatar.includes('https')
                     ? credentials.avatar
                     : url_thumbnail + credentials.avatar
@@ -60,7 +65,7 @@
                   justify-center
                 "
               >
-                <h2 class="text-white" @click="handleClick">
+                <h2 class="text-white cursor-pointer" @click="handleClick">
                   {{ $t("Profile.upload_new_photo") }}
                 </h2>
               </div>
@@ -143,7 +148,7 @@
 
                 <div>
                   <button
-                    type="submit"
+                    type="button"
                     class="
                       focus:outline-none
                       text-white
@@ -418,10 +423,12 @@
           </div>
         </div>
         <div
-          v-if="editUsername || editPassword"
+          v-if="editUsername || editPassword || editThumbnail"
           class="flex items-center gap-6 self-end mr-96 mb-10"
         >
-          <h2 class="text-grey_text" @click="cancelEdit">Cancel</h2>
+          <h2 class="text-grey_text cursor-pointer" @click="cancelEdit">
+            Cancel
+          </h2>
           <button
             type="submit"
             class="
@@ -447,6 +454,7 @@ import { onBeforeMount, ref } from "vue";
 import axios from "@/config/axios/index.js";
 import { Form, Field } from "vee-validate";
 import { useCredentials } from "@/stores/index.js";
+import SuccessDialog from "../GoogleProfile/SuccessDialog.vue";
 const credentials = useCredentials();
 
 const username = ref();
@@ -455,11 +463,14 @@ const showPassword = ref(false);
 const showPasswordConfirm = ref(false);
 const password = ref("12345678910");
 const editUsername = ref(false);
+const success = ref(false);
 const editPassword = ref(false);
 const passwordReset = ref(false);
+const editThumbnail = ref(false);
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
 const handleClick = () => {
   document.getElementById("input").click();
+  editThumbnail.value = true;
 };
 
 const header = {
@@ -501,11 +512,13 @@ const handleSubmit = async (values) => {
       {
         thumbnail: values.thumbnail,
         username: username.value,
+        password: password.value,
       },
       header
     );
     fetchUser();
     credentials.user_name = username.value;
+    success.value = true;
   } catch (err) {
     console.log(err);
   }

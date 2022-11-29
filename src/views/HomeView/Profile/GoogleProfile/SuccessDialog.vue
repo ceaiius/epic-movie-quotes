@@ -2,10 +2,10 @@
   <div class="w-96 flex items-center rounded-md justify-around h-10 bg-success">
     <div class="flex flex-row gap-4 text-success_text">
       <img src="/images/valid-fill.svg" alt="" />
-      <p>Username changed succesfully</p>
+      <p class="text-base">Profile updated Sucessfully</p>
       <img
         class="cursor-pointer"
-        src="/images/exit.svg"
+        src="/images/exit-black.svg"
         alt=""
         @click="$emit('exit')"
       />

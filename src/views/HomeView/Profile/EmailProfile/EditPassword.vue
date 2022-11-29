@@ -218,6 +218,7 @@
             rounded-md
             text-sm
           "
+          @click="handleClick"
         >
           Add
         </button>
@@ -229,9 +230,19 @@
   <script setup>
 import { ref } from "vue";
 import { Field } from "vee-validate";
+import { useCredentials } from "@/stores/index.js";
+const credentials = useCredentials();
+const password = ref();
+const password_confirmation = ref();
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["exit"]);
-
+const handleClick = () => {
+  if (password.value == password_confirmation.value) {
+    credentials.password_edit = password.value;
+  }
+  credentials.can_edit_password = true;
+  emit("exit");
+};
 const showPassword = ref(false);
 const showPasswordConfirm = ref(false);
 </script>

@@ -34,7 +34,7 @@
               justify-center
             "
           >
-            <h2 class="text-white" @click="handleClick">
+            <h2 class="text-white cursor-pointer" @click="handleClick">
               {{ $t("Profile.upload_new_photo") }}
             </h2>
           </div>
@@ -85,7 +85,9 @@
         <hr class="border-[#efefef4d]" />
       </div>
       <div v-if="isEditable" class="flex gap-6 items-center justify-center">
-        <h2 class="text-grey_text" @click="cancelEdit">Cancel</h2>
+        <h2 class="text-grey_text cursor-pointer" @click="cancelEdit">
+          Cancel
+        </h2>
         <button
           type="submit"
           class="

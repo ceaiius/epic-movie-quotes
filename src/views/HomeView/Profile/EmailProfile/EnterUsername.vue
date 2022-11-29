@@ -54,6 +54,7 @@ const username = ref("");
 
 const handleClick = () => {
   credentials.username_edit = username.value;
+  credentials.can_edit_username = true;
   emit("exit");
 };
 </script>

@@ -19,9 +19,13 @@ export const useCredentials = defineStore("credentials", {
       chip: [],
       isOpenRegister: false,
       isOpenLogin: false,
+      isOpenResetPassword: false,
       canEditGoogle: false,
       avatar: null,
       username_edit: "",
+      password_edit: "",
+      can_edit_username: false,
+      can_edit_password: false,
     };
   },
 });

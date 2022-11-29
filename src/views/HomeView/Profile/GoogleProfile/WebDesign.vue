@@ -44,14 +44,14 @@
                 "
                 :src="
                   credentials.avatar == null
-                    ? '/images/static.png'
+                    ? '/images/avatar-default.jpg'
                     : credentials.avatar.includes('https')
                     ? credentials.avatar
                     : url_thumbnail + credentials.avatar
                 "
                 alt=""
               />
-              <h2 class="text-white" @click="handleClick">
+              <h2 class="text-white cursor-pointer" @click="handleClick">
                 {{ $t("Profile.upload_new_photo") }}
               </h2>
               <div>
@@ -119,7 +119,9 @@
           v-if="credentials.canEditGoogle"
           class="flex items-center gap-6 self-end mr-96"
         >
-          <h2 class="text-grey_text" @click="cancelEdit">Cancel</h2>
+          <h2 class="text-grey_text cursor-pointer" @click="cancelEdit">
+            Cancel
+          </h2>
           <button
             type="submit"
             class="

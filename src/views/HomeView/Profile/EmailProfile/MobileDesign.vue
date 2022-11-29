@@ -7,6 +7,11 @@
     ]"
     class="lg:hidden flex-col mt-10 items-center gap-20 w-full flex"
   >
+    <teleport to="body">
+      <dialog-modal v-if="success" top="top-[20%]" @close="success = false">
+        <SuccessDialog @exit="success = false" />
+      </dialog-modal>
+    </teleport>
     <Form
       class="flex-col mt-10 items-center gap-20 w-full flex"
       @submit="handleSubmit"
@@ -14,7 +19,7 @@
       <div class="flex flex-col gap-20">
         <div class="flex flex-col items-center gap-6">
           <img
-            id="mobile_file"
+            id="mobile_img"
             class="
               w-24
               h-24
@@ -26,7 +31,7 @@
             "
             :src="
               credentials.avatar == null
-                ? '/images/static.png'
+                ? '/images/avatar-default.jpg'
                 : credentials.avatar.includes('https')
                 ? credentials.avatar
                 : url_thumbnail + credentials.avatar
@@ -42,7 +47,7 @@
               justify-center
             "
           >
-            <h2 class="text-white" @click="handleClick">
+            <h2 class="text-white cursor-pointer" @click="handleClick">
               {{ $t("Profile.upload_new_photo") }}
             </h2>
           </div>
@@ -110,22 +115,32 @@
           </dialog-modal>
         </teleport>
       </div>
-      <button
-        v-if="isEditable"
-        type="submit"
-        class="
-          text-white
-          bg-default_red
-          w-40
-          h-10
-          mb-10
-          font-medium
-          rounded-md
-          text-sm
+      <div
+        v-if="
+          editThumbnail ||
+          credentials.can_edit_username ||
+          credentials.can_edit_password
         "
+        class="flex gap-6 items-center justify-center mb-10"
       >
-        {{ $t("MovieList.save_changes") }}
-      </button>
+        <h2 class="text-grey_text cursor-pointer" @click="cancelEdit">
+          Cancel
+        </h2>
+        <button
+          type="submit"
+          class="
+            text-white
+            bg-default_red
+            w-40
+            h-10
+            font-medium
+            rounded-md
+            text-sm
+          "
+        >
+          {{ $t("MovieList.save_changes") }}
+        </button>
+      </div>
     </Form>
   </div>
 </template>
@@ -137,25 +152,33 @@ import DialogModal from "../../../../components/DialogModal.vue";
 import EditPassword from "./EditPassword.vue";
 import EnterUsername from "./EnterUsername.vue";
 import EditEmail from "./EditEmail.vue";
+import SuccessDialog from "../GoogleProfile/SuccessDialog.vue";
 import axios from "@/config/axios/index.js";
 import { useCredentials } from "@/stores/index.js";
 const credentials = useCredentials();
-
+const success = ref(false);
 const editUsername = ref(false);
-const isEditable = ref(false);
+const editThumbnail = ref(false);
 const editPassword = ref(false);
 const editEmail = ref(false);
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
 
 const handleClick = () => {
   document.getElementById("mobile_input").click();
-  isEditable.value = true;
+  editThumbnail.value = true;
+};
+
+const cancelEdit = () => {
+  credentials.username_edit = credentials.user_name;
+  var preview = document.getElementById("mobile_img");
+  preview.src = url_thumbnail + credentials.avatar;
+  credentials.password_edit = "";
 };
 
 const setImage = (e) => {
   if (e.target.files.length > 0) {
     var src = URL.createObjectURL(e.target.files[0]);
-    var preview = document.getElementById("mobile_file");
+    var preview = document.getElementById("mobile_img");
     preview.src = src;
   }
 };
@@ -182,10 +205,12 @@ const handleSubmit = async (values) => {
       {
         thumbnail: values.thumbnail,
         username: credentials.username_edit,
+        password: credentials.password_edit,
       },
       header
     );
     fetchUser();
+    success.value = true;
   } catch (err) {
     console.log(err);
   }

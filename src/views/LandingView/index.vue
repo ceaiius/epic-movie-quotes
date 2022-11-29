@@ -122,10 +122,14 @@
     </teleport>
 
     <teleport to="body">
-      <dialog-modal v-if="canResetPassword" @close="canResetPassword = false">
+      <dialog-modal
+        v-if="credentials.isOpenResetPassword"
+        @close="credentials.isOpenResetPassword = false"
+      >
         <ResetPassword
           @back-to-login="
-            (canResetPassword = false), (credentials.isOpenLogin = true)
+            (credentials.isOpenResetPassword = false),
+              (credentials.isOpenLogin = true)
           "
         />
       </dialog-modal>
@@ -320,7 +324,6 @@ import ValidationSucessfull from "./notifications/ValidationSucessfull.vue";
 import { useCredentials } from "@/stores/index.js";
 const credentials = useCredentials();
 
-const canResetPassword = ref(false);
 const isHiddenDropdown = ref(true);
 const localeDefault = ref(true);
 const emailValidated = ref(false);
@@ -345,7 +348,7 @@ const setLanguage = () => {
 const onBlurBackground = computed(() => {
   return credentials.isOpenRegister ||
     credentials.isOpenLogin ||
-    canResetPassword.value
+    credentials.isOpenResetPassword
     ? "blur-[2px]"
     : "blur-none";
 });
@@ -354,7 +357,7 @@ onMounted(() => {
   const route = useRoute();
 
   if (route.query.token && route.query.token !== "verified") {
-    canResetPassword.value = true;
+    credentials.isOpenResetPassword = true;
   }
   if (route.query.token == "verified") {
     emailValidated.value = true;

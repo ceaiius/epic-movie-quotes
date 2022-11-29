@@ -20,7 +20,10 @@
     <div class="flex justify-between items-center text-white pl-12 pr-12 pt-12">
       <h1>{{ $t("Notification.notifications") }}</h1>
       <div v-if="credentials.notifications.length == 0">
-        <h2 class="text-white">
+        <h2 class="text-white hidden lg:block">
+          {{ $t("Notification.no_notifications_yet") }}
+        </h2>
+        <h2 class="lg:hidden absolute text-white top-32 left-[25%]">
           {{ $t("Notification.no_notifications_yet") }}
         </h2>
       </div>
@@ -58,8 +61,12 @@
                 ? 'border rounded-full border-green-500'
                 : ''
             "
-            class="w-12 object-contain h-12"
-            :src="url_thumbnail + notification.from.thumbnail"
+            class="w-12 rounded-full object-cover h-12"
+            :src="[
+              notification.from.thumbnail.includes('https')
+                ? notification.from.thumbnail
+                : url_thumbnail + notification.from.thumbnail,
+            ]"
             alt=""
           />
           <div class="flex flex-col gap-2">
