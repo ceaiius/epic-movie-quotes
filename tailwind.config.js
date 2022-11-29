@@ -16,6 +16,8 @@ module.exports = {
         rgba: "rgba(25, 135, 84, 0.2)",
         border_rgba: "rgba(206, 212, 218, 0.2)",
         notification_border: "rgba(108,117,125,0.5)",
+        success: "#D1E7DD",
+        success_text: "#0F5132",
       },
       screens: {
         xs: "375px",

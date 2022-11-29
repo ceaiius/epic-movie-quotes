@@ -3,25 +3,36 @@
   <div class="lg:flex flex-col mt-10 items-center gap-20 w-full hidden">
     <h2 class="text-white lg:block hidden">{{ $t("Profile.my_profile") }}</h2>
     <div class="flex w-full h-full lg:h-auto items-center justify-center">
-      <div
+      <Form
         class="
-          lg:w-2/3
-          relative
-          lg:rounded-2xl
+          flex flex-col
           w-full
-          h-auto
-          lg:h-[auto]
-          flex
+          h-full
+          gap-6
+          lg:h-auto
+          items-center
           justify-center
-          text-center
-          bg-black_bg
         "
+        @submit="handleSubmit"
       >
-        <Form @submit="handleSubmit">
+        <div
+          class="
+            lg:w-2/3
+            relative
+            lg:rounded-2xl
+            w-full
+            h-auto
+            lg:h-[auto]
+            flex
+            justify-center
+            text-center
+            bg-black_bg
+          "
+        >
           <div class="flex flex-col gap-20">
             <div class="flex flex-col items-center gap-6">
               <img
-                id="file"
+                id="img"
                 class="
                   w-24
                   h-24
@@ -52,19 +63,16 @@
                 <h2 class="text-white" @click="handleClick">
                   {{ $t("Profile.upload_new_photo") }}
                 </h2>
-                <h2 v-if="avatarError" class="text-red-500 absolute top-6">
-                  Please select a new image
-                </h2>
               </div>
               <div>
-                <Field v-slot="{ field }" name="thumbnail">
+                <Field v-slot="{ handleChange }" name="thumbnail">
                   <input
-                    v-bind="field"
                     id="input"
                     ref="fileInput"
                     type="file"
                     class="hidden"
-                    @change="setImage"
+                    @change="handleChange"
+                    @input="setImage"
                   />
                 </Field>
               </div>
@@ -89,12 +97,12 @@
                   id="username"
                   v-model="username"
                   class="bg-input_bg w-full text-sm h-10 p-2 border-2 rounded"
-                  :readonly="isNotEditable"
+                  :readonly="!editUsername"
                 />
                 <label
                   class="lg:absolute lg:-right-20 text-white cursor-pointer"
                   for="username"
-                  @click="isNotEditable = !isNotEditable"
+                  @click="editUsername = !editUsername"
                   >{{ $t("Profile.edit") }}</label
                 >
               </div>
@@ -194,7 +202,7 @@
                       class="lg:absolute lg:-right-20 text-white cursor-pointer"
                       for="password"
                       @click="
-                        (isNotEditable = !isNotEditable),
+                        (editPassword = !editPassword),
                           (passwordReset = !passwordReset)
                       "
                       >{{ $t("Profile.edit") }}</label
@@ -315,7 +323,7 @@
                         name="password"
                       />
                     </div>
-                    <div class="flex flex-col pt-10 relative">
+                    <div class="flex flex-col pt-10 relative mb-10">
                       <label
                         for="exampleInputPassword1"
                         class="text-white text-base pb-2"
@@ -405,27 +413,31 @@
                     </div>
                   </div>
                 </div>
-                <button
-                  v-if="isNotEditable"
-                  type="submit"
-                  class="
-                    text-white
-                    bg-default_red
-                    w-40
-                    h-10
-                    mb-10
-                    font-medium
-                    rounded-md
-                    text-sm
-                  "
-                >
-                  {{ $t("MovieList.save_changes") }}
-                </button>
               </div>
             </div>
           </div>
-        </Form>
-      </div>
+        </div>
+        <div
+          v-if="editUsername || editPassword"
+          class="flex items-center gap-6 self-end mr-96 mb-10"
+        >
+          <h2 class="text-grey_text" @click="cancelEdit">Cancel</h2>
+          <button
+            type="submit"
+            class="
+              text-white
+              bg-default_red
+              w-40
+              h-10
+              font-medium
+              rounded-md
+              text-sm
+            "
+          >
+            {{ $t("MovieList.save_changes") }}
+          </button>
+        </div>
+      </Form>
     </div>
   </div>
 </template>
@@ -436,13 +448,14 @@ import axios from "@/config/axios/index.js";
 import { Form, Field } from "vee-validate";
 import { useCredentials } from "@/stores/index.js";
 const credentials = useCredentials();
-const avatarError = ref(false);
+
 const username = ref();
 const email = ref();
 const showPassword = ref(false);
 const showPasswordConfirm = ref(false);
 const password = ref("12345678910");
-const isNotEditable = ref(true);
+const editUsername = ref(false);
+const editPassword = ref(false);
 const passwordReset = ref(false);
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
 const handleClick = () => {
@@ -458,13 +471,20 @@ const header = {
 const setImage = (e) => {
   if (e.target.files.length > 0) {
     var src = URL.createObjectURL(e.target.files[0]);
-    var preview = document.getElementById("file");
+    var preview = document.getElementById("img");
     preview.src = src;
   }
 };
 onBeforeMount(() => {
   fetchUser();
 });
+
+const cancelEdit = () => {
+  username.value = credentials.user_name;
+  var preview = document.getElementById("img");
+  preview.src = url_thumbnail + credentials.avatar;
+  credentials.canEditGoogle = false;
+};
 
 const fetchUser = () => {
   axios.get("user").then((res) => {
@@ -480,13 +500,14 @@ const handleSubmit = async (values) => {
       "update",
       {
         thumbnail: values.thumbnail,
+        username: username.value,
       },
       header
     );
     fetchUser();
-    avatarError.value = false;
+    credentials.user_name = username.value;
   } catch (err) {
-    avatarError.value = true;
+    console.log(err);
   }
 };
 </script>

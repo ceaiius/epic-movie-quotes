@@ -3,25 +3,36 @@
   <div class="lg:flex flex-col mt-10 items-center gap-20 w-full hidden">
     <h2 class="text-white lg:block hidden">{{ $t("Profile.my_profile") }}</h2>
     <div class="flex w-full h-full lg:h-auto items-center justify-center">
-      <div
+      <Form
         class="
-          lg:w-2/3
-          relative
-          lg:rounded-2xl
+          flex flex-col
           w-full
           h-full
-          lg:h-[535px]
-          flex
-          justify-center
-          text-center
-          bg-black_bg
+          gap-6
+          lg:h-auto
+          items-center
+          justify-between
         "
+        @submit="handleSubmit"
       >
-        <Form @submit="handleSubmit">
+        <div
+          class="
+            lg:w-2/3
+            relative
+            lg:rounded-2xl
+            w-full
+            h-full
+            lg:h-[535px]
+            flex
+            justify-center
+            text-center
+            bg-black_bg
+          "
+        >
           <div class="flex flex-col gap-20">
             <div class="flex flex-col items-center">
               <img
-                id="file"
+                id="img"
                 class="
                   w-24
                   h-24
@@ -44,14 +55,14 @@
                 {{ $t("Profile.upload_new_photo") }}
               </h2>
               <div>
-                <Field v-slot="{ field }" name="thumbnail">
+                <Field v-slot="{ handleChange }" name="thumbnail">
                   <input
-                    v-bind="field"
                     id="input"
                     ref="fileInput"
                     type="file"
                     class="hidden"
-                    @change="setImage"
+                    @change="handleChange"
+                    @input="setImage"
                   />
                 </Field>
               </div>
@@ -76,7 +87,7 @@
                   id="username"
                   v-model="username"
                   class="bg-input_bg w-full text-sm h-10 p-2 border-2 rounded"
-                  :readonly="credentials.canEditGoogle"
+                  :readonly="!credentials.canEditGoogle"
                 />
                 <label
                   class="lg:absolute lg:-right-20 text-white cursor-pointer"
@@ -100,28 +111,31 @@
                   class="bg-input_bg w-full text-sm h-10 p-2 border-2 rounded"
                   readonly
                 />
-
-                <button
-                  type="submit"
-                  class="
-                    text-white
-                    bg-default_red
-                    w-40
-                    h-10
-                    font-medium
-                    rounded-md
-                    text-sm
-                  "
-                  :hidden="credentials.canEditGoogle"
-                  @click="isOpenRegister = true"
-                >
-                  {{ $t("MovieList.save_changes") }}
-                </button>
               </div>
             </div>
           </div>
-        </Form>
-      </div>
+        </div>
+        <div
+          v-if="credentials.canEditGoogle"
+          class="flex items-center gap-6 self-end mr-96"
+        >
+          <h2 class="text-grey_text" @click="cancelEdit">Cancel</h2>
+          <button
+            type="submit"
+            class="
+              text-white
+              bg-default_red
+              w-40
+              h-10
+              font-medium
+              rounded-md
+              text-sm
+            "
+          >
+            {{ $t("MovieList.save_changes") }}
+          </button>
+        </div>
+      </Form>
     </div>
   </div>
 </template>
@@ -136,21 +150,31 @@ const avatarError = ref(false);
 const username = ref();
 const email = ref();
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
-const handleClick = () => {
-  document.getElementById("input").click();
-  credentials.canEditGoogle = false;
-};
-
-const setImage = (e) => {
-  if (e.target.files.length > 0) {
-    var src = URL.createObjectURL(e.target.files[0]);
-    var preview = document.getElementById("file");
-    preview.src = src;
-  }
-};
 onBeforeMount(() => {
   fetchUser();
 });
+
+const cancelEdit = () => {
+  username.value = credentials.user_name;
+  var preview = document.getElementById("img");
+  preview.src = url_thumbnail + credentials.avatar;
+  credentials.canEditGoogle = false;
+};
+
+const handleClick = () => {
+  document.getElementById("input").click();
+  credentials.canEditGoogle = true;
+};
+
+const setImage = (e) => {
+  if (e.target.files.length !== 0) {
+    const output = document.getElementById("img");
+    output.src = URL.createObjectURL(e.target.files[0]);
+    output.onload = function () {
+      URL.revokeObjectURL(output.src);
+    };
+  }
+};
 
 const fetchUser = () => {
   axios.get("user").then((res) => {
@@ -171,10 +195,13 @@ const handleSubmit = async (values) => {
       "update",
       {
         thumbnail: values.thumbnail,
+        username: username.value,
       },
       header
     );
     fetchUser();
+    credentials.user_name = username.value;
+    credentials.canEditGoogle = false;
     avatarError.value = false;
   } catch (err) {
     avatarError.value = true;

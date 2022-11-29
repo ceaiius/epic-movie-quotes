@@ -58,7 +58,13 @@
           <div class="flex items-center gap-2 m-6 text-white w-12 h-12">
             <img
               class="w-12 h-12 object-cover rounded-full"
-              :src="url_thumbnail + item.author.thumbnail"
+              :src="[
+                credentials.avatar == null
+                  ? '/images/static.png'
+                  : credentials.avatar.includes('https')
+                  ? credentials.avatar
+                  : url_thumbnail + credentials.avatar,
+              ]"
               alt=""
             />
             <h2 class="whitespace-nowrap">{{ item.author.username }}</h2>
@@ -75,7 +81,7 @@
             </h2>
             <div class="flex justify-center mt-2">
               <img
-                class="md:max-w-3xl mt-2"
+                class="md:max-w-3xl mt-2 w-full object-cover"
                 :src="url_thumbnail + item.thumbnail"
                 alt=""
               />
@@ -108,7 +114,13 @@
             <div class="flex gap-6">
               <div class="">
                 <img
-                  :src="url_thumbnail + items.author.thumbnail"
+                  :src="[
+                    credentials.avatar == null
+                      ? '/images/static.png'
+                      : credentials.avatar.includes('https')
+                      ? credentials.avatar
+                      : url_thumbnail + credentials.avatar,
+                  ]"
                   class="md:w-12 md:h-12 w-10 h-10 rounded-full object-contain"
                   alt=""
                 />
@@ -139,7 +151,13 @@
         <div>
           <div class="m-6 flex">
             <img
-              :src="url_thumbnail + credentials.avatar"
+              :src="[
+                credentials.avatar == null
+                  ? '/images/static.png'
+                  : credentials.avatar.includes('https')
+                  ? credentials.avatar
+                  : url_thumbnail + credentials.avatar,
+              ]"
               class="hidden object-contain rounded-full lg:block w-12 h-12"
               alt=""
             />

@@ -36,6 +36,7 @@
           rounded-md
           text-sm
         "
+        @click="handleClick"
       >
         {{ $t("Profile.add") }}
       </button>
@@ -45,7 +46,14 @@
 
 <script setup>
 import { ref } from "vue";
+import { useCredentials } from "@/stores/index.js";
+const credentials = useCredentials();
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["exit"]);
 const username = ref("");
+
+const handleClick = () => {
+  credentials.username_edit = username.value;
+  emit("exit");
+};
 </script>

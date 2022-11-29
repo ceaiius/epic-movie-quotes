@@ -4,10 +4,15 @@
       class="flex-col mt-10 items-center gap-20 w-full flex"
       @submit="handleSubmit"
     >
+      <teleport to="body">
+        <dialog-modal v-if="success" top="top-[20%]" @close="success = false">
+          <SuccessDialog @exit="success = false" />
+        </dialog-modal>
+      </teleport>
       <div class="flex flex-col gap-20">
         <div class="flex flex-col items-center gap-6">
           <img
-            id="mobile_file"
+            id="mobile_img"
             class="
               w-24
               h-24
@@ -32,19 +37,16 @@
             <h2 class="text-white" @click="handleClick">
               {{ $t("Profile.upload_new_photo") }}
             </h2>
-            <h2 v-if="avatarError" class="text-red-500 absolute top-6">
-              Please select a new image
-            </h2>
           </div>
           <div>
-            <Field v-slot="{ field }" name="thumbnail">
+            <Field v-slot="{ handleChange }" name="thumbnail">
               <input
-                v-bind="field"
                 id="mobile_input"
                 ref="fileInput"
                 type="file"
                 class="hidden"
-                @change="setImage"
+                @change="handleChange"
+                @input="setImage"
               />
             </Field>
           </div>
@@ -54,45 +56,25 @@
       <div class="flex flex-col w-96 text-white">
         <h2 class="pl-6">{{ $t("Profile.username") }}</h2>
         <div class="flex justify-between p-6">
-          <h2>{{ username }}</h2>
-          <h2 class="cursor-pointer" @click="editUsername = !editUsername">
+          <h2>{{ credentials.username_edit }}</h2>
+          <h2
+            class="cursor-pointer"
+            @click="(editUsername = true), (isEditable = true)"
+          >
             Edit
           </h2>
         </div>
+        <teleport to="body">
+          <dialog-modal v-if="editUsername" @close="editUsername = false">
+            <EnterUsername @exit="editUsername = false" />
+          </dialog-modal>
+        </teleport>
 
-        <div v-if="editUsername" class="flex flex-col gap-6">
-          <input
-            id="username"
-            class="
-              bg-input_bg
-              w-96
-              text-black text-sm
-              h-10
-              p-2
-              border-2
-              rounded
-            "
-          />
-          <button
-            class="
-              text-white
-              bg-default_red
-              w-28
-              h-10
-              font-medium
-              rounded-md
-              text-sm
-            "
-            @click="confirm = true"
-          >
-            {{ $t("Profile.add") }}
-          </button>
-          <teleport to="body">
-            <dialog-modal v-if="confirm" @close="confirm = false">
-              <ConfirmPopup @exit="confirm = false" @save="confirm = false" />
-            </dialog-modal>
-          </teleport>
-        </div>
+        <teleport to="body">
+          <dialog-modal v-if="confirm" @close="confirm = false">
+            <ConfirmPopup @exit="confirm = false" @save="confirm = false" />
+          </dialog-modal>
+        </teleport>
       </div>
       <div class="flex flex-col w-96 text-white">
         <h2 class="pl-6">{{ $t("Profile.email") }}</h2>
@@ -102,22 +84,23 @@
 
         <hr class="border-[#efefef4d]" />
       </div>
-      <button
-        v-if="isEditable"
-        type="submit"
-        class="
-          text-white
-          bg-default_red
-          w-40
-          h-10
-          mb-10
-          font-medium
-          rounded-md
-          text-sm
-        "
-      >
-        {{ $t("MovieList.save_changes") }}
-      </button>
+      <div v-if="isEditable" class="flex gap-6 items-center justify-center">
+        <h2 class="text-grey_text" @click="cancelEdit">Cancel</h2>
+        <button
+          type="submit"
+          class="
+            text-white
+            bg-default_red
+            w-40
+            h-10
+            font-medium
+            rounded-md
+            text-sm
+          "
+        >
+          {{ $t("MovieList.save_changes") }}
+        </button>
+      </div>
     </Form>
   </div>
 </template>
@@ -128,28 +111,35 @@ import { Form, Field } from "vee-validate";
 import ConfirmPopup from "../EmailProfile/ConfirmPopup.vue";
 import axios from "@/config/axios/index.js";
 import DialogModal from "../../../../components/DialogModal.vue";
+import EnterUsername from "../EmailProfile/EnterUsername.vue";
+import SuccessDialog from "./SuccessDialog.vue";
 import { useCredentials } from "@/stores/index.js";
 const credentials = useCredentials();
-const username = ref();
+
 const email = ref();
 const confirm = ref();
 const editUsername = ref(false);
 
-const avatarError = ref(false);
-
 const isEditable = ref(false);
-
+const success = ref(false);
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
+
+const cancelEdit = () => {
+  credentials.username_edit = credentials.user_name;
+  var preview = document.getElementById("mobile_img");
+  preview.src = url_thumbnail + credentials.avatar;
+  credentials.canEditGoogle = false;
+};
 
 const handleClick = () => {
   document.getElementById("mobile_input").click();
   isEditable.value = true;
 };
 
-const setImage = (e) => {
+const setImage = async (e) => {
   if (e.target.files.length > 0) {
     var src = URL.createObjectURL(e.target.files[0]);
-    var preview = document.getElementById("mobile_file");
+    var preview = document.getElementById("mobile_img");
     preview.src = src;
   }
 };
@@ -158,10 +148,6 @@ const header = {
     "Content-Type": "multipart/form-data",
   },
 };
-
-onBeforeMount(() => {
-  fetchUser();
-});
 
 const fetchUser = () => {
   axios.get("user").then((res) => {
@@ -175,20 +161,25 @@ const handleSubmit = async (values) => {
       "update",
       {
         thumbnail: values.thumbnail,
+
+        username: credentials.username_edit,
       },
       header
     );
     fetchUser();
-    avatarError.value = false;
+    success.value = true;
+    credentials.user_name = credentials.username_edit;
+    isEditable.value = false;
   } catch (err) {
-    avatarError.value = true;
+    console.log(err);
   }
 };
 
 onBeforeMount(() => {
   axios.get("user").then((res) => {
     email.value = res.data.email;
-    username.value = res.data.username;
+    credentials.username_edit = res.data.username;
   });
+  fetchUser();
 });
 </script>

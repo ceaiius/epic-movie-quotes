@@ -24,7 +24,13 @@
               lg:mt-0 lg:translate-y-[-50%]
               translate-y-0
             "
-            :src="url_thumbnail + credentials.avatar"
+            :src="
+              credentials.avatar == null
+                ? '/images/static.png'
+                : credentials.avatar.includes('https')
+                ? credentials.avatar
+                : url_thumbnail + credentials.avatar
+            "
             alt=""
           />
           <div
@@ -39,19 +45,16 @@
             <h2 class="text-white" @click="handleClick">
               {{ $t("Profile.upload_new_photo") }}
             </h2>
-            <h2 v-if="avatarError" class="text-red-500 absolute top-6">
-              Please select a new image
-            </h2>
           </div>
           <div>
-            <Field v-slot="{ field }" name="thumbnail">
+            <Field v-slot="{ handleChange }" name="thumbnail">
               <input
-                v-bind="field"
                 id="mobile_input"
                 ref="fileInput"
                 type="file"
                 class="hidden"
-                @change="setImage"
+                @change="handleChange"
+                @input="setImage"
               />
             </Field>
           </div>
@@ -62,7 +65,13 @@
       <div class="flex flex-col w-96 text-white">
         <h2 class="pl-6">{{ $t("Profile.username") }}</h2>
         <div class="flex justify-between p-6">
-          <h2>{{ credentials.user_name }}</h2>
+          <h2>
+            {{
+              credentials.username_edit == ""
+                ? credentials.user_name
+                : credentials.username_edit
+            }}
+          </h2>
           <h2 class="cursor-pointer" @click="editUsername = true">Edit</h2>
         </div>
         <teleport to="body">
@@ -131,7 +140,7 @@ import EditEmail from "./EditEmail.vue";
 import axios from "@/config/axios/index.js";
 import { useCredentials } from "@/stores/index.js";
 const credentials = useCredentials();
-const avatarError = ref(false);
+
 const editUsername = ref(false);
 const isEditable = ref(false);
 const editPassword = ref(false);
@@ -172,13 +181,13 @@ const handleSubmit = async (values) => {
       "update",
       {
         thumbnail: values.thumbnail,
+        username: credentials.username_edit,
       },
       header
     );
     fetchUser();
-    avatarError.value = false;
   } catch (err) {
-    avatarError.value = true;
+    console.log(err);
   }
 };
 </script>

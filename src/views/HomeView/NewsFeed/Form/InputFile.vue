@@ -15,13 +15,13 @@
       >
         Choose file
       </p>
-      <Field v-slot="{ field }" name="thumbnail">
+      <Field v-slot="{ handleChange }" name="thumbnail">
         <input
-          v-bind="field"
           id="input"
           type="file"
           class="hidden"
-          @change="setImage"
+          @change="handleChange"
+          @input="setImage"
         />
       </Field>
     </div>

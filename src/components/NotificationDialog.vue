@@ -58,7 +58,8 @@
                 ? 'border rounded-full border-green-500'
                 : ''
             "
-            src="/images/static.png"
+            class="w-12 object-contain h-12"
+            :src="url_thumbnail + notification.from.thumbnail"
             alt=""
           />
           <div class="flex flex-col gap-2">
@@ -101,6 +102,7 @@
 import axios from "@/config/axios/index.js";
 import { onMounted } from "vue";
 import { useCredentials } from "@/stores/index.js";
+const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
 const credentials = useCredentials();
 
 const url_notifications = `${import.meta.env.VITE_API_BASE_URL}notifications`;
@@ -139,6 +141,7 @@ setTimeout(() => {
 const handleNotifications = async () => {
   axios.get(url_notifications).then((res) => {
     credentials.notifications = res.data;
+    console.log(res.data);
   });
 };
 

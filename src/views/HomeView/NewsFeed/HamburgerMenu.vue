@@ -31,7 +31,13 @@
             lg:mt-0 lg:translate-y-[-50%]
             translate-y-0
           "
-          :src="url_thumbnail + credentials.avatar"
+          :src="
+            credentials.avatar == null
+              ? '/images/static.png'
+              : credentials.avatar.includes('https')
+              ? credentials.avatar
+              : url_thumbnail + credentials.avatar
+          "
           alt=""
         />
         <div>
