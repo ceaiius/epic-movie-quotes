@@ -159,7 +159,12 @@ onBeforeMount(() => {
 const cancelEdit = () => {
   username.value = credentials.user_name;
   var preview = document.getElementById("img");
-  preview.src = url_thumbnail + credentials.avatar;
+  if (credentials.avatar.includes("https")) {
+    preview.src = credentials.avatar;
+  } else {
+    preview.src = url_thumbnail + credentials.avatar;
+  }
+
   credentials.canEditGoogle = false;
 };
 

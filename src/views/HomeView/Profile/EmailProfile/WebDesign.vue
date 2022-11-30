@@ -5,7 +5,10 @@
   >
     <h2 class="text-white lg:block hidden">{{ $t("Profile.my_profile") }}</h2>
     <div v-if="success" class="z-20 right-20 fixed">
-      <SuccessDialog @exit="success = false" />
+      <SuccessDialog
+        message="Profile uptaded sucessfully"
+        @exit="success = false"
+      />
     </div>
     <div class="flex w-full h-full lg:h-auto items-center justify-center">
       <Form

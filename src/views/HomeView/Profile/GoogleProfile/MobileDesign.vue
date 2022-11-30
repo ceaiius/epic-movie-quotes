@@ -5,8 +5,28 @@
       @submit="handleSubmit"
     >
       <teleport to="body">
-        <dialog-modal v-if="success" top="top-[20%]" @close="success = false">
-          <SuccessDialog @exit="success = false" />
+        <dialog-modal
+          v-if="credentials.success_username"
+          top="top-[20%]"
+          @close="credentials.success_username = false"
+        >
+          <SuccessDialog
+            message="Username updated succesfully"
+            @exit="credentials.success_username = false"
+          />
+        </dialog-modal>
+      </teleport>
+
+      <teleport to="body">
+        <dialog-modal
+          v-if="credentials.success_avatar"
+          top="top-[20%]"
+          @close="credentials.success_avatar = false"
+        >
+          <SuccessDialog
+            message="Avatar updated succesfully"
+            @exit="credentials.success_avatar = false"
+          />
         </dialog-modal>
       </teleport>
       <div class="flex flex-col gap-20">
@@ -22,7 +42,13 @@
               lg:mt-0 lg:translate-y-[-50%]
               translate-y-0
             "
-            :src="url_thumbnail + credentials.avatar"
+            :src="
+              credentials.avatar == null
+                ? '/images/avatar-default.jpg'
+                : credentials.avatar.includes('https')
+                ? credentials.avatar
+                : url_thumbnail + credentials.avatar
+            "
             alt=""
           />
           <div
@@ -56,17 +82,22 @@
       <div class="flex flex-col w-96 text-white">
         <h2 class="pl-6">{{ $t("Profile.username") }}</h2>
         <div class="flex justify-between p-6">
-          <h2>{{ credentials.username_edit }}</h2>
+          <h2>{{ credentials.confirmed_username_edit }}</h2>
           <h2
             class="cursor-pointer"
-            @click="(editUsername = true), (isEditable = true)"
+            @click="credentials.can_edit_username_popup = true"
           >
             Edit
           </h2>
         </div>
         <teleport to="body">
-          <dialog-modal v-if="editUsername" @close="editUsername = false">
-            <EnterUsername @exit="editUsername = false" />
+          <dialog-modal
+            v-if="credentials.can_edit_username_popup"
+            @close="credentials.can_edit_username_popup = false"
+          >
+            <EnterUsername
+              @exit="credentials.can_edit_username_popup = false"
+            />
           </dialog-modal>
         </teleport>
 
@@ -120,10 +151,9 @@ const credentials = useCredentials();
 
 const email = ref();
 const confirm = ref();
-const editUsername = ref(false);
 
 const isEditable = ref(false);
-const success = ref(false);
+
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
 
 const cancelEdit = () => {
@@ -163,14 +193,11 @@ const handleSubmit = async (values) => {
       "update",
       {
         thumbnail: values.thumbnail,
-
-        username: credentials.username_edit,
       },
       header
     );
     fetchUser();
-    success.value = true;
-    credentials.user_name = credentials.username_edit;
+    credentials.success_avatar = true;
     isEditable.value = false;
   } catch (err) {
     console.log(err);
@@ -180,7 +207,7 @@ const handleSubmit = async (values) => {
 onBeforeMount(() => {
   axios.get("user").then((res) => {
     email.value = res.data.email;
-    credentials.username_edit = res.data.username;
+    credentials.confirmed_username_edit = res.data.username;
   });
   fetchUser();
 });

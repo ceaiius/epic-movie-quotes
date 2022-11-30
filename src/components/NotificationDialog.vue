@@ -63,7 +63,9 @@
             "
             class="w-12 rounded-full object-cover h-12"
             :src="[
-              notification.from.thumbnail.includes('https')
+              notification.from.thumbnail == null
+                ? '/images/avatar-default.jpg'
+                : notification.from.thumbnail.includes('https')
                 ? notification.from.thumbnail
                 : url_thumbnail + notification.from.thumbnail,
             ]"

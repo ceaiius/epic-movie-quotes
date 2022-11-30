@@ -66,18 +66,30 @@
             {{ likes }} <img src="/images/likes.svg" alt="" />
           </div>
         </div>
+
         <div class="m-6 flex gap-6 relative text-white">
-          <div>
-            <img
-              :src="url + avatar"
-              class="md:w-12 md:h-12 rounded-full object-cover"
-              alt=""
-            />
+          <div v-if="comment_count == 0">
+            <h2>No comments yet</h2>
           </div>
-          <div>
-            <h2>{{ username }}</h2>
-            <p class="max-w-2xl">{{ comment }}</p>
-            <hr class="border-[#efefef4d] mt-6" />
+          <div v-else class="flex gap-6 items-center justify-center">
+            <div>
+              <img
+                :src="[
+                  credentials.avatar == null
+                    ? '/images/avatar-default.jpg'
+                    : credentials.avatar.includes('https')
+                    ? credentials.avatar
+                    : url_thumbnail + credentials.avatar,
+                ]"
+                class="md:w-12 md:h-12 rounded-full object-cover"
+                alt=""
+              />
+            </div>
+            <div>
+              <h2>{{ username }}</h2>
+              <p class="max-w-2xl">{{ comment }}</p>
+              <hr class="border-[#efefef4d] mt-6" />
+            </div>
           </div>
         </div>
       </div>
@@ -89,6 +101,9 @@
 import { onMounted, ref } from "vue";
 import axios from "@/config/axios/index.js";
 import InputReadOnly from "../Form/InputReadOnly.vue";
+import { useCredentials } from "@/stores/index.js";
+
+const credentials = useCredentials();
 const props = defineProps(["id"]);
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["delete", "exit"]);

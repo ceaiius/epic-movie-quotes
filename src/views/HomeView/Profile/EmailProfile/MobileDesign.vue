@@ -8,8 +8,41 @@
     class="lg:hidden flex-col mt-10 items-center gap-20 w-full flex"
   >
     <teleport to="body">
-      <dialog-modal v-if="success" top="top-[20%]" @close="success = false">
-        <SuccessDialog @exit="success = false" />
+      <dialog-modal
+        v-if="credentials.success_username"
+        top="top-[20%]"
+        @close="credentials.success_username = false"
+      >
+        <SuccessDialog
+          message="Username updated succesfully"
+          @exit="credentials.success_username = false"
+        />
+      </dialog-modal>
+    </teleport>
+
+    <teleport to="body">
+      <dialog-modal
+        v-if="credentials.success_avatar"
+        top="top-[20%]"
+        @close="credentials.success_avatar = false"
+      >
+        <SuccessDialog
+          message="Avatar updated succesfully"
+          @exit="credentials.success_avatar = false"
+        />
+      </dialog-modal>
+    </teleport>
+
+    <teleport to="body">
+      <dialog-modal
+        v-if="credentials.success_password"
+        top="top-[20%]"
+        @close="credentials.success_password = false"
+      >
+        <SuccessDialog
+          message="Password updated succesfully"
+          @exit="credentials.success_password = false"
+        />
       </dialog-modal>
     </teleport>
     <Form
@@ -71,17 +104,23 @@
         <h2 class="pl-6">{{ $t("Profile.username") }}</h2>
         <div class="flex justify-between p-6">
           <h2>
-            {{
-              credentials.username_edit == ""
-                ? credentials.user_name
-                : credentials.username_edit
-            }}
+            {{ credentials.confirmed_username_edit }}
           </h2>
-          <h2 class="cursor-pointer" @click="editUsername = true">Edit</h2>
+          <h2
+            class="cursor-pointer"
+            @click="credentials.can_edit_username_popup = true"
+          >
+            Edit
+          </h2>
         </div>
         <teleport to="body">
-          <dialog-modal v-if="editUsername" @close="editUsername = false">
-            <EnterUsername @exit="editUsername = false" />
+          <dialog-modal
+            v-if="credentials.can_edit_username_popup"
+            @close="credentials.can_edit_username_popup = false"
+          >
+            <EnterUsername
+              @exit="credentials.can_edit_username_popup = false"
+            />
           </dialog-modal>
         </teleport>
         <hr class="border-[#efefef4d]" />
@@ -90,11 +129,19 @@
         <h2 class="pl-6">{{ $t("Profile.password") }}</h2>
         <div class="flex justify-between p-6">
           <img class="w-36" src="/images/password.svg" alt="" />
-          <h2 class="cursor-pointer" @click="editPassword = true">Edit</h2>
+          <h2
+            class="cursor-pointer"
+            @click="credentials.can_edit_password_popup = true"
+          >
+            Edit
+          </h2>
         </div>
         <teleport to="body">
-          <dialog-modal v-if="editPassword" @close="editPassword = false">
-            <EditPassword @exit="editPassword = false" />
+          <dialog-modal
+            v-if="credentials.can_edit_password_popup"
+            @close="credentials.can_edit_password_popup = false"
+          >
+            <EditPassword @exit="credentials.can_edit_password_popup = false" />
           </dialog-modal>
         </teleport>
         <hr class="border-[#efefef4d]" />
@@ -116,11 +163,7 @@
         </teleport>
       </div>
       <div
-        v-if="
-          editThumbnail ||
-          credentials.can_edit_username ||
-          credentials.can_edit_password
-        "
+        v-if="editThumbnail"
         class="flex gap-6 items-center justify-center mb-10"
       >
         <h2 class="text-grey_text cursor-pointer" @click="cancelEdit">
@@ -156,7 +199,7 @@ import SuccessDialog from "../GoogleProfile/SuccessDialog.vue";
 import axios from "@/config/axios/index.js";
 import { useCredentials } from "@/stores/index.js";
 const credentials = useCredentials();
-const success = ref(false);
+
 const editUsername = ref(false);
 const editThumbnail = ref(false);
 const editPassword = ref(false);
@@ -195,6 +238,7 @@ onBeforeMount(() => {
 const fetchUser = () => {
   axios.get("user").then((res) => {
     credentials.avatar = res.data.thumbnail;
+    credentials.confirmed_username_edit = res.data.username;
   });
 };
 
@@ -204,13 +248,12 @@ const handleSubmit = async (values) => {
       "update",
       {
         thumbnail: values.thumbnail,
-        username: credentials.username_edit,
-        password: credentials.password_edit,
       },
       header
     );
     fetchUser();
-    success.value = true;
+    credentials.success_avatar = true;
+    editThumbnail.value = false;
   } catch (err) {
     console.log(err);
   }

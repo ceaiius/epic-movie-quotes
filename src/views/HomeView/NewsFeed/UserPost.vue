@@ -59,7 +59,9 @@
             <img
               class="w-12 h-12 object-cover rounded-full"
               :src="[
-                item.author.thumbnail.includes('https')
+                item.author.thumbnail == null
+                  ? '/images/avatar-default.jpg'
+                  : item.author.thumbnail.includes('https')
                   ? item.author.thumbnail
                   : url_thumbnail + item.author.thumbnail,
               ]"
@@ -113,11 +115,13 @@
               <div class="">
                 <img
                   :src="[
-                    items.author.thumbnail.includes('https')
+                    items.author.thumbnail == null
+                      ? '/images/avatar-default.jpg'
+                      : items.author.thumbnail.includes('https')
                       ? items.author.thumbnail
                       : url_thumbnail + items.author.thumbnail,
                   ]"
-                  class="md:w-12 md:h-12 w-10 h-10 rounded-full object-contain"
+                  class="md:w-12 md:h-12 w-10 h-10 rounded-full object-cover"
                   alt=""
                 />
               </div>
@@ -154,7 +158,7 @@
                   ? credentials.avatar
                   : url_thumbnail + credentials.avatar,
               ]"
-              class="hidden object-contain rounded-full lg:block w-12 h-12"
+              class="hidden object-cover rounded-full lg:block w-12 h-12"
               alt=""
             />
             <form
