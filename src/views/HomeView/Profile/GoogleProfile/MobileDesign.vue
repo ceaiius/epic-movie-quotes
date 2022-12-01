@@ -42,13 +42,7 @@
               lg:mt-0 lg:translate-y-[-50%]
               translate-y-0
             "
-            :src="
-              credentials.avatar == null
-                ? '/images/avatar-default.jpg'
-                : credentials.avatar.includes('https')
-                ? credentials.avatar
-                : url_thumbnail + credentials.avatar
-            "
+            :src="thumbnail(credentials.avatar)"
             alt=""
           />
           <div
@@ -113,7 +107,7 @@
           <h2>{{ email }}</h2>
         </div>
 
-        <hr class="border-[#efefef4d]" />
+        <hr class="border-hr_color" />
       </div>
       <div v-if="isEditable" class="flex gap-6 items-center justify-center">
         <h2 class="text-grey_text cursor-pointer" @click="cancelEdit">
@@ -146,6 +140,7 @@ import axios from "@/config/axios/index.js";
 import DialogModal from "../../../../components/DialogModal.vue";
 import EnterUsername from "../EmailProfile/EnterUsername.vue";
 import SuccessDialog from "./SuccessDialog.vue";
+import { thumbnail } from "../../../../helpers/thumbnail";
 import { useCredentials } from "@/stores/index.js";
 const credentials = useCredentials();
 

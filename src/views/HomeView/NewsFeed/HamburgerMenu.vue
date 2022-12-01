@@ -31,13 +31,7 @@
             lg:mt-0 lg:translate-y-[-50%]
             translate-y-0
           "
-          :src="
-            credentials.avatar == null
-              ? '/images/avatar-default.jpg'
-              : credentials.avatar.includes('https')
-              ? credentials.avatar
-              : url_thumbnail + credentials.avatar
-          "
+          :src="thumbnail(credentials.avatar)"
           alt=""
         />
         <div>
@@ -115,11 +109,12 @@ import { useRouter } from "vue-router";
 import router from "../../../router";
 import { useAuthStore } from "@/stores/auth";
 import { useCredentials } from "@/stores/index.js";
+import { thumbnail } from "../../../helpers/thumbnail";
 const credentials = useCredentials();
 const username = ref("");
 const authStore = useAuthStore();
 const googleUser = ref(false);
-const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
+
 onMounted(() => {
   axios.get("user").then((res) => {
     username.value = res.data.username;

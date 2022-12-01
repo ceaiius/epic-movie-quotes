@@ -62,13 +62,7 @@
                 : ''
             "
             class="w-12 rounded-full object-cover h-12"
-            :src="[
-              notification.from.thumbnail == null
-                ? '/images/avatar-default.jpg'
-                : notification.from.thumbnail.includes('https')
-                ? notification.from.thumbnail
-                : url_thumbnail + notification.from.thumbnail,
-            ]"
+            :src="thumbnail(notification.from.thumbnail)"
             alt=""
           />
           <div class="flex flex-col gap-2">
@@ -111,7 +105,7 @@
 import axios from "@/config/axios/index.js";
 import { onMounted } from "vue";
 import { useCredentials } from "@/stores/index.js";
-const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
+import { thumbnail } from "../helpers/thumbnail";
 const credentials = useCredentials();
 
 const url_notifications = `${import.meta.env.VITE_API_BASE_URL}notifications`;

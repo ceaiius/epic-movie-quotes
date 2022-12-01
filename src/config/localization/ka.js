@@ -70,6 +70,7 @@ export default {
     MovieList: {
       my_list_of_movies: "ჩემი ფილმების სია",
       total: "ჯამში",
+      quotes: "ციტატები",
       search: "მოძებნა",
       add_movie: "დამატება",
       movie_description: "ფილმის აღწერა",

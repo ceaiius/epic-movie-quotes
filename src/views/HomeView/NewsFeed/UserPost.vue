@@ -45,7 +45,7 @@
               type="text"
               :placeholder="searchLocale"
             />
-            <hr class="border-[#efefef4d] mt-6" />
+            <hr class="border-hr_color mt-6" />
           </div>
         </div>
       </div>
@@ -58,13 +58,7 @@
           <div class="flex items-center gap-2 m-6 text-white w-12 h-12">
             <img
               class="w-12 h-12 object-cover rounded-full"
-              :src="[
-                item.author.thumbnail == null
-                  ? '/images/avatar-default.jpg'
-                  : item.author.thumbnail.includes('https')
-                  ? item.author.thumbnail
-                  : url_thumbnail + item.author.thumbnail,
-              ]"
+              :src="thumbnail(item.author.thumbnail)"
               alt=""
             />
             <h2 class="whitespace-nowrap">{{ item.author.username }}</h2>
@@ -102,7 +96,7 @@
                 />
               </div>
             </div>
-            <hr class="border-[#efefef4d]" />
+            <hr class="border-hr_color" />
           </div>
         </div>
         <div class="max-h-[450px] overflow-auto">
@@ -114,13 +108,7 @@
             <div class="flex gap-6">
               <div class="">
                 <img
-                  :src="[
-                    items.author.thumbnail == null
-                      ? '/images/avatar-default.jpg'
-                      : items.author.thumbnail.includes('https')
-                      ? items.author.thumbnail
-                      : url_thumbnail + items.author.thumbnail,
-                  ]"
+                  :src="thumbnail(items.author.thumbnail)"
                   class="md:w-12 md:h-12 w-10 h-10 rounded-full object-cover"
                   alt=""
                 />
@@ -144,20 +132,14 @@
                 </div>
               </div>
             </div>
-            <hr class="border-[#efefef4d] mt-6 w-full" />
+            <hr class="border-hr_color mt-6 w-full" />
           </div>
         </div>
 
         <div>
           <div class="m-6 flex">
             <img
-              :src="[
-                credentials.avatar == null
-                  ? '/images/avatar-default.jpg'
-                  : credentials.avatar.includes('https')
-                  ? credentials.avatar
-                  : url_thumbnail + credentials.avatar,
-              ]"
+              :src="thumbnail(credentials.avatar)"
               class="hidden object-cover rounded-full lg:block w-12 h-12"
               alt=""
             />
@@ -200,7 +182,7 @@ import axios from "@/config/axios/index.js";
 import DialogModal from "../../../components/DialogModal.vue";
 import QuoteDialog from "./Dialogs/QuoteDialog.vue";
 import { useCredentials } from "@/stores/index.js";
-
+import { thumbnail } from "../../../helpers/thumbnail";
 const credentials = useCredentials();
 
 // eslint-disable-next-line no-unused-vars
@@ -368,6 +350,7 @@ const handleNotifications = async () => {
 const getQuotes = () => {
   axios.get(url).then((res) => {
     data.value = res.data.data;
+    console.log(res.data);
   });
 };
 

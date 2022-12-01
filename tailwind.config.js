@@ -18,6 +18,7 @@ module.exports = {
         notification_border: "rgba(108,117,125,0.5)",
         success: "#D1E7DD",
         success_text: "#0F5132",
+        hr_color: "#efefef4d",
       },
       screens: {
         xs: "375px",

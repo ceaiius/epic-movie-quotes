@@ -24,7 +24,7 @@
         <h2 class="text-white">{{ $t("NewsFeed.write_new_quote") }}</h2>
         <p class="invisible"></p>
       </div>
-      <hr class="w-full border-[#efefef4d] mt-6" />
+      <hr class="w-full border-hr_color mt-6" />
     </div>
     <div class="flex justify-center">
       <Form

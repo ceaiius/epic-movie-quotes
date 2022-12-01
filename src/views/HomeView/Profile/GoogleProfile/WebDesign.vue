@@ -42,13 +42,7 @@
                   lg:mt-0 lg:translate-y-[-50%]
                   translate-y-0
                 "
-                :src="
-                  credentials.avatar == null
-                    ? '/images/avatar-default.jpg'
-                    : credentials.avatar.includes('https')
-                    ? credentials.avatar
-                    : url_thumbnail + credentials.avatar
-                "
+                :src="thumbnail(credentials.avatar)"
                 alt=""
               />
               <h2 class="text-white cursor-pointer" @click="handleClick">
@@ -98,7 +92,7 @@
                   >{{ $t("Profile.edit") }}</label
                 >
               </div>
-              <hr class="border-[#efefef4d]" />
+              <hr class="border-hr_color" />
               <div
                 class="flex flex-col items-center relative gap-6 w-80 lg:w-96"
               >
@@ -147,6 +141,7 @@ import { onBeforeMount, ref } from "vue";
 import { Form, Field } from "vee-validate";
 import axios from "@/config/axios/index.js";
 import { useCredentials } from "@/stores/index.js";
+import { thumbnail } from "../../../../helpers/thumbnail";
 const credentials = useCredentials();
 const avatarError = ref(false);
 const username = ref();

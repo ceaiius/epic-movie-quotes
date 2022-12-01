@@ -1,9 +1,3 @@
-// export function isRemembered() {
-//   if (getJwtToken()) {
-//     return "/home";
-//   }
-// }
-
 import { useAuthStore } from "@/stores/auth";
 export const isAuthenticated = () => {
   const authStore = useAuthStore();

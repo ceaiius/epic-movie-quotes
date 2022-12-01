@@ -13,13 +13,7 @@
               ? 'border rounded-full border-red-500'
               : '',
           ]"
-          :src="[
-            credentials.avatar == null
-              ? '/images/avatar-default.jpg'
-              : credentials.avatar.includes('https')
-              ? credentials.avatar
-              : url_thumbnail + credentials.avatar,
-          ]"
+          :src="thumbnail(credentials.avatar)"
           alt=""
         />
         <div>
@@ -76,8 +70,9 @@ import axios from "@/config/axios/index.js";
 import { onMounted, ref } from "vue";
 import { useCredentials } from "@/stores/index.js";
 import { useRouter } from "vue-router";
+import { thumbnail } from "../../../helpers/thumbnail";
 const credentials = useCredentials();
-const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
+
 const googleUser = ref(false);
 onMounted(() => {
   axios.get("user").then((res) => {

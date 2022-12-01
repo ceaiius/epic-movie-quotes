@@ -14,7 +14,7 @@
       class="flex flex-col w-full justify-center text-white items-center h-full"
     >
       <h1>Are you sure to make changes?</h1>
-      <hr class="border-[#efefef4d] w-full mt-10" />
+      <hr class="border-hr_color w-full mt-10" />
       <div class="flex w-full justify-between items-center pl-10 pr-10 mt-10">
         <h2 class="cursor-pointer" @click="$emit('exit')">Cancel</h2>
         <button

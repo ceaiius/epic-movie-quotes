@@ -12,7 +12,11 @@
         </teleport>
         <div class="flex flex-col text-white gap-6">
           <h2>{{ $t("MovieList.movie_description") }}</h2>
-          <img :src="url + data?.thumbnail" alt="" class="rounded-2xl" />
+          <img
+            :src="url + data?.thumbnail"
+            alt=""
+            class="w-[800px] h-[530px] object-cover"
+          />
           <div class="flex flex-col gap-6 lg:hidden">
             <h1 class="text-3xl text-brown">
               {{ i18n.global.locale == "En" ? data?.name?.en : data?.name?.ka }}
@@ -71,7 +75,10 @@
             </div>
           </div>
           <div class="flex gap-6 items-center">
-            <h2>Quotes (total {{ count }})</h2>
+            <h2>
+              {{ $t("MovieList.quotes") }} ({{ $t("MovieList.total") }}
+              {{ count }})
+            </h2>
             <button
               type="button"
               class="
@@ -196,7 +203,7 @@
               "
             >
               <img
-                class="object-contain w-64 h-36 ml-6 rounded-md"
+                class="object-cover w-64 h-36 ml-6 rounded-md"
                 :src="url_thumbnail + item.thumbnail"
                 alt=""
               />
@@ -204,7 +211,7 @@
                 "{{ i18n.global.locale == "En" ? item.name.en : item.name.ka }}"
               </h2>
             </div>
-            <hr class="border-[#efefef4d] mt-6 w-full" />
+            <hr class="border-hr_color mt-6 w-full" />
             <div class="flex gap-6 items-center mt-6 mb-6 ml-0 lg:ml-28">
               <div class="flex gap-6">
                 <h2>{{ item.comments.length }}</h2>

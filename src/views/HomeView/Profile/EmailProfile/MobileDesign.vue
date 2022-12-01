@@ -1,10 +1,6 @@
 <template>
   <div
-    :class="[
-      editUsername ? 'hidden' : '',
-      editPassword ? 'hidden' : '',
-      editEmail ? 'hidden' : '',
-    ]"
+    :class="[editUsername ? 'hidden' : '', editPassword ? 'hidden' : '']"
     class="lg:hidden flex-col mt-10 items-center gap-20 w-full flex"
   >
     <teleport to="body">
@@ -62,13 +58,7 @@
               lg:mt-0 lg:translate-y-[-50%]
               translate-y-0
             "
-            :src="
-              credentials.avatar == null
-                ? '/images/avatar-default.jpg'
-                : credentials.avatar.includes('https')
-                ? credentials.avatar
-                : url_thumbnail + credentials.avatar
-            "
+            :src="thumbnail(credentials.avatar)"
             alt=""
           />
           <div
@@ -123,7 +113,7 @@
             />
           </dialog-modal>
         </teleport>
-        <hr class="border-[#efefef4d]" />
+        <hr class="border-hr_color" />
       </div>
       <div class="flex flex-col w-96 text-white">
         <h2 class="pl-6">{{ $t("Profile.password") }}</h2>
@@ -144,24 +134,9 @@
             <EditPassword @exit="credentials.can_edit_password_popup = false" />
           </dialog-modal>
         </teleport>
-        <hr class="border-[#efefef4d]" />
+        <hr class="border-hr_color" />
       </div>
-      <div class="flex flex-col w-96 text-white">
-        <div class="flex justify-between items-center p-6">
-          <h2>Email</h2>
-          <img
-            class="w-2 cursor-pointer"
-            src="/images/right-arrow.svg"
-            alt=""
-            @click="editEmail = true"
-          />
-        </div>
-        <teleport to="body">
-          <dialog-modal v-if="editEmail" @close="editEmail = false">
-            <EditEmail @exit="editEmail = false" />
-          </dialog-modal>
-        </teleport>
-      </div>
+
       <div
         v-if="editThumbnail"
         class="flex gap-6 items-center justify-center mb-10"
@@ -194,7 +169,7 @@ import { Form, Field } from "vee-validate";
 import DialogModal from "../../../../components/DialogModal.vue";
 import EditPassword from "./EditPassword.vue";
 import EnterUsername from "./EnterUsername.vue";
-import EditEmail from "./EditEmail.vue";
+import { thumbnail } from "../../../../helpers/thumbnail";
 import SuccessDialog from "../GoogleProfile/SuccessDialog.vue";
 import axios from "@/config/axios/index.js";
 import { useCredentials } from "@/stores/index.js";
@@ -203,7 +178,7 @@ const credentials = useCredentials();
 const editUsername = ref(false);
 const editThumbnail = ref(false);
 const editPassword = ref(false);
-const editEmail = ref(false);
+
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
 
 const handleClick = () => {

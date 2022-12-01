@@ -50,13 +50,7 @@
                   lg:mt-0 lg:translate-y-[-50%]
                   translate-y-0
                 "
-                :src="
-                  credentials.avatar == null
-                    ? '/images/avatar-default.jpg'
-                    : credentials.avatar.includes('https')
-                    ? credentials.avatar
-                    : url_thumbnail + credentials.avatar
-                "
+                :src="thumbnail(credentials.avatar)"
                 alt=""
               />
               <div
@@ -114,80 +108,10 @@
                   >{{ $t("Profile.edit") }}</label
                 >
               </div>
-              <hr class="border-[#efefef4d]" />
+              <hr class="border-hr_color" />
               <div class="flex flex-col relative gap-6 w-80 lg:w-96">
-                <div class="w-full">
-                  <label
-                    class="text-white absolute -top-10 left-0"
-                    for="email"
-                    >{{ $t("Profile.email") }}</label
-                  >
-
-                  <div>
-                    <input
-                      id="email"
-                      v-model="email"
-                      class="
-                        bg-rgba
-                        w-full
-                        text-sm text-white
-                        h-10
-                        p-2
-                        border-2
-                        rounded
-                      "
-                      readonly
-                    />
-                    <img
-                      class="absolute top-3 right-3"
-                      src="/images/checked_round.svg"
-                      alt=""
-                    />
-                    <h2 class="absolute top-2 text-white -right-40">
-                      {{ $t("Profile.primary_email") }}
-                    </h2>
-                  </div>
-                </div>
-
                 <div>
-                  <button
-                    type="button"
-                    class="
-                      focus:outline-none
-                      text-white
-                      border border-white
-                      w-48
-                      gap-2
-                      h-10
-                      flex
-                      justify-center
-                      items-center
-                      font-medium
-                      rounded-md
-                      text-sm
-                    "
-                  >
-                    <span><img src="/images/plus.svg" alt="" /></span>
-                    {{ $t("Profile.add_new_email") }}
-                  </button>
-                </div>
-                <hr class="border-[#efefef4d]" />
-
-                <div>
-                  <div
-                    class="
-                      flex
-                      mb-10
-                      mt-10
-                      items-center
-                      flex-col
-                      lg:flex-row
-                      gap-6
-                      relative
-                      w-80
-                      lg:w-96
-                    "
-                  >
+                  <div class="mb-10">
                     <h2 class="absolute -top-10 left-0 text-white">
                       {{ $t("Profile.password") }}
                     </h2>
@@ -458,10 +382,10 @@ import axios from "@/config/axios/index.js";
 import { Form, Field } from "vee-validate";
 import { useCredentials } from "@/stores/index.js";
 import SuccessDialog from "../GoogleProfile/SuccessDialog.vue";
+import { thumbnail } from "../../../../helpers/thumbnail";
 const credentials = useCredentials();
 
 const username = ref();
-const email = ref();
 const showPassword = ref(false);
 const showPasswordConfirm = ref(false);
 const password = ref("12345678910");
@@ -471,6 +395,7 @@ const editPassword = ref(false);
 const passwordReset = ref(false);
 const editThumbnail = ref(false);
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
+
 const handleClick = () => {
   document.getElementById("input").click();
   editThumbnail.value = true;
@@ -502,7 +427,6 @@ const cancelEdit = () => {
 
 const fetchUser = () => {
   axios.get("user").then((res) => {
-    email.value = res.data.email;
     username.value = res.data.username;
     credentials.avatar = res.data.thumbnail;
   });
