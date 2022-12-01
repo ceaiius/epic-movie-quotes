@@ -90,7 +90,7 @@
       </div>
 
       <div class="flex flex-col gap-2 justify-center items-center"></div>
-      <div class="flex flex-col w-96 text-white">
+      <div class="flex flex-col w-full sm:w-96 text-white">
         <h2 class="pl-6">{{ $t("Profile.username") }}</h2>
         <div class="flex justify-between p-6">
           <h2>
@@ -115,7 +115,7 @@
         </teleport>
         <hr class="border-hr_color" />
       </div>
-      <div class="flex flex-col w-96 text-white">
+      <div class="flex flex-col w-full sm:w-96 text-white">
         <h2 class="pl-6">{{ $t("Profile.password") }}</h2>
         <div class="flex justify-between p-6">
           <img class="w-36" src="/images/password.svg" alt="" />

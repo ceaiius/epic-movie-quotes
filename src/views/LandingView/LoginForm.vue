@@ -75,6 +75,18 @@
               class="text-default_red text-sm -bottom-6 absolute"
               name="email"
             />
+            <p
+              v-if="error"
+              class="
+                text-default_red
+                whitespace-nowrap
+                text-center text-sm
+                -bottom-6
+                absolute
+              "
+            >
+              {{ $t("LoginForm.wrong_email_or_password") }}
+            </p>
           </div>
           <div class="flex flex-col pt-10 relative">
             <label
@@ -281,7 +293,7 @@ import { useAuthStore } from "@/stores/auth";
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["openRegistration", "closeDialog"]);
 const authStore = useAuthStore();
-
+const error = ref(false);
 const email = ref("");
 const password = ref("");
 const errorInput = ref(false);
@@ -311,6 +323,7 @@ const handleLogin = async () => {
     authStore.authenticated = true;
     router.push({ name: "home" });
   } catch (err) {
+    error.value = true;
     console.log(err);
   }
 };

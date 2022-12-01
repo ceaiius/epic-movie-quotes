@@ -89,7 +89,7 @@
           </div>
 
           <div class="relative">
-            <InputFile />
+            <InputFile rules="required" />
           </div>
 
           <div class="relative">

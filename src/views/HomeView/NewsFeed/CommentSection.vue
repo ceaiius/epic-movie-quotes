@@ -1,18 +1,17 @@
 <template>
   <div>
-    <div class="m-6 flex">
+    <div class="m-6 flex justify-center items-center">
       <img
         :src="thumbnail(credentials.avatar)"
         class="hidden object-cover rounded-full lg:block w-12 h-12"
         alt=""
       />
-      <Form class="w-full" @submit="handleComment">
+      <Form class="w-full flex justify-center" @submit="handleComment">
         <Field
           v-model="commentValue"
           name="comment"
           class="
-            md:w-full
-            w-96
+            w-full
             h-16
             bg-[#24222F]
             pt-4

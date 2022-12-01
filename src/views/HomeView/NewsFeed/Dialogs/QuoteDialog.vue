@@ -50,7 +50,7 @@
             />
           </div>
           <div>
-            <InputFile />
+            <InputFile rules="required" />
           </div>
 
           <div class="relative">

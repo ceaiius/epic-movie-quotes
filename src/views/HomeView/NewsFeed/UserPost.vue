@@ -9,6 +9,8 @@
           class="
             lg:w-56
             w-full
+            justify-center
+            lg:p-0
             md:w-screen
             lg:h-14
             h-32
@@ -55,7 +57,19 @@
         class="w-auto flex flex-col bg-black_bg mt-6 rounded-xl md:mb-12"
       >
         <div>
-          <div class="flex items-center gap-2 m-6 text-white w-12 h-12">
+          <div
+            class="
+              flex
+              items-center
+              gap-2
+              ml-10
+              mt-10
+              sm:m-6
+              text-white
+              w-12
+              h-12
+            "
+          >
             <img
               class="w-12 h-12 object-cover rounded-full"
               :src="thumbnail(item.author.thumbnail)"
@@ -64,7 +78,7 @@
             <h2 class="whitespace-nowrap">{{ item.author.username }}</h2>
           </div>
           <div class="m-6">
-            <h2 class="text-white">
+            <h2 class="text-white ml-10 mt-2 sm:m-6">
               "{{ i18n.global.locale == "En" ? item.name.en : item.name.ka }}" -
               <span>{{
                 i18n.global.locale == "En"
@@ -75,13 +89,13 @@
             </h2>
             <div class="flex justify-center mt-2">
               <img
-                class="md:max-w-3xl mt-2 w-full object-cover"
+                class="sm:w-[550px] mt-2 w-72 object-cover"
                 :src="url_thumbnail + item.thumbnail"
                 alt=""
               />
             </div>
 
-            <div class="flex gap-6 text-white m-6">
+            <div class="flex gap-6 text-white ml-10 mt-6 mb-6 sm:m-6">
               <div class="flex gap-2 cursor-pointer">
                 {{ item.comments.length }}
                 <img src="/images/comments.svg" alt="" />
