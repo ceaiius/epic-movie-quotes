@@ -20,7 +20,10 @@
     <div class="flex justify-between items-center text-white pl-12 pr-12 pt-12">
       <h1>{{ $t("Notification.notifications") }}</h1>
       <div v-if="credentials.notifications.length == 0">
-        <h2 class="text-white">
+        <h2 class="text-white hidden lg:block">
+          {{ $t("Notification.no_notifications_yet") }}
+        </h2>
+        <h2 class="lg:hidden absolute text-white top-32 left-[25%]">
           {{ $t("Notification.no_notifications_yet") }}
         </h2>
       </div>
@@ -58,7 +61,8 @@
                 ? 'border rounded-full border-green-500'
                 : ''
             "
-            src="/images/static.png"
+            class="w-12 rounded-full object-cover h-12"
+            :src="thumbnail(notification.from.thumbnail)"
             alt=""
           />
           <div class="flex flex-col gap-2">
@@ -101,6 +105,7 @@
 import axios from "@/config/axios/index.js";
 import { onMounted } from "vue";
 import { useCredentials } from "@/stores/index.js";
+import { thumbnail } from "../helpers/thumbnail";
 const credentials = useCredentials();
 
 const url_notifications = `${import.meta.env.VITE_API_BASE_URL}notifications`;
@@ -139,6 +144,7 @@ setTimeout(() => {
 const handleNotifications = async () => {
   axios.get(url_notifications).then((res) => {
     credentials.notifications = res.data;
+    console.log(res.data);
   });
 };
 

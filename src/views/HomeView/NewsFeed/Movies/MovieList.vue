@@ -58,7 +58,7 @@
         <div v-for="item in searched" :key="item.id">
           <div>
             <img
-              class="max-h-64 rounded-2xl"
+              class="h-60 w-96 object-cover rounded-2xl"
               :src="url_thumbnail + item.thumbnail"
               alt=""
               @click="handleClick(item.id)"
@@ -71,7 +71,7 @@
             </h2>
 
             <h3 class="flex gap-6 text-2xl mt-2">
-              {{ item.comments.length }}
+              {{ item.quotes.length }}
               <span><img src="/images/chat.png" alt="" /></span>
             </h3>
           </div>
@@ -134,6 +134,7 @@ const getMovies = () => {
   axios.get(url).then((res) => {
     data.value = res.data;
     count.value = res.data.length;
+    console.log(res.data);
   });
 };
 </script>

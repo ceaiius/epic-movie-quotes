@@ -10,6 +10,11 @@
       rounded-none
     "
   >
+    <teleport to="body">
+      <dialog-modal v-if="confirmPassword" @close="confirmPassword = false">
+        <ConfirmPasswordPopup @exit="confirmPassword = false" />
+      </dialog-modal>
+    </teleport>
     <div class="mb-10">
       <div
         class="
@@ -218,6 +223,7 @@
             rounded-md
             text-sm
           "
+          @click="handleClick"
         >
           Add
         </button>
@@ -229,9 +235,22 @@
   <script setup>
 import { ref } from "vue";
 import { Field } from "vee-validate";
+import { useCredentials } from "@/stores/index.js";
+import ConfirmPasswordPopup from "./ConfirmPasswordPopup.vue";
+import DialogModal from "../../../../components/DialogModal.vue";
+const credentials = useCredentials();
+const password = ref();
+const password_confirmation = ref();
+const confirmPassword = ref(false);
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["exit"]);
-
+const handleClick = () => {
+  if (password.value == password_confirmation.value) {
+    credentials.password_edit = password.value;
+    credentials.can_edit_password = true;
+    confirmPassword.value = true;
+  }
+};
 const showPassword = ref(false);
 const showPasswordConfirm = ref(false);
 </script>

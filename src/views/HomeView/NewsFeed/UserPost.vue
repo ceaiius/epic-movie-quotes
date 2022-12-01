@@ -8,7 +8,8 @@
         <div
           class="
             lg:w-56
-            w-screen
+            w-full
+            md:w-screen
             lg:h-14
             h-32
             flex
@@ -18,7 +19,7 @@
             rounded-none
           "
         >
-          <div class="flex pl-8 md:pl-4 gap-4 cursor-pointer">
+          <div class="flex w-screen pl-8 md:pl-4 gap-4 cursor-pointer">
             <img src="/images/pencil.svg" alt="" />
             <h2 class="text-white" @click="openQuote = true">
               {{ $t("NewsFeed.write_new_quote") }}
@@ -44,7 +45,7 @@
               type="text"
               :placeholder="searchLocale"
             />
-            <hr class="border-[#efefef4d] mt-6" />
+            <hr class="border-hr_color mt-6" />
           </div>
         </div>
       </div>
@@ -55,7 +56,11 @@
       >
         <div>
           <div class="flex items-center gap-2 m-6 text-white w-12 h-12">
-            <img src="/images/static.png" alt="" />
+            <img
+              class="w-12 h-12 object-cover rounded-full"
+              :src="thumbnail(item.author.thumbnail)"
+              alt=""
+            />
             <h2 class="whitespace-nowrap">{{ item.author.username }}</h2>
           </div>
           <div class="m-6">
@@ -70,7 +75,7 @@
             </h2>
             <div class="flex justify-center mt-2">
               <img
-                class="md:max-w-3xl mt-2"
+                class="md:max-w-3xl mt-2 w-full object-cover"
                 :src="url_thumbnail + item.thumbnail"
                 alt=""
               />
@@ -91,7 +96,7 @@
                 />
               </div>
             </div>
-            <hr class="border-[#efefef4d]" />
+            <hr class="border-hr_color" />
           </div>
         </div>
         <div class="max-h-[450px] overflow-auto">
@@ -103,8 +108,8 @@
             <div class="flex gap-6">
               <div class="">
                 <img
-                  src="/images/static.png"
-                  class="md:w-12 md:h-12 w-10 h-10 object-contain"
+                  :src="thumbnail(items.author.thumbnail)"
+                  class="md:w-12 md:h-12 w-10 h-10 rounded-full object-cover"
                   alt=""
                 />
               </div>
@@ -127,15 +132,15 @@
                 </div>
               </div>
             </div>
-            <hr class="border-[#efefef4d] mt-6 w-full" />
+            <hr class="border-hr_color mt-6 w-full" />
           </div>
         </div>
 
         <div>
           <div class="m-6 flex">
             <img
-              src="/images/static.png"
-              class="hidden lg:block w-12 h-12"
+              :src="thumbnail(credentials.avatar)"
+              class="hidden object-cover rounded-full lg:block w-12 h-12"
               alt=""
             />
             <form
@@ -146,7 +151,7 @@
                 id=""
                 v-model="commentValue"
                 class="
-                  lg:w-full
+                  md:w-full
                   w-96
                   h-16
                   bg-[#24222F]
@@ -176,8 +181,8 @@ import { i18n } from "../../../i18n";
 import axios from "@/config/axios/index.js";
 import DialogModal from "../../../components/DialogModal.vue";
 import QuoteDialog from "./Dialogs/QuoteDialog.vue";
-
 import { useCredentials } from "@/stores/index.js";
+import { thumbnail } from "../../../helpers/thumbnail";
 const credentials = useCredentials();
 
 // eslint-disable-next-line no-unused-vars
@@ -345,6 +350,7 @@ const handleNotifications = async () => {
 const getQuotes = () => {
   axios.get(url).then((res) => {
     data.value = res.data.data;
+    console.log(res.data);
   });
 };
 

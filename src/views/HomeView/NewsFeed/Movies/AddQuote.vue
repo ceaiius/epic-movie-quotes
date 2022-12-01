@@ -47,7 +47,15 @@
             data?.year
           }})
         </h1>
-        <h2 class="text-white">{{ data?.genre }}</h2>
+        <div class="flex gap-2 flex-wrap">
+          <div
+            v-for="genre in genres"
+            :key="genre"
+            class="w-fit rounded-md bg-default_red"
+          >
+            <h2 class="pl-4 pr-4 py-2 text-white">{{ genre }}</h2>
+          </div>
+        </div>
         <h2 class="text-white">
           Director :
           {{
@@ -154,7 +162,7 @@ const id = route.params.id;
 const url_quotes = import.meta.env.VITE_API_BASE_URL + "quotes";
 
 const data = ref([]);
-
+const genres = ref([]);
 onMounted(() => {
   getMovies();
 });
@@ -162,6 +170,7 @@ const getMovies = () => {
   const url = `${import.meta.env.VITE_API_BASE_URL}movies/${id}`;
   axios.get(url).then((res) => {
     data.value = res.data;
+    genres.value = JSON.parse(res.data.genre);
     console.log(res.data);
   });
 };

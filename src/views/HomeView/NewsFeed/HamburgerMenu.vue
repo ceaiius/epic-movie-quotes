@@ -23,7 +23,15 @@
               ? 'border rounded-full border-red-500'
               : '',
           ]"
-          src="/images/static.png"
+          class="
+            w-20
+            h-20
+            object-cover
+            rounded-full
+            lg:mt-0 lg:translate-y-[-50%]
+            translate-y-0
+          "
+          :src="thumbnail(credentials.avatar)"
           alt=""
         />
         <div>
@@ -100,12 +108,17 @@ import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import router from "../../../router";
 import { useAuthStore } from "@/stores/auth";
+import { useCredentials } from "@/stores/index.js";
+import { thumbnail } from "../../../helpers/thumbnail";
+const credentials = useCredentials();
 const username = ref("");
 const authStore = useAuthStore();
 const googleUser = ref(false);
+
 onMounted(() => {
   axios.get("user").then((res) => {
     username.value = res.data.username;
+    credentials.avatar = res.data.thumbnail;
     if (res.data.email_verified_at == null) {
       googleUser.value = true;
     } else {

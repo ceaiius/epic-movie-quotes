@@ -71,6 +71,7 @@ export default {
     MovieList: {
       my_list_of_movies: "My list of movies",
       total: "Total",
+      quotes: "Quotes",
       search: "Search",
       add_movie: "Add movie",
       movie_description: "Movie Description",

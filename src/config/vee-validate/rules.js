@@ -25,7 +25,7 @@ defineRule("username", (value) => {
 });
 
 defineRule("geo", (value) => {
-  const regex = /^[ა-ჰა-ჰ\s][ა-ჰა-ჰ0-9\s]*$/;
+  const regex = /^[ა-ჰა-ჰ0-9.\-_ ]+$/;
   if (!regex.test(value)) {
     return false;
   }
@@ -34,7 +34,7 @@ defineRule("geo", (value) => {
 });
 
 defineRule("eng", (value) => {
-  const regex = /^[A-Za-z\s][A-Za-z0-9\s]*$/;
+  const regex = /^[a-zA-Z0-9.\-_ ]+$/;
   if (!regex.test(value)) {
     return false;
   }

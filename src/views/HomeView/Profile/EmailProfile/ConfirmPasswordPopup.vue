@@ -35,8 +35,8 @@
     </div>
   </div>
 </template>
-  
-  <script setup>
+    
+    <script setup>
 import axios from "@/config/axios/index.js";
 import { useCredentials } from "@/stores/index.js";
 
@@ -49,8 +49,8 @@ const handeClick = async () => {
     await axios.post("update", {
       username: credentials.username_edit,
     });
-    credentials.success_username = true;
 
+    credentials.success_password = true;
     emit("exit");
     credentials.can_edit_username_popup = false;
     credentials.can_edit_password_popup = false;

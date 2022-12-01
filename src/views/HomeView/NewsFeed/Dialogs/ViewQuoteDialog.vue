@@ -32,9 +32,14 @@
           />
         </div>
         <h2 class="text-white">{{ $t("MovieList.view_quote") }}</h2>
-        <img src="/images/exit.svg" alt="" @click="$emit('exit')" />
+        <img
+          class="cursor-pointer"
+          src="/images/exit.svg"
+          alt=""
+          @click="$emit('exit')"
+        />
       </div>
-      <hr class="w-full border-[#efefef4d] mt-6" />
+      <hr class="w-full border-hr_color mt-6" />
     </div>
 
     <div class="flex justify-center">
@@ -53,9 +58,9 @@
         </div>
         <div class="relative">
           <img
-            :src="url + thumbnail"
+            :src="url_thumbnail + thumbnail"
             alt=""
-            class="w-full max-h-64 object-contain"
+            class="w-full max-h-64 object-cover"
           />
         </div>
         <div class="flex gap-6 text-white m-6">
@@ -66,14 +71,24 @@
             {{ likes }} <img src="/images/likes.svg" alt="" />
           </div>
         </div>
+
         <div class="m-6 flex gap-6 relative text-white">
-          <div>
-            <img src="/images/static.png" class="md:w-12 md:h-12" alt="" />
+          <div v-if="comment_count == 0">
+            <h2>No comments yet</h2>
           </div>
-          <div>
-            <h2>{{ username }}</h2>
-            <p class="max-w-2xl">{{ comment }}</p>
-            <hr class="border-[#efefef4d] mt-6" />
+          <div v-else class="flex gap-6 items-center justify-center">
+            <div>
+              <img
+                :src="avatar(credentials.avatar)"
+                class="md:w-12 md:h-12 rounded-full object-cover"
+                alt=""
+              />
+            </div>
+            <div>
+              <h2>{{ username }}</h2>
+              <p class="max-w-2xl">{{ comment }}</p>
+              <hr class="border-hr_color mt-6" />
+            </div>
           </div>
         </div>
       </div>
@@ -85,11 +100,14 @@
 import { onMounted, ref } from "vue";
 import axios from "@/config/axios/index.js";
 import InputReadOnly from "../Form/InputReadOnly.vue";
+import { useCredentials } from "@/stores/index.js";
+import { thumbnail as avatar } from "../../../../helpers/thumbnail";
+const credentials = useCredentials();
 const props = defineProps(["id"]);
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["delete", "exit"]);
 const thumbnail = ref();
-const url = import.meta.env.VITE_API_STORAGE_URL;
+const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
 const data = ref([]);
 const username = ref("");
 const comment = ref("No comments yet");
@@ -97,7 +115,9 @@ const name_en = ref();
 const comment_count = ref(0);
 const name_ka = ref();
 const likes = ref(0);
+
 const url_quotes = import.meta.env.VITE_API_BASE_URL + "quotes-all";
+
 onMounted(() => {
   getQuotes();
 });
@@ -112,6 +132,8 @@ const getQuotes = () => {
     username.value = data.value[0].comments[0].author.username;
     comment.value = data.value[0].comments[0].body;
     likes.value = data.value[0].users_count;
+
+    console.log(res.data);
   });
 };
 </script>

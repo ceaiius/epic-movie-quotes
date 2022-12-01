@@ -41,8 +41,8 @@
           v-bind="field"
           :id="name"
           class="cursor-pointer w-20 bg-transparent pl-4 chip-remove"
-          :class="chips.length !== 0 ? 'invisible' : ''"
-          :placeholder="chips.length == 0 ? 'Genre' : ''"
+          :class="credentials.chip.length !== 0 ? 'invisible' : ''"
+          :placeholder="credentials.chip.length == 0 ? 'Genre' : ''"
           autocomplete="off"
           disabled
         />
@@ -81,7 +81,7 @@ import { Field } from "vee-validate";
 import { onBeforeMount, ref } from "vue";
 import { useCredentials } from "@/stores/index.js";
 const credentials = useCredentials();
-const chips = ref([]);
+// const chips = ref([]);
 const open = ref(false);
 const genres = ref();
 // eslint-disable-next-line no-unused-vars
@@ -89,7 +89,7 @@ const props = defineProps(["name", "values"]);
 
 onBeforeMount(() => {
   setTimeout(() => {
-    props.values.map((x) => chips.value.push(x));
+    props.values.map((x) => credentials.chip.push(x));
     credentials.chip = props.values;
   }, 100);
 });
@@ -107,14 +107,14 @@ const movieGenres = [
 ];
 
 const addChip = (e) => {
-  if (!chips.value.includes(e.target.textContent)) {
-    chips.value.push(e.target.textContent);
-    genres.value = chips.value;
+  if (!credentials.chip.includes(e.target.textContent)) {
+    credentials.chip.push(e.target.textContent);
+    genres.value = credentials.chip;
   }
 };
 
 const removeChip = (index) => {
-  chips.value.splice(index, 1);
+  credentials.chip.splice(index, 1);
   open.value = false;
 };
 
@@ -125,7 +125,7 @@ const toggleGenres = (e) => {
 };
 
 const rule = () => {
-  if (chips.value.length === 0) {
+  if (credentials.chip.length === 0) {
     return false;
   } else {
     return true;
