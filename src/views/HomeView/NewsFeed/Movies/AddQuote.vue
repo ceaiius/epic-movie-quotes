@@ -5,7 +5,7 @@
       flex flex-col
       bg-black_bg
       md:w-[900px] md:h-fit
-      pb-12
+      mt-20
       lg:ml-48 lg:mb-64
       w-screen
       h-screen
@@ -129,6 +129,7 @@
               bg-default_red
               w-full
               h-10
+              mb-10
               font-medium
               rounded-md
               text-sm
