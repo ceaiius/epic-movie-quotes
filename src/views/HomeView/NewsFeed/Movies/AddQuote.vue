@@ -8,7 +8,6 @@
       pb-12
       lg:ml-48 lg:mb-64
       w-screen
-      mt-20
       h-screen
       md:rounded-xl
       rounded-none

@@ -22,32 +22,29 @@
           class="flex flex-col gap-6 relative"
           @submit="handleResetPassword"
         >
-          <div class="flex flex-col pt-6 relative">
-            <label for="exampleInputPassword1" class="text-white text-base pb-2"
-              >Password</label
+          <div class="flex flex-col pt-10 relative">
+            <label
+              for="exampleInputPassword1"
+              class="text-white text-base pb-2"
+              >{{ $t("RegistrationForm.password") }}</label
             >
-
             <Field
-              v-model="password"
-              :rules="validatePassword"
-              :class="[
-                errorPassword
-                  ? 'border-2 border-red'
-                  : 'border-2 border-green-500',
-              ]"
-              :type="[showPassword ? 'text' : 'password']"
-              class="
-                bg-input_bg
-                text-sm
-                h-10
-                p-2
-                border
-                border-input_bg
-                rounded
-              "
-              placeholder="At least 8 & max.15 lower case characters"
+              v-slot="{ meta, field }"
               name="password"
-            />
+              rules="required|min:8|max:15"
+            >
+              <input
+                v-bind="field"
+                v-model="password"
+                :class="[
+                  meta.valid && meta.touched ? ' border-green-500' : '',
+                  !meta.valid && meta.touched ? ' border-red-500' : '',
+                ]"
+                :type="[showPassword ? 'text' : 'password']"
+                class="bg-input_bg text-sm h-10 p-2 border-2 rounded"
+                :placeholder="placeholderPassword"
+              />
+            </Field>
             <span @click="showPassword = !showPassword">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +57,7 @@
                   w-6
                   h-6
                   absolute
-                  top-16
+                  top-20
                   right-2
                   cursor-pointer
                   fill-transparent
@@ -90,7 +87,7 @@
                   w-6
                   h-6
                   absolute
-                  top-16
+                  top-20
                   right-2
                   cursor-pointer
                   stroke-[#7F8487]
@@ -108,31 +105,29 @@
               name="password"
             />
           </div>
-          <div class="flex flex-col pt-6 relative">
-            <label for="exampleInputPassword1" class="text-white text-base pb-2"
-              >Confirm Password</label
+          <div class="flex flex-col pt-10 relative">
+            <label
+              for="exampleInputPassword1"
+              class="text-white text-base pb-2"
+              >{{ $t("RegistrationForm.confirm_password") }}</label
             >
             <Field
-              v-model="password_confirmation"
-              :type="[showPasswordConfirm ? 'text' : 'password']"
-              :rules="validateConfirmPassword"
-              :class="[
-                errorConfirmPassword
-                  ? 'border-2 border-red'
-                  : 'border-2 border-green-500',
-              ]"
+              v-slot="{ meta, field }"
               name="password_confirmation"
-              class="
-                bg-input_bg
-                text-sm
-                h-10
-                p-2
-                border
-                border-input_bg
-                rounded
-              "
-              placeholder="Confirm password"
-            />
+              rules="required|min:8|max:15|confirmed:@password"
+            >
+              <input
+                v-bind="field"
+                v-model="password_confirmation"
+                :type="[showPasswordConfirm ? 'text' : 'password']"
+                :class="[
+                  meta.valid && meta.touched ? ' border-green-500' : '',
+                  !meta.valid && meta.touched ? ' border-red-500' : '',
+                ]"
+                class="bg-input_bg text-sm h-10 p-2 border-2 rounded"
+                :placeholder="placeholderConfirm"
+              />
+            </Field>
 
             <span @click="showPasswordConfirm = !showPasswordConfirm">
               <svg
@@ -146,7 +141,7 @@
                   w-6
                   h-6
                   absolute
-                  top-16
+                  top-20
                   right-2
                   cursor-pointer
                   fill-transparent
@@ -176,7 +171,7 @@
                   w-6
                   h-6
                   absolute
-                  top-16
+                  top-20
                   right-2
                   cursor-pointer
                   stroke-[#7F8487]
@@ -231,17 +226,17 @@
 <script setup>
 import { Field, Form, ErrorMessage } from "vee-validate";
 import axios from "@/config/axios/index.js";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import router from "../../../router";
 import { useRoute } from "vue-router";
 import ResetSuccess from "../notifications/ResetSuccess.vue";
 import DialogModal from "@/components/DialogModal.vue";
 import { useCredentials } from "@/stores/index.js";
+import { i18n } from "../../../i18n";
 const credentials = useCredentials();
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["closePasswordSent", "backToLogin"]);
-const errorPassword = ref(false);
-const errorConfirmPassword = ref(false);
+
 const showPassword = ref(false);
 const showPasswordConfirm = ref(false);
 const password = ref("");
@@ -255,53 +250,31 @@ const closeSuccess = () => {
   credentials.isOpenResetPassword = false;
   router.push({ name: "landing" });
 };
-const validatePassword = (value) => {
-  if (!value) {
-    errorPassword.value = true;
-    return "This field is required ";
-  }
-  if (value.length < 8) {
-    errorPassword.value = true;
-    return "Password must be at least 8 characters";
-  }
-  if (value.length > 15) {
-    errorPassword.value = true;
-    return "Password must not have more than 15 characters ";
-  }
-  errorPassword.value = false;
-  return true;
-};
+const placeholderPassword = computed(
+  () =>
+    i18n.global.messages[i18n.global.locale].RegistrationForm
+      .password_placeholder
+);
 
-const validateConfirmPassword = (value) => {
-  if (!value) {
-    errorConfirmPassword.value = true;
-    return "This field is required ";
-  }
-  if (value.length < 8) {
-    errorConfirmPassword.value = true;
-    return "Password must be at least 8 characters";
-  }
-  if (value.length > 15) {
-    errorConfirmPassword.value = true;
-    return "Password must not have more than 15 characters ";
-  }
-  if (value != password.value) {
-    errorConfirmPassword.value = true;
-    return "Passwords don't match";
-  }
-  errorConfirmPassword.value = false;
-  return true;
-};
+const placeholderConfirm = computed(
+  () =>
+    i18n.global.messages[i18n.global.locale].RegistrationForm
+      .confirm_placeholder
+);
 
-const handleResetPassword = () => {
-  axios.post("reset-password", {
-    token: route.query.token,
-    email: route.query.email,
-    password: password.value,
-    password_confirmation: password_confirmation.value,
-  });
-  isResetSuccessful.value = true;
-  passwordNotReset.value = false;
+const handleResetPassword = async () => {
+  try {
+    await axios.post("reset-password", {
+      token: route.query.token,
+      email: route.query.email,
+      password: password.value,
+      password_confirmation: password_confirmation.value,
+    });
+    isResetSuccessful.value = true;
+    passwordNotReset.value = false;
+  } catch (err) {
+    console.log(err);
+  }
 };
 </script>
       

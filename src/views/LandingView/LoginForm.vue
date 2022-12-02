@@ -268,7 +268,9 @@
         @close="(isOpenPasswordSent = false), (credentials.isOpenLogin = false)"
       >
         <PasswordSent
-          @skip="(isOpenPasswordSent = false), (credentials.isOpenLogin = true)"
+          @skip="
+            (isOpenPasswordSent = false), (credentials.isOpenLogin = false)
+          "
           @close-password-sent="
             (isOpenPasswordSent = false), (credentials.isOpenLogin = false)
           "
@@ -306,11 +308,15 @@ const isOpenPasswordSent = ref(false);
 const credentials = useCredentials();
 const url = import.meta.env.VITE_API_GOOGLE_URL;
 const handleForgotPassword = async () => {
-  isOpenPasswordSent.value = true;
-  isOpenForgotPassword.value = false;
-  axios.post("forgot-password", {
-    email: credentials.forgot_password_email,
-  });
+  try {
+    await axios.post("forgot-password", {
+      email: credentials.forgot_password_email,
+    });
+    isOpenPasswordSent.value = true;
+    isOpenForgotPassword.value = false;
+  } catch (err) {
+    credentials.wrong_email = true;
+  }
 };
 
 const handleLogin = async () => {

@@ -17,7 +17,18 @@
       class="w-8 absolute -top-6 right-32 lg:-top-0 lg:right-60"
       alt=""
     />
-    <div class="flex justify-between items-center text-white pl-12 pr-12 pt-12">
+    <div
+      class="
+        flex
+        justify-between
+        items-center
+        text-white
+        pl-8
+        pr-12
+        pt-12
+        gap-2
+      "
+    >
       <h1>{{ $t("Notification.notifications") }}</h1>
       <div v-if="credentials.notifications.length == 0">
         <h2 class="text-white hidden lg:block">
@@ -27,7 +38,7 @@
           {{ $t("Notification.no_notifications_yet") }}
         </h2>
       </div>
-      <h2 class="underline" @click="handleRead">
+      <h2 class="underline whitespace-nowrap" @click="handleRead">
         {{ $t("Notification.mark_as_all_read") }}
       </h2>
     </div>

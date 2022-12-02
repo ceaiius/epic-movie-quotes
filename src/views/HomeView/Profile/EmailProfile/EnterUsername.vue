@@ -27,7 +27,7 @@
         $t("Profile.enter_new_username")
       }}</label>
       <Form
-        class="relative flex flex-col gap-6 justify-center items-center"
+        class="relative w-full flex flex-col gap-6 justify-center items-center"
         @submit="handleSubmit"
       >
         <Field
@@ -43,7 +43,7 @@
               meta.valid && meta.touched ? ' border-green-500' : '',
               !meta.valid && meta.touched ? ' border-red-500' : '',
             ]"
-            class="w-96 text-sm h-10 p-2 border-2 rounded"
+            class="xs:w-96 w-full text-sm h-10 p-2 border-2 rounded"
           />
         </Field>
 
