@@ -54,6 +54,7 @@ export default {
       sign_up: "Sign up",
       email_placeholder: "Enter your email",
       password_placeholder: "Password",
+      wrong_email_or_password: "Incorrect email or password",
     },
     NewsFeed: {
       movie_quotes: "Movie Quotes",

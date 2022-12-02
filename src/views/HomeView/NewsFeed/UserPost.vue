@@ -9,6 +9,8 @@
           class="
             lg:w-56
             w-full
+            justify-center
+            lg:p-0
             md:w-screen
             lg:h-14
             h-32
@@ -55,7 +57,19 @@
         class="w-auto flex flex-col bg-black_bg mt-6 rounded-xl md:mb-12"
       >
         <div>
-          <div class="flex items-center gap-2 m-6 text-white w-12 h-12">
+          <div
+            class="
+              flex
+              items-center
+              gap-2
+              ml-10
+              mt-10
+              sm:m-6
+              text-white
+              w-12
+              h-12
+            "
+          >
             <img
               class="w-12 h-12 object-cover rounded-full"
               :src="thumbnail(item.author.thumbnail)"
@@ -64,7 +78,7 @@
             <h2 class="whitespace-nowrap">{{ item.author.username }}</h2>
           </div>
           <div class="m-6">
-            <h2 class="text-white">
+            <h2 class="text-white ml-10 mt-2 sm:m-6">
               "{{ i18n.global.locale == "En" ? item.name.en : item.name.ka }}" -
               <span>{{
                 i18n.global.locale == "En"
@@ -75,23 +89,21 @@
             </h2>
             <div class="flex justify-center mt-2">
               <img
-                class="md:max-w-3xl mt-2 w-full object-cover"
+                class="sm:w-[550px] mt-2 w-72 object-cover"
                 :src="url_thumbnail + item.thumbnail"
                 alt=""
               />
             </div>
 
-            <div class="flex gap-6 text-white m-6">
+            <div class="flex gap-6 text-white ml-10 mt-6 mb-6 sm:m-6">
               <div class="flex gap-2 cursor-pointer">
                 {{ item.comments.length }}
                 <img src="/images/comments.svg" alt="" />
               </div>
               <div class="flex gap-2 cursor-pointer">
                 {{ item.users_count }}
-
-                <img
-                  :src="liked ? '/images/red-like.svg' : '/images/likes.svg'"
-                  alt=""
+                <BaseLike
+                  :id="item.id"
                   @click="handleLike(item.id, item.user_id)"
                 />
               </div>
@@ -136,40 +148,7 @@
           </div>
         </div>
 
-        <div>
-          <div class="m-6 flex">
-            <img
-              :src="thumbnail(credentials.avatar)"
-              class="hidden object-cover rounded-full lg:block w-12 h-12"
-              alt=""
-            />
-            <form
-              class="w-full"
-              @submit.prevent="handleComment(item.id, item.user_id)"
-            >
-              <input
-                id=""
-                v-model="commentValue"
-                class="
-                  md:w-full
-                  w-96
-                  h-16
-                  bg-[#24222F]
-                  pt-4
-                  pl-4
-                  ml-6
-                  rounded-xl
-                  outline-none
-                  text-white
-                "
-                cols="30"
-                rows="2"
-                :placeholder="commentLocale"
-              />
-              <input type="submit" hidden />
-            </form>
-          </div>
-        </div>
+        <CommentSection :id="item.id" :author="item.user_id" />
       </div>
     </div>
   </div>
@@ -183,6 +162,9 @@ import DialogModal from "../../../components/DialogModal.vue";
 import QuoteDialog from "./Dialogs/QuoteDialog.vue";
 import { useCredentials } from "@/stores/index.js";
 import { thumbnail } from "../../../helpers/thumbnail";
+import BaseLike from "./BaseLike.vue";
+
+import CommentSection from "./CommentSection.vue";
 const credentials = useCredentials();
 
 // eslint-disable-next-line no-unused-vars
@@ -218,13 +200,10 @@ const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
 const url = import.meta.env.VITE_API_BASE_URL + `quotes?page=1`;
 
 const openQuote = ref(false);
-const commentValue = ref("");
+
 const inputValue = ref("");
 const username = ref("");
 
-const commentLocale = computed(
-  () => i18n.global.messages[i18n.global.locale].NewsFeed.write_comment
-);
 const searchLocale = computed(
   () => i18n.global.messages[i18n.global.locale].NewsFeed.search
 );
@@ -292,19 +271,6 @@ const searched = computed(() => {
   }
 });
 
-const handleComment = (id, author) => {
-  const url_comment = `${import.meta.env.VITE_API_BASE_URL}comment/${id}`;
-  axios.post(url_comment, {
-    body: commentValue.value,
-    quote_id: id,
-    user_id: credentials.user_id,
-    username: credentials.user_name,
-    author_id: author,
-  });
-
-  commentValue.value = "";
-};
-
 const loadMorePosts = () => {
   let url = import.meta.env.VITE_API_BASE_URL + `quotes?page=${count.value}`;
 
@@ -314,14 +280,17 @@ const loadMorePosts = () => {
   });
 };
 onMounted(() => {
+  fetchUser();
+  getQuotes();
+  onScroll();
+});
+
+const fetchUser = () => {
   axios.get("user").then((res) => {
     username.value = res.data.username;
     id.value = res.data.id;
   });
-
-  getQuotes();
-  onScroll();
-});
+};
 
 const onScroll = () => {
   window.onscroll = () => {
@@ -350,7 +319,6 @@ const handleNotifications = async () => {
 const getQuotes = () => {
   axios.get(url).then((res) => {
     data.value = res.data.data;
-    console.log(res.data);
   });
 };
 

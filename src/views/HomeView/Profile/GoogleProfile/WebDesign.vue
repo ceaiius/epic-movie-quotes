@@ -77,11 +77,37 @@
                 <h2 class="absolute -top-10 left-0 text-white">
                   {{ $t("Profile.username") }}
                 </h2>
-                <input
-                  id="username"
+                <Field
+                  v-slot="{ meta, field }"
                   v-model="username"
-                  class="bg-input_bg w-full text-sm h-10 p-2 border-2 rounded"
-                  :readonly="!credentials.canEditGoogle"
+                  name="username"
+                  rules="required|username"
+                >
+                  <input
+                    id="username"
+                    v-bind="field"
+                    :class="[
+                      meta.valid && meta.touched && credentials.canEditGoogle
+                        ? ' border-green-500'
+                        : '',
+                      !meta.valid && meta.touched && credentials.canEditGoogle
+                        ? ' border-red-500'
+                        : '',
+                    ]"
+                    class="bg-input_bg w-full text-sm h-10 p-2 border-2 rounded"
+                    :readonly="!credentials.canEditGoogle"
+                  />
+                </Field>
+                <ErrorMessage
+                  v-if="credentials.canEditGoogle"
+                  class="
+                    text-default_red
+                    whitespace-nowrap
+                    text-center text-sm
+                    -bottom-6
+                    absolute
+                  "
+                  name="username"
                 />
                 <label
                   class="lg:absolute lg:-right-20 text-white cursor-pointer"
@@ -138,7 +164,7 @@
   
   <script setup>
 import { onBeforeMount, ref } from "vue";
-import { Form, Field } from "vee-validate";
+import { Form, Field, ErrorMessage } from "vee-validate";
 import axios from "@/config/axios/index.js";
 import { useCredentials } from "@/stores/index.js";
 import { thumbnail } from "../../../../helpers/thumbnail";

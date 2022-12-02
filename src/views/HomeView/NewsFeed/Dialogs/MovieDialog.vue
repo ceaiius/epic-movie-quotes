@@ -4,10 +4,9 @@
       flex flex-col
       bg-black_bg
       md:w-input_width md:h-fit
-      pb-12
       w-screen
-      h-screen
-      md:rounded-xl
+      h-auto
+      md:mt-0 md:rounded-xl
       rounded-none
     "
   >
@@ -98,7 +97,7 @@
             />
           </div>
           <div class="relative">
-            <InputFile />
+            <InputFile rules="required" />
           </div>
 
           <button
@@ -108,6 +107,7 @@
               bg-default_red
               w-full
               h-10
+              mb-10
               font-medium
               rounded-md
               text-sm

@@ -7,7 +7,7 @@
     open
     :class="top"
     class="
-      absolute
+      fixed
       top-1/2
       bg-transparent
       z-[100]

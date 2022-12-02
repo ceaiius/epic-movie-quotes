@@ -7,7 +7,7 @@
       w-screen
       h-96
       relative
-      -top-10
+      -top-4
       md:rounded-xl
       rounded-none
     "

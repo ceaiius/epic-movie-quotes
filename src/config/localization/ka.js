@@ -53,6 +53,7 @@ export default {
       sign_up: "რეგისტრაცია",
       password_placeholder: "პაროლი",
       email_placeholder: "შეიყვანეთ იმეილი",
+      wrong_email_or_password: "არასწორი იმეილი ან პაროლი",
     },
     NewsFeed: {
       movie_quotes: "ფილმის ციტატები",

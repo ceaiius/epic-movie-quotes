@@ -13,7 +13,13 @@
   >
     <nav class="px-2 sm:px-4 py-4 rounded">
       <div
-        class="container flex flex-wrap justify-between items-center mx-auto"
+        class="
+          container
+          flex
+          xs:flex-wrap xs:justify-between
+          items-center
+          mx-auto
+        "
       >
         <span
           class="

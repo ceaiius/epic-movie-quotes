@@ -9,7 +9,7 @@
       lg:ml-48 lg:mb-64
       w-screen
       mt-0
-      lg:mt-96
+      lg:mt-80
       h-screen
       md:rounded-xl
       rounded-none

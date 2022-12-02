@@ -75,6 +75,18 @@
               class="text-default_red text-sm -bottom-6 absolute"
               name="email"
             />
+            <p
+              v-if="error"
+              class="
+                text-default_red
+                whitespace-nowrap
+                text-center text-sm
+                -bottom-6
+                absolute
+              "
+            >
+              {{ $t("LoginForm.wrong_email_or_password") }}
+            </p>
           </div>
           <div class="flex flex-col pt-10 relative">
             <label
@@ -256,7 +268,9 @@
         @close="(isOpenPasswordSent = false), (credentials.isOpenLogin = false)"
       >
         <PasswordSent
-          @skip="(isOpenPasswordSent = false), (credentials.isOpenLogin = true)"
+          @skip="
+            (isOpenPasswordSent = false), (credentials.isOpenLogin = false)
+          "
           @close-password-sent="
             (isOpenPasswordSent = false), (credentials.isOpenLogin = false)
           "
@@ -281,7 +295,7 @@ import { useAuthStore } from "@/stores/auth";
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["openRegistration", "closeDialog"]);
 const authStore = useAuthStore();
-
+const error = ref(false);
 const email = ref("");
 const password = ref("");
 const errorInput = ref(false);
@@ -294,11 +308,15 @@ const isOpenPasswordSent = ref(false);
 const credentials = useCredentials();
 const url = import.meta.env.VITE_API_GOOGLE_URL;
 const handleForgotPassword = async () => {
-  isOpenPasswordSent.value = true;
-  isOpenForgotPassword.value = false;
-  axios.post("forgot-password", {
-    email: credentials.forgot_password_email,
-  });
+  try {
+    await axios.post("forgot-password", {
+      email: credentials.forgot_password_email,
+    });
+    isOpenPasswordSent.value = true;
+    isOpenForgotPassword.value = false;
+  } catch (err) {
+    credentials.wrong_email = true;
+  }
 };
 
 const handleLogin = async () => {
@@ -311,6 +329,7 @@ const handleLogin = async () => {
     authStore.authenticated = true;
     router.push({ name: "home" });
   } catch (err) {
+    error.value = true;
     console.log(err);
   }
 };

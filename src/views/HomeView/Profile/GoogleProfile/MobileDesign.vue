@@ -73,7 +73,7 @@
         </div>
       </div>
 
-      <div class="flex flex-col w-96 text-white">
+      <div class="flex flex-col w-full sm:w-96 text-white">
         <h2 class="pl-6">{{ $t("Profile.username") }}</h2>
         <div class="flex justify-between p-6">
           <h2>{{ credentials.confirmed_username_edit }}</h2>
@@ -101,7 +101,7 @@
           </dialog-modal>
         </teleport>
       </div>
-      <div class="flex flex-col w-96 text-white">
+      <div class="flex flex-col w-full sm:w-96 text-white">
         <h2 class="pl-6">{{ $t("Profile.email") }}</h2>
         <div class="flex justify-between p-6">
           <h2>{{ email }}</h2>

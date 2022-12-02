@@ -15,7 +15,7 @@
           <img
             :src="url + data?.thumbnail"
             alt=""
-            class="w-[800px] h-[530px] object-cover"
+            class="w-[800px] h-[330px] lg:h-[550px] object-cover"
           />
           <div class="flex flex-col gap-6 lg:hidden">
             <h1 class="text-3xl text-brown">

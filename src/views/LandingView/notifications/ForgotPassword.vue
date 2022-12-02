@@ -22,23 +22,31 @@
         class="flex flex-col gap-6 relative"
         @submit="$emit('openPasswordSent')"
       >
-        <Field
-          v-model="credentials.forgot_password_email"
-          type="email"
-          name="email"
-          :rules="validateEmail"
+        <Field v-slot="{ meta, field }" name="email" rules="required">
+          <input
+            v-bind="field"
+            v-model="credentials.forgot_password_email"
+            type="email"
+            :class="[
+              meta.valid && meta.touched ? ' border-green-500' : '',
+              !meta.valid && meta.touched ? ' border-red-500' : '',
+            ]"
+            class="w-96 bg-input_bg text-sm h-10 p-2 border rounded relative"
+            placeholder="Enter your email"
+          />
+        </Field>
+        <h2
+          v-if="credentials.wrong_email"
           class="
-            w-96
-            bg-input_bg
-            text-sm
-            h-10
-            p-2
-            border
-            border-input_bg
-            rounded
+            text-default_red
+            whitespace-nowrap
+            text-center text-sm
+            absolute
+            top-16
           "
-          placeholder="Enter your email"
-        />
+        >
+          Invalid Email
+        </h2>
         <ErrorMessage
           class="
             text-default_red
@@ -85,21 +93,6 @@ import { useCredentials } from "@/stores/index.js";
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["openPasswordSent", "backToLogin"]);
 const credentials = useCredentials();
-
-const validateEmail = (value) => {
-  // if the field is empty
-  if (!value) {
-    return "This field is required";
-  }
-
-  // if the field is not a valid email
-  const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-  if (!regex.test(value)) {
-    return "This field must be a valid email";
-  }
-
-  return true;
-};
 </script>
   
    
