@@ -449,7 +449,10 @@ const cancelEdit = () => {
   username.value = credentials.user_name;
   var preview = document.getElementById("img");
   preview.src = url_thumbnail + credentials.avatar;
-  credentials.canEditGoogle = false;
+  editUsername.value = false;
+  editPassword.value = false;
+  editThumbnail.value = false;
+  passwordReset.value = false;
 };
 
 const fetchUser = () => {
