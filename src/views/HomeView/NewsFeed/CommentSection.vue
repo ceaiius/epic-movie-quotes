@@ -40,21 +40,35 @@ import { useCredentials } from "@/stores/index.js";
 import { thumbnail } from "../../../helpers/thumbnail";
 const commentValue = ref();
 const credentials = useCredentials();
-const props = defineProps(["id", "author"]);
+const props = defineProps(["id", "author", "count"]);
 const commentLocale = computed(
   () => i18n.global.messages[i18n.global.locale].NewsFeed.write_comment
 );
+console.log(props.count);
+const fetch = () => {
+  let url = import.meta.env.VITE_API_BASE_URL + `quotes-show`;
+  axios
+    .post(url, {
+      id: props.count,
+    })
+    .then((res) => {
+      credentials.quotes_array = res.data;
+    });
+};
 
-const handleComment = () => {
+const handleComment = async () => {
   const url_comment = `${import.meta.env.VITE_API_BASE_URL}comment/${props.id}`;
-  axios.post(url_comment, {
-    body: commentValue.value,
-    quote_id: props.id,
-    user_id: credentials.user_id,
-    username: credentials.user_name,
-    author_id: props.author,
-  });
-
-  commentValue.value = "";
+  axios
+    .post(url_comment, {
+      body: commentValue.value,
+      quote_id: props.id,
+      user_id: credentials.user_id,
+      username: credentials.user_name,
+      author_id: props.author,
+    })
+    .then(() => {
+      fetch();
+      commentValue.value = "";
+    });
 };
 </script>

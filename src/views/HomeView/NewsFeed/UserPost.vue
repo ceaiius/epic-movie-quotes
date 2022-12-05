@@ -148,7 +148,7 @@
           </div>
         </div>
 
-        <CommentSection :id="item.id" :author="item.user_id" />
+        <CommentSection :id="item.id" :author="item.user_id" :count="count" />
       </div>
     </div>
   </div>
@@ -170,17 +170,17 @@ const credentials = useCredentials();
 // eslint-disable-next-line no-unused-vars
 
 window.Echo.channel(`comment-channel`).listen(".new-comment", () => {
-  getQuotes();
+  fetch();
   handleCount();
   handleNotifications();
 });
 
 window.Echo.channel(`delete-comment-channel`).listen(".delete-comment", () => {
-  getQuotes();
+  fetch();
 });
 
 window.Echo.channel(`like-channel`).listen(".add-like", () => {
-  getQuotes();
+  fetch();
   handleCount();
   handleNotifications();
 });
@@ -208,11 +208,10 @@ const searchLocale = computed(
   () => i18n.global.messages[i18n.global.locale].NewsFeed.search
 );
 const id = ref();
-const data = ref([]);
-const liked = ref(false);
+
 const searched = computed(() => {
   if (inputValue.value || credentials.quote_search) {
-    return data.value.filter((item) => {
+    return credentials.quotes_array.filter((item) => {
       if (
         i18n.global.locale == "En" &&
         (inputValue.value.charAt(0) == "@" ||
@@ -267,7 +266,7 @@ const searched = computed(() => {
       }
     });
   } else {
-    return data.value;
+    return credentials.quotes_array;
   }
 });
 
@@ -275,7 +274,7 @@ const loadMorePosts = () => {
   let url = import.meta.env.VITE_API_BASE_URL + `quotes?page=${count.value}`;
 
   axios.get(url).then((res) => {
-    data.value.push(...res.data.data);
+    credentials.quotes_array.push(...res.data.data);
     count.value = count.value + 1;
   });
 };
@@ -290,6 +289,17 @@ const fetchUser = () => {
     username.value = res.data.username;
     id.value = res.data.id;
   });
+};
+
+const fetch = () => {
+  let url = import.meta.env.VITE_API_BASE_URL + `quotes-show`;
+  axios
+    .post(url, {
+      id: count.value,
+    })
+    .then((res) => {
+      credentials.quotes_array = res.data;
+    });
 };
 
 const onScroll = () => {
@@ -318,7 +328,7 @@ const handleNotifications = async () => {
 
 const getQuotes = () => {
   axios.get(url).then((res) => {
-    data.value = res.data.data;
+    credentials.quotes_array = res.data.data;
   });
 };
 
@@ -326,7 +336,7 @@ const deleteQuote = (id) => {
   const url = `${import.meta.env.VITE_API_BASE_URL}comment/${id}`;
   axios.delete(url).then((res) => {
     if (res.status === 200) {
-      getQuotes();
+      fetch();
     }
   });
 };
@@ -340,13 +350,8 @@ const handleLike = async (id, author) => {
       username: credentials.user_name,
       author_id: author,
     })
-    .then((res) => {
-      getQuotes();
-      if (res.data.message == "unlike") {
-        liked.value = false;
-      } else if (res.data.message == "like") {
-        liked.value = true;
-      }
+    .then(() => {
+      fetch();
     });
 };
 </script>

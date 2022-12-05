@@ -137,6 +137,64 @@
               </div>
               <hr class="border-hr_color" />
               <div class="flex flex-col relative gap-6 w-80 lg:w-96">
+                <div class="w-full">
+                  <label
+                    class="text-white absolute -top-10 left-0"
+                    for="email"
+                    >{{ $t("Profile.email") }}</label
+                  >
+
+                  <div>
+                    <input
+                      id="email"
+                      v-model="email"
+                      class="
+                        bg-rgba
+                        w-full
+                        text-sm text-white
+                        h-10
+                        p-2
+                        border-2
+                        rounded
+                      "
+                      readonly
+                    />
+                    <img
+                      class="absolute top-3 right-3"
+                      src="/images/checked_round.svg"
+                      alt=""
+                    />
+                    <h2 class="absolute top-2 text-white -right-40">
+                      {{ $t("Profile.primary_email") }}
+                    </h2>
+                  </div>
+                </div>
+
+                <div>
+                  <button
+                    type="button"
+                    class="
+                      focus:outline-none
+                      text-white
+                      border border-white
+                      w-48
+                      gap-2
+                      h-10
+                      flex
+                      justify-center
+                      items-center
+                      font-medium
+                      rounded-md
+                      text-sm
+                    "
+                  >
+                    <span><img src="/images/plus.svg" alt="" /></span>
+                    {{ $t("Profile.add_new_email") }}
+                  </button>
+                </div>
+                <hr class="border-[#efefef4d]" />
+              </div>
+              <div class="flex flex-col relative gap-6 w-80 lg:w-96">
                 <div>
                   <div class="mb-10">
                     <h2 class="absolute -top-10 left-0 text-white">
@@ -411,7 +469,7 @@ import { useCredentials } from "@/stores/index.js";
 import SuccessDialog from "../GoogleProfile/SuccessDialog.vue";
 import { thumbnail } from "../../../../helpers/thumbnail";
 const credentials = useCredentials();
-
+const email = ref();
 const username = ref();
 const showPassword = ref(false);
 const showPasswordConfirm = ref(false);
@@ -449,11 +507,15 @@ const cancelEdit = () => {
   username.value = credentials.user_name;
   var preview = document.getElementById("img");
   preview.src = url_thumbnail + credentials.avatar;
-  credentials.canEditGoogle = false;
+  editUsername.value = false;
+  editPassword.value = false;
+  editThumbnail.value = false;
+  passwordReset.value = false;
 };
 
 const fetchUser = () => {
   axios.get("user").then((res) => {
+    email.value = res.data.email;
     username.value = res.data.username;
     credentials.avatar = res.data.thumbnail;
   });

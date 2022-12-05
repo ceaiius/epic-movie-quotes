@@ -135,6 +135,7 @@
             </div>
           </div>
         </div>
+
         <div
           v-if="credentials.canEditGoogle"
           class="flex items-center gap-6 self-end mr-96"
