@@ -189,7 +189,7 @@
   </div>
   <div class="hidden lg:block">
     <div
-      class="bg-fixed h-screen bg-[url('images/image1.png')] flex items-center"
+      class="bg-fixed h-screen bg-[url('/images/image1.png')] flex items-center"
     >
       <div class="ml-52 flex flex-col gap-4">
         <span class="relative top-large_dash_top right-large_dash_right"
@@ -208,7 +208,7 @@
     </div>
 
     <div
-      class="bg-fixed h-screen bg-[url('images/image3.png')] flex items-center"
+      class="bg-fixed h-screen bg-[url('/images/image3.png')] flex items-center"
     >
       <div class="ml-52 flex flex-col gap-4">
         <span class="relative top-large_dash_top right-large_dash_right"
@@ -229,7 +229,7 @@
       </div>
     </div>
     <div
-      class="bg-fixed h-screen bg-[url('images/image2.png')] flex items-center"
+      class="bg-fixed h-screen bg-[url('/images/image2.png')] flex items-center"
     >
       <div class="ml-52 flex flex-col gap-4">
         <span class="relative top-large_dash_top right-large_dash_right"
@@ -250,10 +250,10 @@
   </div>
   <div class="block lg:hidden">
     <div class="flex flex-col justify-center items-center">
-      <img src="images/image1.png" alt="" />
+      <img src="/images/image1.png" alt="" />
       <div class="absolute">
         <span class="relative top-small_dash_top right-small_dash_right"
-          ><img src="images/small-line.png" alt=""
+          ><img src="/images/small-line.png" alt=""
         /></span>
         <h1 class="text-white text-xl flex">
           “ {{ $t("LandingPage.you_have_to_leave_something") }}<br />
@@ -267,10 +267,10 @@
     </div>
 
     <div class="flex flex-col justify-center items-center">
-      <img src="images/image3.png" alt="" />
+      <img src="/images/image3.png" alt="" />
       <div class="absolute">
         <span class="relative top-small_dash_top right-small_dash_right"
-          ><img src="images/small-line.png" alt=""
+          ><img src="/images/small-line.png" alt=""
         /></span>
         <h1 class="text-white text-xl flex">
           {{ $t("LandingPage.i_think_we_re_just_gonna_have") }},
@@ -288,10 +288,10 @@
     </div>
 
     <div class="flex flex-col justify-center items-center">
-      <img src="images/image2.png" alt="" />
+      <img src="/images/image2.png" alt="" />
       <div class="absolute">
         <span class="relative top-small_dash_top right-small_dash_right"
-          ><img src="images/small-line.png" alt=""
+          ><img src="/images/small-line.png" alt=""
         /></span>
         <h1 class="text-white text-xl flex">
           “{{ $t("LandingPage.I_see_in_your_eyes_the_same") }} <br />
