@@ -134,7 +134,6 @@ const getMovies = () => {
   axios.get(url).then((res) => {
     data.value = res.data;
     count.value = res.data.length;
-    console.log(res.data);
   });
 };
 </script>

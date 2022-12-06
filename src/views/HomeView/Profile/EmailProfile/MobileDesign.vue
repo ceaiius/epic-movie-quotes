@@ -136,6 +136,22 @@
         </teleport>
         <hr class="border-hr_color" />
       </div>
+      <div class="flex flex-col w-full mb-10 text-white">
+        <div class="flex justify-between items-center p-6">
+          <h2>Email</h2>
+          <img
+            class="w-2 cursor-pointer"
+            src="/images/right-arrow.svg"
+            alt=""
+            @click="editEmail = true"
+          />
+        </div>
+        <teleport to="body">
+          <dialog-modal v-if="editEmail" @close="editEmail = false">
+            <EditEmail @exit="editEmail = false" />
+          </dialog-modal>
+        </teleport>
+      </div>
 
       <div
         v-if="editThumbnail"
@@ -168,13 +184,14 @@ import { onBeforeMount, ref } from "vue";
 import { Form, Field } from "vee-validate";
 import DialogModal from "../../../../components/DialogModal.vue";
 import EditPassword from "./EditPassword.vue";
+import EditEmail from "./EditEmail.vue";
 import EnterUsername from "./EnterUsername.vue";
 import { thumbnail } from "../../../../helpers/thumbnail";
 import SuccessDialog from "../GoogleProfile/SuccessDialog.vue";
 import axios from "@/config/axios/index.js";
 import { useCredentials } from "@/stores/index.js";
 const credentials = useCredentials();
-
+const editEmail = ref(false);
 const editUsername = ref(false);
 const editThumbnail = ref(false);
 const editPassword = ref(false);
