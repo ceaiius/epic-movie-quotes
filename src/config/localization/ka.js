@@ -54,6 +54,7 @@ export default {
       password_placeholder: "პაროლი",
       email_placeholder: "შეიყვანეთ იმეილი",
       wrong_email_or_password: "არასწორი იმეილი ან პაროლი",
+      email_not_verified: "მეილი არ არის ვალიდური",
     },
     NewsFeed: {
       movie_quotes: "ფილმის ციტატები",

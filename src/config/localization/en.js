@@ -55,6 +55,7 @@ export default {
       email_placeholder: "Enter your email",
       password_placeholder: "Password",
       wrong_email_or_password: "Incorrect email or password",
+      email_not_verified: "Email not verified",
     },
     NewsFeed: {
       movie_quotes: "Movie Quotes",

@@ -76,7 +76,7 @@
               name="email"
             />
             <p
-              v-if="error"
+              v-if="wrongCredentials"
               class="
                 text-default_red
                 whitespace-nowrap
@@ -86,6 +86,18 @@
               "
             >
               {{ $t("LoginForm.wrong_email_or_password") }}
+            </p>
+            <p
+              v-if="notVerified"
+              class="
+                text-default_red
+                whitespace-nowrap
+                text-center text-sm
+                -bottom-6
+                absolute
+              "
+            >
+              {{ $t("LoginForm.email_not_verified") }}
             </p>
           </div>
           <div class="flex flex-col pt-10 relative">
@@ -295,12 +307,13 @@ import { useAuthStore } from "@/stores/auth";
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["openRegistration", "closeDialog"]);
 const authStore = useAuthStore();
-const error = ref(false);
+const wrongCredentials = ref(false);
 const email = ref("");
 const password = ref("");
 const errorInput = ref(false);
 const remember = ref("");
 const errorMessage = ref("");
+const notVerified = ref(false);
 const isOpenForgotPassword = ref(false);
 const showPassword = ref(false);
 const isNotLogged = ref(true);
@@ -327,10 +340,18 @@ const handleLogin = async () => {
       remember: remember.value,
     });
     authStore.authenticated = true;
+
     router.push({ name: "home" });
   } catch (err) {
-    error.value = true;
-    console.log(err);
+    wrongCredentials.value = false;
+    notVerified.value = false;
+    if (err.response.data == "wrong email or password") {
+      wrongCredentials.value = true;
+    } else if (err.response.data == "Email is not verified!") {
+      notVerified.value = true;
+    }
+
+    console.log(err.response.data);
   }
 };
 const placeholderPassword = computed(
