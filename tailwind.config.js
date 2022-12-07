@@ -19,6 +19,7 @@ module.exports = {
         success: "#D1E7DD",
         success_text: "#0F5132",
         hr_color: "#efefef4d",
+        unvalidated: "rgba(236, 149, 36, 0.2)",
       },
       screens: {
         xs: "375px",

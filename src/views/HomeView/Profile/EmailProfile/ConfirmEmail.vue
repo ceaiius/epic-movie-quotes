@@ -17,7 +17,7 @@
             rounded-md
             text-sm
           "
-          @click="handeClick"
+          @click="$emit('save')"
         >
           {{ $t("Profile.confirm") }}
         </button>
@@ -25,28 +25,8 @@
     </div>
   </div>
 </template>
-  
-  <script setup>
-import axios from "@/config/axios/index.js";
-import { useCredentials } from "@/stores/index.js";
 
-const credentials = useCredentials();
+<script setup>
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["exit", "save"]);
-
-const handeClick = async () => {
-  try {
-    await axios.post("update", {
-      username: credentials.username_edit,
-    });
-    credentials.success_username = true;
-
-    emit("exit");
-    credentials.can_edit_username_popup = false;
-    credentials.can_edit_password_popup = false;
-    credentials.confirmed_username_edit = credentials.username_edit;
-  } catch (err) {
-    console.log(err);
-  }
-};
 </script>

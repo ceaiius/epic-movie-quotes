@@ -30,10 +30,13 @@ export const useCredentials = defineStore("credentials", {
       can_edit_password: false,
       can_edit_username_popup: false,
       can_edit_password_popup: false,
+      can_edit_email_popup: false,
       confirmed_username_edit: "",
       success_username: false,
       success_avatar: false,
       success_password: false,
+      success_email: false,
+      emails: [],
     };
   },
 });

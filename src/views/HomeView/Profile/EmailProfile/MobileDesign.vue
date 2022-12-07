@@ -41,6 +41,19 @@
         />
       </dialog-modal>
     </teleport>
+
+    <teleport to="body">
+      <dialog-modal
+        v-if="credentials.success_email"
+        top="top-[10%]"
+        @close="credentials.success_email = false"
+      >
+        <SuccessDialog
+          message="Email updated succesfully"
+          @exit="credentials.success_email = false"
+        />
+      </dialog-modal>
+    </teleport>
     <Form
       class="flex-col mt-10 items-center gap-20 w-full flex"
       @submit="handleSubmit"
@@ -100,7 +113,7 @@
             class="cursor-pointer"
             @click="credentials.can_edit_username_popup = true"
           >
-            Edit
+            {{ $t("Profile.edit") }}
           </h2>
         </div>
         <teleport to="body">
@@ -123,7 +136,7 @@
             class="cursor-pointer"
             @click="credentials.can_edit_password_popup = true"
           >
-            Edit
+            {{ $t("Profile.edit") }}
           </h2>
         </div>
         <teleport to="body">
@@ -138,7 +151,7 @@
       </div>
       <div class="flex flex-col w-full mb-10 text-white">
         <div class="flex justify-between items-center p-6">
-          <h2>Email</h2>
+          <h2>{{ $t("Profile.email") }}</h2>
           <img
             class="w-2 cursor-pointer"
             src="/images/right-arrow.svg"
@@ -184,7 +197,7 @@ import { onBeforeMount, ref } from "vue";
 import { Form, Field } from "vee-validate";
 import DialogModal from "../../../../components/DialogModal.vue";
 import EditPassword from "./EditPassword.vue";
-import EditEmail from "./EditEmail.vue";
+import EditEmail from "@/views/HomeView/Profile/EmailProfile/EditEmail.vue";
 import EnterUsername from "./EnterUsername.vue";
 import { thumbnail } from "../../../../helpers/thumbnail";
 import SuccessDialog from "../GoogleProfile/SuccessDialog.vue";
