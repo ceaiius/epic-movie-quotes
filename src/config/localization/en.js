@@ -99,6 +99,8 @@ export default {
       make_this_primary: "Make this primary",
       add: "Add",
       enter_new_username: "Enter new username",
+      enter_new_email: "Enter new email",
+      not_verified: "Not verified",
       are_you_sure_to_make_changes: "Are you sure to make changes",
       confirm: "Confirm",
     },

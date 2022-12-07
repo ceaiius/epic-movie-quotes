@@ -1,15 +1,5 @@
 <template>
-  <div
-    class="
-      flex flex-col
-      bg-black_bg
-      w-96
-      h-60
-      lg:hidden
-      md:rounded-xl
-      rounded-xl
-    "
-  >
+  <div class="flex flex-col bg-black_bg w-96 h-60 md:rounded-xl rounded-xl">
     <div
       class="flex flex-col w-full justify-center text-white items-center h-full"
     >

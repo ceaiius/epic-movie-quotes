@@ -136,8 +136,8 @@
                 >
               </div>
               <hr class="border-hr_color" />
-              <div class="flex flex-col relative gap-6 w-80 lg:w-96">
-                <div class="w-full">
+              <div class="flex flex-col gap-12 w-80 lg:w-96">
+                <div class="w-full relative">
                   <label
                     class="text-white absolute -top-10 left-0"
                     for="email"
@@ -154,7 +154,7 @@
                         text-sm text-white
                         h-10
                         p-2
-                        border-2
+                        border border-[#198754]
                         rounded
                       "
                       readonly
@@ -170,6 +170,70 @@
                   </div>
                 </div>
 
+                <div
+                  v-for="item in emails"
+                  :key="item.id"
+                  class="w-full relative"
+                >
+                  <label
+                    class="text-white absolute -top-10 left-0"
+                    for="email"
+                    >{{ $t("Profile.email") }}</label
+                  >
+
+                  <div>
+                    <input
+                      id="email"
+                      :value="item.email"
+                      :class="
+                        item.email_verified_at == null
+                          ? 'bg-unvalidated border-[#EC9524] text-white '
+                          : ''
+                      "
+                      class="w-full text-sm h-10 p-2 border rounded"
+                      readonly
+                    />
+                    <img
+                      v-if="item.email_verified_at == null"
+                      class="absolute top-3 right-3"
+                      src="/images/unvalidated.svg"
+                      alt=""
+                    />
+                    <div
+                      :class="
+                        item.email_verified_at == null ? '-right-[63%] ' : ''
+                      "
+                      class="absolute top-2 text-white -right-[78%]"
+                    >
+                      <div class="flex gap-6">
+                        <h2 class="cursor-pointer">
+                          {{
+                            item.email_verified_at == null
+                              ? $t("Profile.not_verified")
+                              : $t("Profile.make_this_primary")
+                          }}
+                        </h2>
+                        <h2
+                          class="cursor-pointer"
+                          @click="deleteEmail(item.id)"
+                        >
+                          {{ $t("Profile.remove") }}
+                        </h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <teleport to="body">
+                  <dialog-modal
+                    v-if="credentials.can_edit_email_popup"
+                    @close="credentials.can_edit_email_popup = false"
+                  >
+                    <EnterEmail
+                      @exit="credentials.can_edit_email_popup = false"
+                      @fetch="getEmails"
+                    />
+                  </dialog-modal>
+                </teleport>
                 <div>
                   <button
                     type="button"
@@ -187,6 +251,7 @@
                       rounded-md
                       text-sm
                     "
+                    @click="credentials.can_edit_email_popup = true"
                   >
                     <span><img src="/images/plus.svg" alt="" /></span>
                     {{ $t("Profile.add_new_email") }}
@@ -467,7 +532,9 @@ import axios from "@/config/axios/index.js";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { useCredentials } from "@/stores/index.js";
 import SuccessDialog from "../GoogleProfile/SuccessDialog.vue";
+import DialogModal from "../../../../components/DialogModal.vue";
 import { thumbnail } from "../../../../helpers/thumbnail";
+import EnterEmail from "./EnterEmail.vue";
 const credentials = useCredentials();
 const email = ref();
 const username = ref();
@@ -476,10 +543,20 @@ const showPasswordConfirm = ref(false);
 const password = ref("12345678910");
 const editUsername = ref(false);
 const success = ref(false);
+const emails = ref([]);
 const editPassword = ref(false);
 const passwordReset = ref(false);
 const editThumbnail = ref(false);
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
+
+const deleteEmail = (id) => {
+  const url = `${import.meta.env.VITE_API_BASE_URL}emails/${id}`;
+  axios.delete(url).then((res) => {
+    if (res.status === 200) {
+      getEmails();
+    }
+  });
+};
 
 const handleClick = () => {
   document.getElementById("input").click();
@@ -501,7 +578,12 @@ const setImage = (e) => {
 };
 onBeforeMount(() => {
   fetchUser();
+  getEmails();
 });
+
+const getEmails = () => {
+  axios.get("emails").then((res) => (emails.value = res.data));
+};
 
 const cancelEdit = () => {
   username.value = credentials.user_name;

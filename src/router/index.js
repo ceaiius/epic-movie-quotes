@@ -11,6 +11,7 @@ import NotFound from "../views/ErrorView/NotFound.vue";
 import GoogleProfile from "../views/HomeView/Profile/GoogleProfile/Index.vue";
 import EmailProfile from "../views/HomeView/Profile/EmailProfile/Index.vue";
 import { useAuthStore } from "@/stores/auth";
+import VerifyEmail from "../views/HomeView/Profile/EmailProfile/VerifyEmail.vue";
 import axios from "axios";
 axios.defaults.withCredentials = true;
 const router = createRouter({
@@ -62,6 +63,11 @@ const router = createRouter({
           path: "email_profile",
           component: EmailProfile,
           name: "email_profile",
+        },
+        {
+          path: "verify-new-email",
+          component: VerifyEmail,
+          name: "verify-new-email",
         },
       ],
     },

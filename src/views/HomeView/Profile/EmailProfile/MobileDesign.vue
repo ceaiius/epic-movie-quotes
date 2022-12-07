@@ -100,7 +100,7 @@
             class="cursor-pointer"
             @click="credentials.can_edit_username_popup = true"
           >
-            Edit
+            {{ $t("Profile.edit") }}
           </h2>
         </div>
         <teleport to="body">
@@ -123,7 +123,7 @@
             class="cursor-pointer"
             @click="credentials.can_edit_password_popup = true"
           >
-            Edit
+            {{ $t("Profile.edit") }}
           </h2>
         </div>
         <teleport to="body">
@@ -138,7 +138,7 @@
       </div>
       <div class="flex flex-col w-full mb-10 text-white">
         <div class="flex justify-between items-center p-6">
-          <h2>Email</h2>
+          <h2>{{ $t("Profile.email") }}</h2>
           <img
             class="w-2 cursor-pointer"
             src="/images/right-arrow.svg"
