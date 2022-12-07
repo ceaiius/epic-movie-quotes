@@ -180,6 +180,41 @@
                     for="email"
                     >{{ $t("Profile.email") }}</label
                   >
+                  <div
+                    v-if="hover"
+                    class="
+                      absolute
+                      -right-32
+                      -top-12
+                      w-80
+                      h-10
+                      bg-white
+                      rounded-md
+                    "
+                  >
+                    <div
+                      class="
+                        flex
+                        gap-2
+                        h-full
+                        items-center
+                        text-sm
+                        justify-center
+                        relative
+                      "
+                    >
+                      <img
+                        src="/images/unverified-black.svg"
+                        alt="unverified black icon"
+                      />
+                      <h2>Please verify new email address</h2>
+                      <img
+                        class="absolute top-9"
+                        src="/images/white-arrow.svg"
+                        alt="white arrow"
+                      />
+                    </div>
+                  </div>
 
                   <div>
                     <input
@@ -193,11 +228,14 @@
                       class="w-full text-sm h-10 p-2 border rounded"
                       readonly
                     />
+
                     <img
                       v-if="item.email_verified_at == null"
                       class="absolute top-3 right-3"
                       src="/images/unvalidated.svg"
-                      alt=""
+                      alt="unvalidated icon"
+                      @mouseover="hover = true"
+                      @mouseleave="hover = false"
                     />
                     <div
                       :class="
@@ -206,12 +244,18 @@
                       class="absolute top-2 text-white -right-[78%]"
                     >
                       <div class="flex gap-6">
-                        <h2 class="cursor-pointer">
-                          {{
-                            item.email_verified_at == null
-                              ? $t("Profile.not_verified")
-                              : $t("Profile.make_this_primary")
-                          }}
+                        <h2
+                          v-if="item.email_verified_at == null"
+                          class="cursor-pointer"
+                        >
+                          {{ $t("Profile.not_verified") }}
+                        </h2>
+                        <h2
+                          v-else
+                          class="cursor-pointer"
+                          @click="makePrimary(item.email)"
+                        >
+                          {{ $t("Profile.make_this_primary") }}
                         </h2>
                         <h2
                           class="cursor-pointer"
@@ -534,10 +578,11 @@ import { useCredentials } from "@/stores/index.js";
 import SuccessDialog from "../GoogleProfile/SuccessDialog.vue";
 import DialogModal from "../../../../components/DialogModal.vue";
 import { thumbnail } from "../../../../helpers/thumbnail";
-import EnterEmail from "./EnterEmail.vue";
+import EnterEmail from "@/views/HomeView/Profile/EmailProfile/EnterEmail.vue";
 const credentials = useCredentials();
 const email = ref();
 const username = ref();
+const hover = ref(false);
 const showPassword = ref(false);
 const showPasswordConfirm = ref(false);
 const password = ref("12345678910");
@@ -569,6 +614,20 @@ const header = {
   },
 };
 
+const makePrimary = (email) => {
+  const url = `${import.meta.env.VITE_API_BASE_URL}emails-primary`;
+  axios
+    .post(url, {
+      email: email,
+    })
+    .then((res) => {
+      if (res.status === 200) {
+        getEmails();
+        fetchUser();
+      }
+    });
+};
+
 const setImage = (e) => {
   if (e.target.files.length > 0) {
     var src = URL.createObjectURL(e.target.files[0]);
@@ -588,7 +647,12 @@ const getEmails = () => {
 const cancelEdit = () => {
   username.value = credentials.user_name;
   var preview = document.getElementById("img");
-  preview.src = url_thumbnail + credentials.avatar;
+  if (credentials.avatar == null) {
+    preview.src = "/images/avatar-default.jpg";
+  } else {
+    preview.src = url_thumbnail + credentials.avatar;
+  }
+
   editUsername.value = false;
   editPassword.value = false;
   editThumbnail.value = false;

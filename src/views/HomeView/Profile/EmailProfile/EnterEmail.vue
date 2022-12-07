@@ -10,6 +10,11 @@
       rounded-none
     "
   >
+    <teleport to="body">
+      <dialog-modal v-if="confirmEmail" @close="confirmEmail = false">
+        <ConfirmEmail @save="addEmail" @exit="confirmEmail = false" />
+      </dialog-modal>
+    </teleport>
     <div class="relative flex flex-col gap-6 justify-center items-center mt-10">
       <img
         class="cursor-pointer absolute top-0 right-6"
@@ -62,18 +67,29 @@ import { Form, Field } from "vee-validate";
 
 import { ref } from "vue";
 import axios from "@/config/axios/index.js";
+import ConfirmEmail from "./ConfirmEmail.vue";
+import DialogModal from "../../../../components/DialogModal.vue";
+import { useCredentials } from "@/stores/index.js";
+
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["exit", "fetch"]);
+const credentials = useCredentials();
+const confirmEmail = ref(false);
 
 const email = ref();
 const handleSubmit = async () => {
+  confirmEmail.value = true;
+};
+
+const addEmail = async () => {
   try {
     await axios.post("emails-store", {
       email: email.value,
-      type: "secondary",
     });
     emit("fetch");
     emit("exit");
+    confirmEmail.value = false;
+    credentials.success_email = true;
   } catch (err) {
     console.log(err);
   }

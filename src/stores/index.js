@@ -35,6 +35,7 @@ export const useCredentials = defineStore("credentials", {
       success_username: false,
       success_avatar: false,
       success_password: false,
+      success_email: false,
       emails: [],
     };
   },

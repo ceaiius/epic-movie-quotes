@@ -41,6 +41,19 @@
         />
       </dialog-modal>
     </teleport>
+
+    <teleport to="body">
+      <dialog-modal
+        v-if="credentials.success_email"
+        top="top-[10%]"
+        @close="credentials.success_email = false"
+      >
+        <SuccessDialog
+          message="Email updated succesfully"
+          @exit="credentials.success_email = false"
+        />
+      </dialog-modal>
+    </teleport>
     <Form
       class="flex-col mt-10 items-center gap-20 w-full flex"
       @submit="handleSubmit"
@@ -184,7 +197,7 @@ import { onBeforeMount, ref } from "vue";
 import { Form, Field } from "vee-validate";
 import DialogModal from "../../../../components/DialogModal.vue";
 import EditPassword from "./EditPassword.vue";
-import EditEmail from "./EditEmail.vue";
+import EditEmail from "@/views/HomeView/Profile/EmailProfile/EditEmail.vue";
 import EnterUsername from "./EnterUsername.vue";
 import { thumbnail } from "../../../../helpers/thumbnail";
 import SuccessDialog from "../GoogleProfile/SuccessDialog.vue";
