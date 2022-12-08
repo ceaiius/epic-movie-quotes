@@ -55,6 +55,12 @@ export default {
       email_placeholder: "შეიყვანეთ იმეილი",
       wrong_email_or_password: "არასწორი იმეილი ან პაროლი",
       email_not_verified: "მეილი არ არის ვალიდური",
+      forgot_password_question: "დაგავიწყდა პაროლი?",
+      instructions:
+        "შეიყვანე მეილი და გამოგიგზავნით პაროლის აღდგენის ინსტრუქციას",
+      send_instructions: "გამოგზავნა",
+      invalid_email: "არასწორი მეილი",
+      back_to_login: "უკან დაბრუნება",
     },
     NewsFeed: {
       movie_quotes: "ფილმის ციტატები",

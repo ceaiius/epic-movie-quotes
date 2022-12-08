@@ -239,7 +239,7 @@
                     />
                     <div
                       :class="
-                        item.email_verified_at == null ? '-right-[63%] ' : ''
+                        item.email_verified_at == null ? '-right-[62%] ' : ''
                       "
                       class="absolute top-2 text-white -right-[78%]"
                     >

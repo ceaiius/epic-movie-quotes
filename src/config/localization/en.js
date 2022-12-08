@@ -56,6 +56,12 @@ export default {
       password_placeholder: "Password",
       wrong_email_or_password: "Incorrect email or password",
       email_not_verified: "Email not verified",
+      forgot_password_question: "Forgot Password?",
+      instructions:
+        "Enter the email and we'll send an email with instructions to reset your password",
+      send_instructions: "Send Instructions",
+      invalid_email: "Invalid Email",
+      back_to_login: "Back to login",
     },
     NewsFeed: {
       movie_quotes: "Movie Quotes",

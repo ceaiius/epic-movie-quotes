@@ -322,13 +322,16 @@ const credentials = useCredentials();
 const url = import.meta.env.VITE_API_GOOGLE_URL;
 const handleForgotPassword = async () => {
   try {
+    credentials.loading = true;
     await axios.post("forgot-password", {
       email: credentials.forgot_password_email,
     });
+    credentials.loading = false;
     isOpenPasswordSent.value = true;
     isOpenForgotPassword.value = false;
   } catch (err) {
     credentials.wrong_email = true;
+    credentials.loading = false;
   }
 };
 

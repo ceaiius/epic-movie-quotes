@@ -45,7 +45,7 @@
     <teleport to="body">
       <dialog-modal
         v-if="credentials.success_email"
-        top="top-[10%]"
+        top="top-[10%] left-[80%]"
         @close="credentials.success_email = false"
       >
         <SuccessDialog

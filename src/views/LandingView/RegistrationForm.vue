@@ -335,8 +335,10 @@
               text-sm
               mt-10
             "
+            :disabled="loading"
           >
-            {{ $t("RegistrationForm.sign_up") }}
+            <LoadingSpinner v-if="loading" />
+            <span v-else>{{ $t("RegistrationForm.sign_up") }}</span>
           </button>
         </Form>
         <form :action="url">
@@ -399,10 +401,11 @@ import DialogModal from "@/components/DialogModal.vue";
 
 import ValidateEmail from "./notifications/ValidateEmail.vue";
 import { useCredentials } from "@/stores/index.js";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
 const credentials = useCredentials();
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["openLogin", "closeDialog"]);
-
+const loading = ref(false);
 const isOpenValidation = ref(false);
 const isNotRegistered = ref(true);
 const url = import.meta.env.VITE_API_GOOGLE_URL;
@@ -412,6 +415,7 @@ const showPasswordConfirm = ref(false);
 const nameTaken = ref(false);
 const emailTaken = ref(false);
 const handleRegister = (values) => {
+  loading.value = true;
   axios
     .post("register", {
       username: values.username,
@@ -433,7 +437,8 @@ const handleRegister = (values) => {
       }
 
       console.log(error.response.data);
-    });
+    })
+    .finally(() => (loading.value = false));
 };
 
 const placeholderPassword = computed(

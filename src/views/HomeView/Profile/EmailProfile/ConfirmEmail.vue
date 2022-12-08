@@ -17,9 +17,11 @@
             rounded-md
             text-sm
           "
+          :disabled="credentials.loading"
           @click="$emit('save')"
         >
-          {{ $t("Profile.confirm") }}
+          <LoadingSpinner v-if="credentials.loading" custom="w-5 h-5" />
+          <span v-else> {{ $t("Profile.confirm") }}</span>
         </button>
       </div>
     </div>
@@ -27,6 +29,9 @@
 </template>
 
 <script setup>
+import { useCredentials } from "@/stores/index.js";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
+const credentials = useCredentials();
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["exit", "save"]);
 </script>

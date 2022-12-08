@@ -13,10 +13,11 @@
   >
     <div class="mt-20 flex flex-col justify-center items-center gap-6">
       <img src="/images/send-email.png" alt="" />
-      <h1 class="text-2xl font-bold text-white">Forgot password?</h1>
+      <h1 class="text-2xl font-bold text-white">
+        {{ $t("LoginForm.forgot_password_question") }}?
+      </h1>
       <h2 class="text-grey_text text-center">
-        Enter the email and we’ll send an email with instructions to reset your
-        password
+        {{ $t("LoginForm.instructions") }}
       </h2>
       <Form
         class="flex flex-col gap-6 relative"
@@ -32,7 +33,7 @@
               !meta.valid && meta.touched ? ' border-red-500' : '',
             ]"
             class="w-96 bg-input_bg text-sm h-10 p-2 border rounded relative"
-            placeholder="Enter your email"
+            :placeholder="$t('RegistrationForm.email_placeholder')"
           />
         </Field>
         <h2
@@ -45,7 +46,7 @@
             top-16
           "
         >
-          Invalid Email
+          {{ $t("LoginForm.invalid_email") }}
         </h2>
         <ErrorMessage
           class="
@@ -68,8 +69,10 @@
             text-sm
             mt-6
           "
+          :disabled="credentials.loading"
         >
-          Send instructions
+          <LoadingSpinner v-if="credentials.loading" />
+          <span v-else> {{ $t("LoginForm.send_instructions") }}</span>
         </button>
       </Form>
 
@@ -80,7 +83,7 @@
         <span class="cursor-pointer"
           ><img src="/images/back-arrow.svg" alt=""
         /></span>
-        <p class="cursor-pointer">Back to login</p>
+        <p class="cursor-pointer">{{ $t("LoginForm.back_to_login") }}</p>
       </div>
     </div>
   </div>
@@ -89,7 +92,7 @@
   <script setup>
 import { Field, Form, ErrorMessage } from "vee-validate";
 import { useCredentials } from "@/stores/index.js";
-
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["openPasswordSent", "backToLogin"]);
 const credentials = useCredentials();
