@@ -16,7 +16,7 @@
         class="
           container
           flex
-          xs:flex-wrap xs:justify-between
+          sm:flex-wrap sm:justify-between
           items-center
           mx-auto
         "
@@ -160,7 +160,7 @@
             font-bold
             text-center
             md:leading-relaxed
-            text-2xl
+            text-xl
             whitespace-nowrap
             mt-52
           "

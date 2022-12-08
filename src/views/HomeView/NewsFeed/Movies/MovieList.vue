@@ -19,7 +19,7 @@
                 v-model="inputValue"
                 class="text-white bg-transparent pl-10 w-48 outline-none"
                 type="text"
-                :placeholder="placeholderSearch"
+                :placeholder="$t('MovieList.search')"
               />
             </div>
 
@@ -116,9 +116,6 @@ const data = ref([]);
 
 const count = ref();
 const inputValue = ref(null);
-const placeholderSearch = computed(
-  () => i18n.global.messages[i18n.global.locale].MovieList.search
-);
 
 const url = import.meta.env.VITE_API_BASE_URL + "movies";
 

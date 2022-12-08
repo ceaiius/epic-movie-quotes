@@ -203,7 +203,7 @@
               "
             >
               <img
-                class="object-cover w-64 h-36 ml-6 rounded-md"
+                class="object-cover w-full pl-4 pr-4 md:w-64 h-36 rounded-md"
                 :src="url_thumbnail + item.thumbnail"
                 alt=""
               />

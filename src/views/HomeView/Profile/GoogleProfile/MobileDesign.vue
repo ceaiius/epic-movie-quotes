@@ -155,7 +155,7 @@ const cancelEdit = () => {
   credentials.username_edit = credentials.user_name;
   var preview = document.getElementById("mobile_img");
   preview.src = url_thumbnail + credentials.avatar;
-  credentials.canEditGoogle = false;
+  isEditable.value = false;
 };
 
 const handleClick = () => {

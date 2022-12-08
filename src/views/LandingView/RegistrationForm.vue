@@ -24,15 +24,15 @@
         />
       </div>
       <div class="pt-8 text-center">
-        <h1 class="text-white text-3xl">
+        <h1 class="text-white text-xl md:text-3xl">
           {{ $t("RegistrationForm.create_an_account") }}
         </h1>
         <h3 class="text-grey_text text-base pt-2">
           {{ $t("RegistrationForm.start_journey") }}
         </h3>
       </div>
-      <div class="w-96">
-        <Form class="pl-4" @submit="handleRegister">
+      <div class="w-full xs:w-96">
+        <Form class="pl-4 pr-4" @submit="handleRegister">
           <div class="flex flex-col pt-4 relative">
             <label for="exampleInputEmail1" class="text-white text-base pb-2">{{
               $t("RegistrationForm.name")
@@ -51,7 +51,7 @@
                 ]"
                 type="text"
                 class="bg-input_bg text-sm h-10 w-full p-2 border-2 rounded"
-                :placeholder="placeholderUsername"
+                :placeholder="$t('RegistrationForm.username_placeholder')"
               />
               <span>
                 <img
@@ -113,7 +113,7 @@
                   !meta.valid && meta.touched ? ' border-red-500' : '',
                 ]"
                 class="bg-input_bg text-sm h-10 p-2 border-2 rounded"
-                :placeholder="placeholderEmail"
+                :placeholder="$t('RegistrationForm.email_placeholder')"
               />
               <span>
                 <img
@@ -175,7 +175,7 @@
                 ]"
                 :type="[showPassword ? 'text' : 'password']"
                 class="bg-input_bg text-sm h-10 p-2 border-2 rounded"
-                :placeholder="placeholderPassword"
+                :placeholder="$t('RegistrationForm.password_placeholder')"
               />
             </Field>
             <span @click="showPassword = !showPassword">
@@ -258,7 +258,7 @@
                   !meta.valid && meta.touched ? ' border-red-500' : '',
                 ]"
                 class="bg-input_bg text-sm h-10 p-2 border-2 rounded"
-                :placeholder="placeholderConfirm"
+                :placeholder="$t('RegistrationForm.confirm_placeholder')"
               />
             </Field>
 
@@ -335,11 +335,13 @@
               text-sm
               mt-10
             "
+            :disabled="loading"
           >
-            {{ $t("RegistrationForm.sign_up") }}
+            <LoadingSpinner v-if="loading" />
+            <span v-else>{{ $t("RegistrationForm.sign_up") }}</span>
           </button>
         </Form>
-        <form :action="url">
+        <form :action="url" class="pl-4 pr-4">
           <button
             class="
               flex
@@ -347,11 +349,10 @@
               items-center
               gap-2
               mt-6
-              ml-4
               focus:outline-none
               text-white
               border border-white
-              w-google_input_width
+              w-full
               h-12
               font-medium
               rounded-md
@@ -393,16 +394,15 @@
 <script setup>
 import axios from "@/config/axios/index.js";
 import { Form, Field, ErrorMessage } from "vee-validate";
-import { computed, ref } from "vue";
-import { i18n } from "../../i18n";
+import { ref } from "vue";
 import DialogModal from "@/components/DialogModal.vue";
-
 import ValidateEmail from "./notifications/ValidateEmail.vue";
 import { useCredentials } from "@/stores/index.js";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
 const credentials = useCredentials();
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["openLogin", "closeDialog"]);
-
+const loading = ref(false);
 const isOpenValidation = ref(false);
 const isNotRegistered = ref(true);
 const url = import.meta.env.VITE_API_GOOGLE_URL;
@@ -412,6 +412,7 @@ const showPasswordConfirm = ref(false);
 const nameTaken = ref(false);
 const emailTaken = ref(false);
 const handleRegister = (values) => {
+  loading.value = true;
   axios
     .post("register", {
       username: values.username,
@@ -433,28 +434,8 @@ const handleRegister = (values) => {
       }
 
       console.log(error.response.data);
-    });
+    })
+    .finally(() => (loading.value = false));
 };
-
-const placeholderPassword = computed(
-  () =>
-    i18n.global.messages[i18n.global.locale].RegistrationForm
-      .password_placeholder
-);
-
-const placeholderEmail = computed(
-  () =>
-    i18n.global.messages[i18n.global.locale].RegistrationForm.email_placeholder
-);
-const placeholderUsername = computed(
-  () =>
-    i18n.global.messages[i18n.global.locale].RegistrationForm
-      .username_placeholder
-);
-const placeholderConfirm = computed(
-  () =>
-    i18n.global.messages[i18n.global.locale].RegistrationForm
-      .confirm_placeholder
-);
 </script>
  

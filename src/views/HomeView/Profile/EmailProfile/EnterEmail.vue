@@ -62,7 +62,7 @@
   </div>
 </template>
   
-  <script setup>
+<script setup>
 import { Form, Field } from "vee-validate";
 
 import { ref } from "vue";
@@ -79,10 +79,12 @@ const confirmEmail = ref(false);
 const email = ref();
 const handleSubmit = async () => {
   confirmEmail.value = true;
+  credentials.loading = false;
 };
 
 const addEmail = async () => {
   try {
+    credentials.loading = true;
     await axios.post("emails-store", {
       email: email.value,
     });
@@ -92,6 +94,7 @@ const addEmail = async () => {
     credentials.success_email = true;
   } catch (err) {
     console.log(err);
+    credentials.loading = false;
   }
 };
 </script>

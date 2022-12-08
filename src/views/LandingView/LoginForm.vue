@@ -17,22 +17,22 @@
     >
       <div>
         <img
-          class="block md:hidden absolute left-10 cursor-pointer"
+          class="block md:hidden absolute left-6 top-20 cursor-pointer"
           src="/images/back-arrow.svg"
           alt=""
           @click="$emit('closeDialog')"
         />
       </div>
-      <div class="text-center pt-12">
-        <h1 class="text-white text-3xl">
+      <div class="text-center">
+        <h1 class="text-white text-xl md:text-3xl md:mt-12">
           {{ $t("LoginForm.log_in_your_account") }}
         </h1>
-        <h3 class="text-grey_text text-base pt-2">
+        <h3 class="text-grey_text text-base pl-2 pr-2 pt-2">
           {{ $t("LoginForm.welcome_back") }}
         </h3>
       </div>
-      <div class="w-96">
-        <Form class="pl-4" @submit="handleLogin">
+      <div class="w-full xs:w-96">
+        <Form class="pl-4 pr-4" @submit="handleLogin">
           <div class="flex flex-col pt-6 relative">
             <label for="email" class="text-white text-base pb-2">{{
               $t("LoginForm.email")
@@ -47,7 +47,7 @@
                 ]"
                 type="email"
                 v-bind="field"
-                :placeholder="placeholderEmail"
+                :placeholder="$t('LoginForm.password_placeholder')"
               />
               <span>
                 <img
@@ -120,7 +120,7 @@
                 ]"
                 :type="[showPassword ? 'text' : 'password']"
                 class="bg-input_bg text-sm h-10 p-2 border-2 rounded"
-                :placeholder="placeholderPassword"
+                :placeholder="$t('RegistrationForm.confirm_placeholder')"
               />
             </Field>
             <span @click="showPassword = !showPassword">
@@ -193,11 +193,13 @@
               false-value="no"
               class="w-4 h-4 bg-gray-100 rounded"
             />
-            <label for="default-checkbox" class="text-white text-base"
+            <label
+              for="default-checkbox"
+              class="text-white text-sm md:text-base whitespace-nowrap"
               >{{ $t("LoginForm.remember_me") }}
             </label>
             <a
-              class="ml-10 text-link underline cursor-pointer"
+              class="ml-10 text-link underline cursor-pointer text-sm"
               @click="(isOpenForgotPassword = true), (isNotLogged = false)"
               >{{ $t("LoginForm.forgot_password") }}</a
             >
@@ -225,7 +227,7 @@
             {{ $t("LoginForm.sign_in") }}
           </button>
         </Form>
-        <form :action="url">
+        <form :action="url" class="pl-4 pr-4">
           <button
             class="
               flex
@@ -233,11 +235,10 @@
               items-center
               gap-2
               mt-6
-              ml-4
               focus:outline-none
               text-white
               border border-white
-              w-google_input_width
+              w-full
               h-12
               font-medium
               rounded-md
@@ -297,12 +298,12 @@ import axios from "@/config/axios/jwt.js";
 import { Field, Form, ErrorMessage } from "vee-validate";
 import DialogModal from "@/components/DialogModal.vue";
 import ForgotPassword from "./notifications/ForgotPassword.vue";
-import { computed, ref } from "vue";
+import { ref } from "vue";
 
 import router from "../../router";
 import PasswordSent from "./notifications/PasswordSent.vue";
 import { useCredentials } from "@/stores/index.js";
-import { i18n } from "../../i18n";
+
 import { useAuthStore } from "@/stores/auth";
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["openRegistration", "closeDialog"]);
@@ -322,13 +323,16 @@ const credentials = useCredentials();
 const url = import.meta.env.VITE_API_GOOGLE_URL;
 const handleForgotPassword = async () => {
   try {
+    credentials.loading = true;
     await axios.post("forgot-password", {
       email: credentials.forgot_password_email,
     });
+    credentials.loading = false;
     isOpenPasswordSent.value = true;
     isOpenForgotPassword.value = false;
   } catch (err) {
     credentials.wrong_email = true;
+    credentials.loading = false;
   }
 };
 
@@ -354,13 +358,6 @@ const handleLogin = async () => {
     console.log(err.response.data);
   }
 };
-const placeholderPassword = computed(
-  () => i18n.global.messages[i18n.global.locale].LoginForm.password_placeholder
-);
-
-const placeholderEmail = computed(
-  () => i18n.global.messages[i18n.global.locale].LoginForm.email_placeholder
-);
 </script>
  
   

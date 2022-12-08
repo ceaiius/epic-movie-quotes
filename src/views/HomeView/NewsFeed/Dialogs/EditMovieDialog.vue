@@ -6,12 +6,13 @@
       md:w-input_width md:h-fit
       pb-12
       w-screen
-      h-screen
+      max-h-screen
+      overflow-auto
       md:rounded-xl
       rounded-none
     "
   >
-    <div class="flex flex-col items-center mt-6">
+    <div class="flex flex-col items-center mt-12">
       <div class="flex items-center justify-between w-full">
         <img
           class="cursor-pointer pl-6"
