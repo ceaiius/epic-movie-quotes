@@ -17,13 +17,16 @@
             flex
             items-center
             bg-[#24222F]
-            md:rounded-xl
+            lg:rounded-xl
             rounded-none
           "
         >
-          <div class="flex w-screen pl-8 md:pl-4 gap-4 cursor-pointer">
+          <div
+            class="flex w-screen pl-8 md:pl-4 gap-4 cursor-pointer"
+            @click="openQuote = true"
+          >
             <img src="/images/pencil.svg" alt="" />
-            <h2 class="text-white" @click="openQuote = true">
+            <h2 class="text-white">
               {{ $t("NewsFeed.write_new_quote") }}
             </h2>
           </div>
@@ -45,7 +48,7 @@
               v-model="inputValue"
               class="w-[686px] text-white bg-transparent pl-10 outline-none"
               type="text"
-              :placeholder="searchLocale"
+              :placeholder="$t('NewsFeed.search')"
             />
             <hr class="border-hr_color mt-6" />
           </div>
@@ -204,9 +207,6 @@ const openQuote = ref(false);
 const inputValue = ref("");
 const username = ref("");
 
-const searchLocale = computed(
-  () => i18n.global.messages[i18n.global.locale].NewsFeed.search
-);
 const id = ref();
 
 const searched = computed(() => {

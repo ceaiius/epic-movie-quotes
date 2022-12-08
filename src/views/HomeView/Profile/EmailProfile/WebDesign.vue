@@ -134,6 +134,18 @@
                   @click="editUsername = !editUsername"
                   >{{ $t("Profile.edit") }}</label
                 >
+                <p
+                  v-if="usernameTaken"
+                  class="
+                    text-default_red
+                    whitespace-nowrap
+                    text-center text-sm
+                    -bottom-6
+                    absolute
+                  "
+                >
+                  {{ $t("RegistrationForm.username_taken") }}
+                </p>
               </div>
               <hr class="border-hr_color" />
               <div class="flex flex-col gap-12 w-80 lg:w-96">
@@ -593,7 +605,7 @@ const editPassword = ref(false);
 const passwordReset = ref(false);
 const editThumbnail = ref(false);
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
-
+const usernameTaken = ref(false);
 const deleteEmail = (id) => {
   const url = `${import.meta.env.VITE_API_BASE_URL}emails/${id}`;
   axios.delete(url).then((res) => {
@@ -681,8 +693,13 @@ const handleSubmit = async (values) => {
     fetchUser();
     credentials.user_name = username.value;
     success.value = true;
+    editThumbnail.value = false;
+    editUsername.value = false;
+    editPassword.value = false;
+    passwordReset.value = false;
   } catch (err) {
     console.log(err);
+    usernameTaken.value = true;
   }
 };
 </script>

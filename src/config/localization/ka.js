@@ -70,7 +70,7 @@ export default {
       news_feed: "ნიუს ფიდი",
       enter_movies: "ჩაწერე @ ფილმის მოსაძებნად",
       enter_quotes: "ჩაწერე # ციტატის მოსაძებნად",
-      write_new_quote: "შექმენი პოსტი",
+      write_new_quote: "დაწერე პოსტი",
       write_comment: "დაწერე კომენტარი...",
       search: "ჩაწერე @ ფილმის მოსაძებნად, ჩაწერე # ციტატის მოძაძებნად",
       post: "დაპოსტვა",

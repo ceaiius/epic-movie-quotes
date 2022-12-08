@@ -13,7 +13,7 @@
       rounded-none
     "
   >
-    <div class="flex flex-col items-center mt-6">
+    <div class="flex flex-col items-center mt-24">
       <div class="flex justify-around w-full items-center">
         <img
           class="cursor-pointer"

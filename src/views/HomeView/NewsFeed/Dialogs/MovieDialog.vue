@@ -5,12 +5,13 @@
       bg-black_bg
       md:w-input_width md:h-fit
       w-screen
-      h-auto
+      max-h-screen
+      overflow-auto
       md:mt-0 md:rounded-xl
       rounded-none
     "
   >
-    <div class="flex flex-col items-center mt-6">
+    <div class="flex flex-col items-center mt-12">
       <div class="flex justify-around w-full items-center">
         <img
           class="cursor-pointer"

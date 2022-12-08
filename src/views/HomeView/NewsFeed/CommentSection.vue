@@ -23,7 +23,7 @@
           "
           cols="30"
           rows="2"
-          :placeholder="commentLocale"
+          :placeholder="$t('NewsFeed.write_comment')"
         />
         <input type="submit" hidden />
       </Form>
@@ -33,17 +33,15 @@
 
 <script setup>
 import axios from "@/config/axios/index.js";
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import { Field, Form } from "vee-validate";
-import { i18n } from "../../../i18n";
+
 import { useCredentials } from "@/stores/index.js";
 import { thumbnail } from "../../../helpers/thumbnail";
 const commentValue = ref();
 const credentials = useCredentials();
 const props = defineProps(["id", "author", "count"]);
-const commentLocale = computed(
-  () => i18n.global.messages[i18n.global.locale].NewsFeed.write_comment
-);
+
 console.log(props.count);
 const fetch = () => {
   let url = import.meta.env.VITE_API_BASE_URL + `quotes-show`;

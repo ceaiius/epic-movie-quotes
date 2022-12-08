@@ -117,6 +117,18 @@
                   "
                   >{{ $t("Profile.edit") }}</label
                 >
+                <p
+                  v-if="usernameTaken"
+                  class="
+                    text-default_red
+                    whitespace-nowrap
+                    text-center text-sm
+                    -bottom-6
+                    absolute
+                  "
+                >
+                  {{ $t("RegistrationForm.username_taken") }}
+                </p>
               </div>
               <hr class="border-hr_color" />
               <div
@@ -172,6 +184,7 @@ import { thumbnail } from "../../../../helpers/thumbnail";
 const credentials = useCredentials();
 const avatarError = ref(false);
 const username = ref();
+const usernameTaken = ref(false);
 const email = ref();
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
 onBeforeMount(() => {
@@ -208,7 +221,7 @@ const setImage = (e) => {
 const fetchUser = () => {
   axios.get("user").then((res) => {
     email.value = res.data.email;
-    username.value = res.data.username;
+    username.value = res.data.username.toLowerCase();
     credentials.avatar = res.data.thumbnail;
   });
 };
@@ -232,8 +245,10 @@ const handleSubmit = async (values) => {
     credentials.user_name = username.value;
     credentials.canEditGoogle = false;
     avatarError.value = false;
+    usernameTaken.value = false;
   } catch (err) {
     avatarError.value = true;
+    usernameTaken.value = true;
   }
 };
 </script>

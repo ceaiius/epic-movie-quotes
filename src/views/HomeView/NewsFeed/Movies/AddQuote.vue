@@ -5,7 +5,6 @@
       flex flex-col
       bg-black_bg
       md:w-[900px] md:h-fit
-      mt-20
       lg:ml-48 lg:mb-64
       w-screen
       h-screen
@@ -13,7 +12,7 @@
       rounded-none
     "
   >
-    <div class="flex flex-col items-center mt-6">
+    <div class="flex flex-col items-center mt-12">
       <div class="flex items-center justify-between w-full">
         <img
           class="cursor-pointer pl-6"

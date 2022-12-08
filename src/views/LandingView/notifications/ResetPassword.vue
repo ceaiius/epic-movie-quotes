@@ -42,7 +42,7 @@
                 ]"
                 :type="[showPassword ? 'text' : 'password']"
                 class="bg-input_bg text-sm h-10 p-2 border-2 rounded"
-                :placeholder="placeholderPassword"
+                :placeholder="$t('RegistrationForm.password_placeholder')"
               />
             </Field>
             <span @click="showPassword = !showPassword">
@@ -125,7 +125,7 @@
                   !meta.valid && meta.touched ? ' border-red-500' : '',
                 ]"
                 class="bg-input_bg text-sm h-10 p-2 border-2 rounded"
-                :placeholder="placeholderConfirm"
+                :placeholder="$t('RegistrationForm.confirm_placeholder')"
               />
             </Field>
 
@@ -226,13 +226,13 @@
 <script setup>
 import { Field, Form, ErrorMessage } from "vee-validate";
 import axios from "@/config/axios/index.js";
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import router from "../../../router";
 import { useRoute } from "vue-router";
 import ResetSuccess from "../notifications/ResetSuccess.vue";
 import DialogModal from "@/components/DialogModal.vue";
 import { useCredentials } from "@/stores/index.js";
-import { i18n } from "../../../i18n";
+
 const credentials = useCredentials();
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["closePasswordSent", "backToLogin"]);
@@ -250,17 +250,6 @@ const closeSuccess = () => {
   credentials.isOpenResetPassword = false;
   router.push({ name: "landing" });
 };
-const placeholderPassword = computed(
-  () =>
-    i18n.global.messages[i18n.global.locale].RegistrationForm
-      .password_placeholder
-);
-
-const placeholderConfirm = computed(
-  () =>
-    i18n.global.messages[i18n.global.locale].RegistrationForm
-      .confirm_placeholder
-);
 
 const handleResetPassword = async () => {
   try {
