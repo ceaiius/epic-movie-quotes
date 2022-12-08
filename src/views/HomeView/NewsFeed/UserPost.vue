@@ -25,9 +25,9 @@
             class="flex w-screen pl-8 md:pl-4 gap-4 cursor-pointer"
             @click="openQuote = true"
           >
-            <img src="/images/pencil.svg" alt="" />
+            <img src="/images/pencil.svg" alt="pencil icon" />
             <h2 class="text-white">
-              {{ $t("NewsFeed.write_new_quote") }}
+              {{ $t("news_feed.write_new_quote") }}
             </h2>
           </div>
         </div>
@@ -43,12 +43,12 @@
 
         <div class="h-[52px] lg:flex hidden relative ml-6">
           <div class="flex items-center">
-            <img class="absolute" src="/images/search.svg" alt="" />
+            <img class="absolute" src="/images/search.svg" alt="search icon" />
             <input
               v-model="inputValue"
               class="w-[686px] text-white bg-transparent pl-10 outline-none"
               type="text"
-              :placeholder="$t('NewsFeed.search')"
+              :placeholder="$t('news_feed.search')"
             />
             <hr class="border-hr_color mt-6" />
           </div>
@@ -76,7 +76,7 @@
             <img
               class="w-12 h-12 object-cover rounded-full"
               :src="thumbnail(item.author.thumbnail)"
-              alt=""
+              alt="user avatar"
             />
             <h2 class="whitespace-nowrap">{{ item.author.username }}</h2>
           </div>
@@ -94,14 +94,14 @@
               <img
                 class="sm:w-[550px] mt-2 w-72 object-cover"
                 :src="url_thumbnail + item.thumbnail"
-                alt=""
+                alt="user avatar"
               />
             </div>
 
             <div class="flex gap-6 text-white ml-10 mt-6 mb-6 sm:m-6">
               <div class="flex gap-2 cursor-pointer">
                 {{ item.comments.length }}
-                <img src="/images/comments.svg" alt="" />
+                <img src="/images/comments.svg" alt="comments icon" />
               </div>
               <div class="flex gap-2 cursor-pointer">
                 {{ item.users_count }}
@@ -125,7 +125,7 @@
                 <img
                   :src="thumbnail(items.author.thumbnail)"
                   class="md:w-12 md:h-12 w-10 h-10 rounded-full object-cover"
-                  alt=""
+                  alt="user avatar"
                 />
               </div>
               <div>
@@ -141,7 +141,7 @@
                     "
                     class="absolute right-0 cursor-pointer"
                     src="/images/delete.svg"
-                    alt=""
+                    alt="delete icon"
                     @click="deleteQuote(items.id)"
                   />
                 </div>
@@ -159,18 +159,16 @@
 
 <script setup>
 import { computed, onMounted, ref } from "vue";
-import { i18n } from "../../../i18n";
+import { i18n } from "@/i18n";
 import axios from "@/config/axios/index.js";
-import DialogModal from "../../../components/DialogModal.vue";
-import QuoteDialog from "./Dialogs/QuoteDialog.vue";
+import DialogModal from "@/components/DialogModal.vue";
+import QuoteDialog from "@/views/HomeView/NewsFeed/Dialogs/QuoteDialog.vue";
 import { useCredentials } from "@/stores/index.js";
-import { thumbnail } from "../../../helpers/thumbnail";
-import BaseLike from "./BaseLike.vue";
+import { thumbnail } from "@/helpers/thumbnail";
+import BaseLike from "@/views/HomeView/NewsFeed/BaseLike.vue";
 
-import CommentSection from "./CommentSection.vue";
+import CommentSection from "@/views/HomeView/NewsFeed/CommentSection.vue";
 const credentials = useCredentials();
-
-// eslint-disable-next-line no-unused-vars
 
 window.Echo.channel(`comment-channel`).listen(".new-comment", () => {
   fetch();

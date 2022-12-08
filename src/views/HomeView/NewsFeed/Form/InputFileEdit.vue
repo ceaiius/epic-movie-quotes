@@ -5,7 +5,7 @@
         id="file"
         class="max-h-[300px] w-full object-cover"
         :src="url + credentials.thumbnail"
-        alt=""
+        alt="user avatar"
       />
       <div
         class="absolute left-[50%] top-[50%] transform translate-x-[-50%]"
@@ -25,7 +25,7 @@
             -mt-12
           "
         >
-          <img src="/images/file-camera.svg" class="w-6" alt="" />
+          <img src="/images/file-camera.svg" class="w-6" alt="camera icon" />
           <h2 class="text-white text-sm">Change photo</h2>
         </div>
       </div>

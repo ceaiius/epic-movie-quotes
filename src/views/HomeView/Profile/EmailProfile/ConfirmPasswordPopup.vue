@@ -13,10 +13,12 @@
     <div
       class="flex flex-col w-full justify-center text-white items-center h-full"
     >
-      <h1>Are you sure to make changes?</h1>
+      <h1>{{ $t("profile.are_you_sure_to_make_changes") }}</h1>
       <hr class="border-hr_color w-full mt-10" />
       <div class="flex w-full justify-between items-center pl-10 pr-10 mt-10">
-        <h2 class="cursor-pointer" @click="$emit('exit')">Cancel</h2>
+        <h2 class="cursor-pointer" @click="$emit('exit')">
+          {{ $t("profile.cancel") }}
+        </h2>
         <button
           class="
             text-white
@@ -29,7 +31,7 @@
           "
           @click="handeClick"
         >
-          {{ $t("Profile.confirm") }}
+          {{ $t("profile.confirm") }}
         </button>
       </div>
     </div>
@@ -39,11 +41,8 @@
     <script setup>
 import axios from "@/config/axios/index.js";
 import { useCredentials } from "@/stores/index.js";
-
 const credentials = useCredentials();
-// eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["exit", "save"]);
-
 const handeClick = async () => {
   try {
     await axios.post("update", {

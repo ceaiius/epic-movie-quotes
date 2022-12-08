@@ -16,7 +16,7 @@
         <img
           class="cursor-pointer"
           src="/images/back-arrow.svg"
-          alt=""
+          alt="back arrow icon"
           @click="$emit('closeSearch')"
         />
         <input
@@ -24,7 +24,6 @@
           type="text"
           placeholder="Search"
           class="border-none outline-none text-white bg-transparent"
-          @input="log"
         />
       </div>
     </div>
@@ -34,12 +33,8 @@
   <script setup>
 import { useCredentials } from "@/stores/index.js";
 
-// eslint-disable-next-line no-unused-vars
-const emit = defineEmits(["closeSearch"]);
+defineEmits(["closeSearch"]);
 const credentials = useCredentials();
-const log = () => {
-  console.log(credentials.movie_search);
-};
 </script>
   
   

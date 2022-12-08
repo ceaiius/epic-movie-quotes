@@ -1,6 +1,6 @@
 export default {
   En: {
-    LandingPage: {
+    landing_page: {
       movie_quotes: "Movie Quotes",
       sign_up: "Sign up",
       log_in: "Log in",
@@ -23,7 +23,7 @@ export default {
       all_rights_reserved: "ALL RIGHTS RESERVED",
       get_started: "Get started",
     },
-    RegistrationForm: {
+    registration_form: {
       create_an_account: "Create an account",
       start_journey: "Start your journey!",
       username_taken: "The username has already been taken",
@@ -41,7 +41,7 @@ export default {
       password_placeholder: "At least 8 & max.15 lower case characters",
       confirm_placeholder: "Confirm password",
     },
-    LoginForm: {
+    login_form: {
       log_in_your_account: "Log in to your account",
       welcome_back: "Welcome back! Please enter your details",
       email: "Email",
@@ -62,8 +62,25 @@ export default {
       send_instructions: "Send Instructions",
       invalid_email: "Invalid Email",
       back_to_login: "Back to login",
+      skip: "Skip, I'll confirm later",
+      go_to_my_email: "Go to my email",
+      we_have_sent_password_recovery:
+        "We have sent a password recover instructions to your email",
+      check_your_email: "Check your email",
+      reset_password: "Reset Password",
+      password_must_be_different:
+        "Your new password must be different from previous used passwords",
+      create_new_password: "Create new password",
+      go_to_news_feed: "Go to my news feed",
+      password_changed: "Your Password changed successfully",
+      success: "Success!",
+      account_activated: "Account activated",
+      please_check: "Please check your email",
+      activate_account:
+        "Please check your email and follow the instructions to activate your account",
+      thank_you: "Thank you!",
     },
-    NewsFeed: {
+    news_feed: {
       movie_quotes: "Movie Quotes",
       log_out: "Log out",
       edit_profile: "Edit your profile",
@@ -76,7 +93,7 @@ export default {
       search: "Enter @ to search movies, Enter # to search quotes",
       post: "Post",
     },
-    MovieList: {
+    movie_list: {
       my_list_of_movies: "My list of movies",
       total: "Total",
       quotes: "Quotes",
@@ -92,8 +109,10 @@ export default {
       edit_movie: "Edit movie",
       genre: "Genre",
       year: "Year",
+      edit: "Edit",
+      delete: "Delete",
     },
-    Profile: {
+    profile: {
       my_profile: "My profile",
       upload_new_photo: "Upload new photo",
       edit: "Edit",
@@ -110,8 +129,13 @@ export default {
       not_verified: "Not verified",
       are_you_sure_to_make_changes: "Are you sure to make changes",
       confirm: "Confirm",
+      cancel: "Cancel",
+      password_should_contain: "Password should contain",
+      eight_or_more_characters: "8 or more characters",
+      fifteen_or_more_characters: "15 lowercase character",
+      please_verify_new_email_address: "Please verify new email address",
     },
-    Notification: {
+    notification: {
       notifications: "Notifications",
       no_notifications_yet: "No notifications yet",
       mark_as_all_read: "Mark as all read",

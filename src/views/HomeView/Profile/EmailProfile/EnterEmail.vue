@@ -19,12 +19,12 @@
       <img
         class="cursor-pointer absolute top-0 right-6"
         src="/images/exit.svg"
-        alt=""
+        alt="exit icon"
         @click="$emit('exit')"
       />
 
       <label for="username" class="text-white">{{
-        $t("Profile.enter_new_email")
+        $t("profile.enter_new_email")
       }}</label>
       <Form
         class="relative w-full flex flex-col gap-6 justify-center items-center"
@@ -55,7 +55,7 @@
             text-sm
           "
         >
-          {{ $t("Profile.add") }}
+          {{ $t("profile.add") }}
         </button>
       </Form>
     </div>
@@ -67,21 +67,17 @@ import { Form, Field } from "vee-validate";
 
 import { ref } from "vue";
 import axios from "@/config/axios/index.js";
-import ConfirmEmail from "./ConfirmEmail.vue";
-import DialogModal from "../../../../components/DialogModal.vue";
+import ConfirmEmail from "@/views/HomeView/Profile/EmailProfile/ConfirmEmail.vue";
+import DialogModal from "@/components/DialogModal.vue";
 import { useCredentials } from "@/stores/index.js";
-
-// eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["exit", "fetch"]);
 const credentials = useCredentials();
 const confirmEmail = ref(false);
-
 const email = ref();
 const handleSubmit = async () => {
   confirmEmail.value = true;
   credentials.loading = false;
 };
-
 const addEmail = async () => {
   try {
     credentials.loading = true;

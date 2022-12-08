@@ -19,12 +19,12 @@
       <img
         class="cursor-pointer absolute top-0 right-6"
         src="/images/exit.svg"
-        alt=""
+        alt="exit icon"
         @click="$emit('exit')"
       />
 
       <label for="username" class="text-white">{{
-        $t("Profile.enter_new_username")
+        $t("profile.enter_new_username")
       }}</label>
       <Form
         class="relative w-full flex flex-col gap-6 justify-center items-center"
@@ -59,7 +59,7 @@
             text-sm
           "
         >
-          {{ $t("Profile.add") }}
+          {{ $t("profile.add") }}
         </button>
       </Form>
     </div>
@@ -69,13 +69,12 @@
 <script setup>
 import { ref } from "vue";
 import { useCredentials } from "@/stores/index.js";
-import ConfirmPopup from "./ConfirmPopup.vue";
+import ConfirmPopup from "@/views/HomeView/Profile/EmailProfile/ConfirmPopup.vue";
 import { Form, Field } from "vee-validate";
-import DialogModal from "../../../../components/DialogModal.vue";
+import DialogModal from "@/components/DialogModal.vue";
 const credentials = useCredentials();
 const confirmUsername = ref(false);
-// eslint-disable-next-line no-unused-vars
-const emit = defineEmits(["exit"]);
+defineEmits(["exit"]);
 const username = ref("");
 
 const handleSubmit = () => {

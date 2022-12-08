@@ -5,6 +5,6 @@
 </template>
 
 <script setup>
-import WebDesign from "./WebDesign.vue";
-import MobileDesign from "./MobileDesign.vue";
+import WebDesign from "@/views/HomeView/Profile/GoogleProfile/WebDesign.vue";
+import MobileDesign from "@/views/HomeView/Profile/GoogleProfile/MobileDesign.vue";
 </script>

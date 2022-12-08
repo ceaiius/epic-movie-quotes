@@ -20,14 +20,14 @@
         <img
           class="cursor-pointer"
           src="/images/delete.svg"
-          alt=""
+          alt="delete icon"
           @click="$emit('delete')"
         />
-        <h2 class="text-white">{{ $t("MovieList.edit_quote") }}</h2>
+        <h2 class="text-white">{{ $t("movie_list.edit_quote") }}</h2>
         <img
           class="cursor-pointer"
           src="/images/exit.svg"
-          alt=""
+          alt="exit icon"
           @click="$emit('exit')"
         />
       </div>
@@ -65,7 +65,6 @@
             />
           </div>
           <div class="relative">
-            <!-- <InputFile /> -->
             <InputFileEdit />
           </div>
 
@@ -82,7 +81,7 @@
               mt-6
             "
           >
-            {{ $t("MovieList.save_changes") }}
+            {{ $t("movie_list.save_changes") }}
           </button>
         </div>
       </Form>
@@ -95,12 +94,12 @@ import { Form } from "vee-validate";
 import { onMounted, ref } from "vue";
 import axios from "@/config/axios/index.js";
 
-import InputFileEdit from "../Form/InputFileEdit.vue";
-import InputField from "../Form/InputField.vue";
+import InputFileEdit from "@/views/HomeView/NewsFeed/Form/InputFileEdit.vue";
+import InputField from "@/views/HomeView/NewsFeed/Form/InputField.vue";
 import { useCredentials } from "@/stores/index.js";
 const credentials = useCredentials();
 const props = defineProps(["id"]);
-// eslint-disable-next-line no-unused-vars
+
 const emit = defineEmits(["delete", "exit", "updateQuotes", "closePopup"]);
 
 const data = ref([]);

@@ -28,8 +28,7 @@
 <script setup>
 import { Field } from "vee-validate";
 
-// eslint-disable-next-line no-unused-vars
-const props = defineProps([
+defineProps([
   "placeholder",
   "language",
   "name",

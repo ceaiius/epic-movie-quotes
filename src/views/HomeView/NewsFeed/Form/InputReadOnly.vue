@@ -20,9 +20,6 @@
 </template>
       
       <script setup>
-// eslint-disable-next-line no-unused-vars
-const props = defineProps(["language", "name", "modelValue"]);
-
-// eslint-disable-next-line no-unused-vars
-const emit = defineEmits(["update:modelValue"]);
+defineProps(["language", "name", "modelValue"]);
+defineEmits(["update:modelValue"]);
 </script>

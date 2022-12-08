@@ -4,7 +4,7 @@
       <img
         :src="thumbnail(credentials.avatar)"
         class="hidden object-cover rounded-full lg:block w-12 h-12"
-        alt=""
+        alt="user avatar"
       />
       <Form class="w-full flex justify-center" @submit="handleComment">
         <Field
@@ -23,7 +23,7 @@
           "
           cols="30"
           rows="2"
-          :placeholder="$t('NewsFeed.write_comment')"
+          :placeholder="$t('news_feed.write_comment')"
         />
         <input type="submit" hidden />
       </Form>
@@ -37,7 +37,7 @@ import { ref } from "vue";
 import { Field, Form } from "vee-validate";
 
 import { useCredentials } from "@/stores/index.js";
-import { thumbnail } from "../../../helpers/thumbnail";
+import { thumbnail } from "@/helpers/thumbnail";
 const commentValue = ref();
 const credentials = useCredentials();
 const props = defineProps(["id", "author", "count"]);

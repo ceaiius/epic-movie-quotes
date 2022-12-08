@@ -1,5 +1,8 @@
 <template>
-  <img :src="liked ? '/images/red-like.svg' : '/images/likes.svg'" alt="" />
+  <img
+    :src="liked ? '/images/red-like.svg' : '/images/likes.svg'"
+    alt="like icon"
+  />
 </template>
 
 <script setup>

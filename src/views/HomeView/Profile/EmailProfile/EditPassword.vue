@@ -33,26 +33,28 @@
         <img
           class="cursor-pointer absolute top-6 right-6"
           src="/images/exit.svg"
-          alt=""
+          alt="exit icon"
           @click="$emit('exit')"
         />
-        <h2>Passwords should contain:</h2>
+        <h2>{{ $t("profile.passwords_should_contain") }}:</h2>
         <p>
           <span class="flex gap-2"
-            ><img src="/images/grey_circle.svg" alt="" />8 or more
-            characters</span
+            ><img src="/images/grey_circle.svg" alt="grey circle icon" />{{
+              $t("profile.eight_or_more_characters")
+            }}</span
           >
         </p>
         <p>
           <span class="flex gap-2"
-            ><img src="/images/green_circle.svg" alt="" />15 lowercase
-            character</span
+            ><img src="/images/green_circle.svg" alt="green circle icon" />{{
+              $t("profile.fifteen_lowercase_characters")
+            }}</span
           >
         </p>
       </div>
       <div class="flex flex-col items-center pt-10 relative">
         <label for="exampleInputPassword1" class="text-white text-base pb-2">{{
-          $t("RegistrationForm.password")
+          $t("registration_form.password")
         }}</label>
         <Field
           v-slot="{ meta, field }"
@@ -68,7 +70,7 @@
             ]"
             :type="[showPassword ? 'text' : 'password']"
             class="bg-input_bg w-96 text-sm h-10 p-2 border-2 rounded"
-            :placeholder="placeholderPassword"
+            :placeholder="$t('registration_form.password_placeholder')"
           />
         </Field>
         <span @click="showPassword = !showPassword">
@@ -133,7 +135,7 @@
       </div>
       <div class="flex flex-col items-center pt-10 relative">
         <label for="exampleInputPassword1" class="text-white text-base pb-2">{{
-          $t("RegistrationForm.confirm_password")
+          $t("registration_form.confirm_password")
         }}</label>
         <Field
           v-slot="{ meta, field }"
@@ -149,7 +151,7 @@
               !meta.valid && meta.touched ? ' border-red-500' : '',
             ]"
             class="bg-input_bg w-96 text-sm h-10 p-2 border-2 rounded"
-            :placeholder="placeholderConfirm"
+            :placeholder="$t('registration_form.confirm_placeholder')"
           />
         </Field>
 
@@ -236,14 +238,13 @@
 import { ref } from "vue";
 import { Field } from "vee-validate";
 import { useCredentials } from "@/stores/index.js";
-import ConfirmPasswordPopup from "./ConfirmPasswordPopup.vue";
-import DialogModal from "../../../../components/DialogModal.vue";
+import ConfirmPasswordPopup from "@/views/HomeView/Profile/EmailProfile/ConfirmPasswordPopup.vue";
+import DialogModal from "@/components/DialogModal.vue";
 const credentials = useCredentials();
 const password = ref();
 const password_confirmation = ref();
 const confirmPassword = ref(false);
-// eslint-disable-next-line no-unused-vars
-const emit = defineEmits(["exit"]);
+defineEmits(["exit"]);
 const handleClick = () => {
   if (password.value == password_confirmation.value) {
     credentials.password_edit = password.value;

@@ -16,7 +16,7 @@
         <img
           class="cursor-pointer"
           src="/images/back-arrow.svg"
-          alt=""
+          alt="back arrow icon"
           @click="$emit('closeSearch')"
         />
         <input
@@ -27,8 +27,8 @@
         />
       </div>
       <div class="mt-10 ml-8 text-input_bg flex flex-col gap-2">
-        <h2>{{ $t("NewsFeed.enter_movies") }}</h2>
-        <h2>{{ $t("NewsFeed.enter_quotes") }}</h2>
+        <h2>{{ $t("news_feed.enter_movies") }}</h2>
+        <h2>{{ $t("news_feed.enter_quotes") }}</h2>
       </div>
     </div>
   </div>
@@ -37,7 +37,6 @@
 <script setup>
 import { useCredentials } from "@/stores/index.js";
 const credentials = useCredentials();
-// eslint-disable-next-line no-unused-vars
-const emit = defineEmits(["closeSearch"]);
+defineEmits(["closeSearch"]);
 </script>
 

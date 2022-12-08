@@ -12,11 +12,12 @@
     "
   >
     <div class="mt-20 flex flex-col justify-center items-center gap-6">
-      <img src="/images/send-email.png" alt="" />
-      <h1 class="text-2xl font-bold text-white">Thank you!</h1>
+      <img src="/images/send-email.png" alt="send email image" />
+      <h1 class="text-2xl font-bold text-white">
+        {{ $t("login_form.thank_you") }}
+      </h1>
       <h2 class="text-white text-center">
-        Please check your email and follow the instructions to activate your
-        account
+        {{ $t("login_form.activate_account") }}
       </h2>
       <button
         class="
@@ -31,14 +32,13 @@
         "
         @click="$emit('closeValidate')"
       >
-        Please check your email
+        {{ $t("login_form.please_check") }}
       </button>
     </div>
   </div>
 </template>
 
 <script setup>
-// eslint-disable-next-line no-unused-vars
-const emit = defineEmits(["closeValidate"]);
+defineEmits(["closeValidate"]);
 </script>
 

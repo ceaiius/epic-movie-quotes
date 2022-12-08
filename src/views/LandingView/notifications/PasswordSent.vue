@@ -12,10 +12,12 @@
     "
   >
     <div class="mt-20 flex flex-col justify-center items-center gap-6">
-      <img src="/images/send-email.png" alt="" />
-      <h1 class="text-2xl font-bold text-white">Check your email</h1>
+      <img src="/images/send-email.png" alt="send email image" />
+      <h1 class="text-2xl font-bold text-white">
+        {{ $t("login_form.check_your_email") }}
+      </h1>
       <h2 class="text-grey_text text-center">
-        We have sent a password recover instructions to your email
+        {{ $t("login_form.we_have_sent_password_recovery") }}
       </h2>
 
       <button
@@ -30,21 +32,20 @@
         "
         @click="$emit('closePasswordSent')"
       >
-        Go to my email
+        {{ $t("login_form.go_to_my_email") }}
       </button>
       <div
         class="flex gap-6 justify-center items-center text-grey_text"
         @click="$emit('skip')"
       >
-        <p class="cursor-pointer">Skip, I'll confirm later</p>
+        <p class="cursor-pointer">{{ $t("login_form.skip") }}</p>
       </div>
     </div>
   </div>
 </template>
     
-    <script setup>
-// eslint-disable-next-line no-unused-vars
-const emit = defineEmits(["closePasswordSent", "skip"]);
+<script setup>
+defineEmits(["closePasswordSent", "skip"]);
 </script>
     
      

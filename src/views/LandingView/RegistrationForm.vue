@@ -19,23 +19,23 @@
         <img
           class="block md:hidden absolute top-10 left-10 cursor-pointer"
           src="/images/back-arrow.svg"
-          alt=""
+          alt="back arrow icon"
           @click="$emit('closeDialog')"
         />
       </div>
       <div class="pt-8 text-center">
         <h1 class="text-white text-xl md:text-3xl">
-          {{ $t("RegistrationForm.create_an_account") }}
+          {{ $t("registration_form.create_an_account") }}
         </h1>
         <h3 class="text-grey_text text-base pt-2">
-          {{ $t("RegistrationForm.start_journey") }}
+          {{ $t("registration_form.start_journey") }}
         </h3>
       </div>
       <div class="w-full xs:w-96">
         <Form class="pl-4 pr-4" @submit="handleRegister">
           <div class="flex flex-col pt-4 relative">
             <label for="exampleInputEmail1" class="text-white text-base pb-2">{{
-              $t("RegistrationForm.name")
+              $t("registration_form.name")
             }}</label>
             <Field
               v-slot="{ meta, field }"
@@ -51,7 +51,7 @@
                 ]"
                 type="text"
                 class="bg-input_bg text-sm h-10 w-full p-2 border-2 rounded"
-                :placeholder="$t('RegistrationForm.username_placeholder')"
+                :placeholder="$t('registration_form.username_placeholder')"
               />
               <span>
                 <img
@@ -61,7 +61,7 @@
                   ]"
                   class="w-6 h-6 absolute top-14 right-2"
                   src="/images/valid.svg"
-                  alt=""
+                  alt="valid icon"
                 />
                 <img
                   :class="[
@@ -70,7 +70,7 @@
                   ]"
                   class="w-6 h-6 absolute top-14 right-2"
                   src="/images/invalid.svg"
-                  alt=""
+                  alt="invalid icon"
                 />
               </span>
             </Field>
@@ -95,12 +95,12 @@
                 absolute
               "
             >
-              {{ $t("RegistrationForm.username_taken") }}
+              {{ $t("registration_form.username_taken") }}
             </p>
           </div>
           <div class="flex flex-col pt-6 relative">
             <label for="email" class="text-white text-base pb-2">{{
-              $t("RegistrationForm.email")
+              $t("registration_form.email")
             }}</label>
             <Field v-slot="{ meta, field }" name="email" rules="required|email">
               <input
@@ -113,7 +113,7 @@
                   !meta.valid && meta.touched ? ' border-red-500' : '',
                 ]"
                 class="bg-input_bg text-sm h-10 p-2 border-2 rounded"
-                :placeholder="$t('RegistrationForm.email_placeholder')"
+                :placeholder="$t('registration_form.email_placeholder')"
               />
               <span>
                 <img
@@ -123,7 +123,7 @@
                   ]"
                   class="w-6 h-6 absolute top-16 right-2"
                   src="/images/valid.svg"
-                  alt=""
+                  alt="valid icon"
                 />
                 <img
                   :class="[
@@ -132,7 +132,7 @@
                   ]"
                   class="w-6 h-6 absolute top-16 right-2"
                   src="/images/invalid.svg"
-                  alt=""
+                  alt="invalid icon"
                 />
               </span>
             </Field>
@@ -151,7 +151,7 @@
                 absolute
               "
             >
-              {{ $t("RegistrationForm.email_taken") }}
+              {{ $t("registration_form.email_taken") }}
             </p>
           </div>
 
@@ -159,7 +159,7 @@
             <label
               for="exampleInputPassword1"
               class="text-white text-base pb-2"
-              >{{ $t("RegistrationForm.password") }}</label
+              >{{ $t("registration_form.password") }}</label
             >
             <Field
               v-slot="{ meta, field }"
@@ -175,7 +175,7 @@
                 ]"
                 :type="[showPassword ? 'text' : 'password']"
                 class="bg-input_bg text-sm h-10 p-2 border-2 rounded"
-                :placeholder="$t('RegistrationForm.password_placeholder')"
+                :placeholder="$t('registration_form.password_placeholder')"
               />
             </Field>
             <span @click="showPassword = !showPassword">
@@ -242,7 +242,7 @@
             <label
               for="exampleInputPassword1"
               class="text-white text-base pb-2"
-              >{{ $t("RegistrationForm.confirm_password") }}</label
+              >{{ $t("registration_form.confirm_password") }}</label
             >
             <Field
               v-slot="{ meta, field }"
@@ -258,7 +258,7 @@
                   !meta.valid && meta.touched ? ' border-red-500' : '',
                 ]"
                 class="bg-input_bg text-sm h-10 p-2 border-2 rounded"
-                :placeholder="$t('RegistrationForm.confirm_placeholder')"
+                :placeholder="$t('registration_form.confirm_placeholder')"
               />
             </Field>
 
@@ -338,7 +338,7 @@
             :disabled="loading"
           >
             <LoadingSpinner v-if="loading" />
-            <span v-else>{{ $t("RegistrationForm.sign_up") }}</span>
+            <span v-else>{{ $t("registration_form.sign_up") }}</span>
           </button>
         </Form>
         <form :action="url" class="pl-4 pr-4">
@@ -360,16 +360,16 @@
             "
             type="submit"
           >
-            <span><img src="/images/google.svg" alt="" /></span>
-            {{ $t("RegistrationForm.sign_up_with_google") }}
+            <span><img src="/images/google.svg" alt="google icon" /></span>
+            {{ $t("registration_form.sign_up_with_google") }}
           </button>
         </form>
         <p class="text-center pt-4 text-grey_text">
-          {{ $t("RegistrationForm.already_have_an_account") }}
+          {{ $t("registration_form.already_have_an_account") }}
           <a
             class="text-link cursor-pointer underline"
             @click="$emit('openLogin')"
-            >{{ $t("RegistrationForm.log_in") }}</a
+            >{{ $t("registration_form.log_in") }}</a
           >
         </p>
       </div>
@@ -396,12 +396,11 @@ import axios from "@/config/axios/index.js";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { ref } from "vue";
 import DialogModal from "@/components/DialogModal.vue";
-import ValidateEmail from "./notifications/ValidateEmail.vue";
+import ValidateEmail from "@/views/LandingView/notifications/ValidateEmail.vue";
 import { useCredentials } from "@/stores/index.js";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
 const credentials = useCredentials();
-// eslint-disable-next-line no-unused-vars
-const emit = defineEmits(["openLogin", "closeDialog"]);
+defineEmits(["openLogin", "closeDialog"]);
 const loading = ref(false);
 const isOpenValidation = ref(false);
 const isNotRegistered = ref(true);

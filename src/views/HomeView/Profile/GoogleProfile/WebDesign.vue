@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="lg:flex flex-col mt-10 items-center gap-20 w-full hidden">
-    <h2 class="text-white lg:block hidden">{{ $t("Profile.my_profile") }}</h2>
+    <h2 class="text-white lg:block hidden">{{ $t("profile.my_profile") }}</h2>
     <div class="flex w-full h-full lg:h-auto items-center justify-center">
       <Form
         class="
@@ -43,10 +43,10 @@
                   translate-y-0
                 "
                 :src="thumbnail(credentials.avatar)"
-                alt=""
+                alt="user avatar"
               />
               <h2 class="text-white cursor-pointer" @click="handleClick">
-                {{ $t("Profile.upload_new_photo") }}
+                {{ $t("profile.upload_new_photo") }}
               </h2>
               <div>
                 <Field v-slot="{ handleChange }" name="thumbnail">
@@ -75,7 +75,7 @@
                 "
               >
                 <h2 class="absolute -top-10 left-0 text-white">
-                  {{ $t("Profile.username") }}
+                  {{ $t("profile.username") }}
                 </h2>
                 <Field
                   v-slot="{ meta, field }"
@@ -115,7 +115,7 @@
                   @click="
                     credentials.canEditGoogle = !credentials.canEditGoogle
                   "
-                  >{{ $t("Profile.edit") }}</label
+                  >{{ $t("profile.edit") }}</label
                 >
                 <p
                   v-if="usernameTaken"
@@ -127,7 +127,7 @@
                     absolute
                   "
                 >
-                  {{ $t("RegistrationForm.username_taken") }}
+                  {{ $t("registration_form.username_taken") }}
                 </p>
               </div>
               <hr class="border-hr_color" />
@@ -135,7 +135,7 @@
                 class="flex flex-col items-center relative gap-6 w-80 lg:w-96"
               >
                 <label class="text-white absolute -top-10 left-0" for="email">{{
-                  $t("Profile.email")
+                  $t("profile.email")
                 }}</label>
                 <input
                   id="email"
@@ -153,7 +153,7 @@
           class="flex items-center gap-6 self-end mr-96"
         >
           <h2 class="text-grey_text cursor-pointer" @click="cancelEdit">
-            Cancel
+            {{ $t("profile.cancel") }}
           </h2>
           <button
             type="submit"
@@ -167,7 +167,7 @@
               text-sm
             "
           >
-            {{ $t("MovieList.save_changes") }}
+            {{ $t("movie_list.save_changes") }}
           </button>
         </div>
       </Form>
@@ -180,7 +180,7 @@ import { onBeforeMount, ref } from "vue";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import axios from "@/config/axios/index.js";
 import { useCredentials } from "@/stores/index.js";
-import { thumbnail } from "../../../../helpers/thumbnail";
+import { thumbnail } from "@/helpers/thumbnail";
 const credentials = useCredentials();
 const avatarError = ref(false);
 const username = ref();

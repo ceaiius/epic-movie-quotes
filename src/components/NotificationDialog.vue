@@ -15,7 +15,7 @@
     <img
       src="/images/polygon.svg"
       class="w-8 absolute -top-6 right-32 lg:-top-0 lg:right-60"
-      alt=""
+      alt="polygon icon"
     />
     <div
       class="
@@ -29,17 +29,17 @@
         gap-2
       "
     >
-      <h1>{{ $t("Notification.notifications") }}</h1>
+      <h1>{{ $t("notification.notifications") }}</h1>
       <div v-if="credentials.notifications.length == 0">
         <h2 class="text-white hidden lg:block">
-          {{ $t("Notification.no_notifications_yet") }}
+          {{ $t("notification.no_notifications_yet") }}
         </h2>
         <h2 class="lg:hidden absolute text-white top-32 left-[25%]">
-          {{ $t("Notification.no_notifications_yet") }}
+          {{ $t("notification.no_notifications_yet") }}
         </h2>
       </div>
       <h2 class="underline whitespace-nowrap" @click="handleRead">
-        {{ $t("Notification.mark_as_all_read") }}
+        {{ $t("notification.mark_as_all_read") }}
       </h2>
     </div>
 
@@ -74,20 +74,20 @@
             "
             class="w-12 rounded-full object-cover h-12"
             :src="thumbnail(notification.from.thumbnail)"
-            alt=""
+            alt="user avatar"
           />
           <div class="flex flex-col gap-2">
             <h2>{{ notification.from.username }}</h2>
             <div v-if="notification.type == 'like'" class="flex gap-2">
-              <img src="/images/heart.svg" alt="" />
+              <img src="/images/heart.svg" alt="heart icon" />
               <h3 class="text-sm lg:text-base whitespace-nowrap">
-                {{ $t("Notification.reacted_to_your_quote") }}
+                {{ $t("notification.reacted_to_your_quote") }}
               </h3>
             </div>
             <div v-if="notification.type == 'comment'" class="flex gap-2">
-              <img class="w-6 h-6" src="/images/chat.png" alt="" />
+              <img class="w-6 h-6" src="/images/chat.png" alt="chat icon" />
               <h3 class="text-sm lg:text-base">
-                {{ $t("Notification.commented_to_your_movie_quote") }}
+                {{ $t("notification.commented_to_your_movie_quote") }}
               </h3>
             </div>
           </div>
@@ -95,14 +95,14 @@
         <div>
           <div class="lg:hidden pl-2 flex-row flex gap-6">
             <h2 v-if="notification.read == 0" class="text-green-500">
-              {{ $t("Notification.new") }}
+              {{ $t("notification.new") }}
             </h2>
             <h2>{{ timeAgo(notification.created_at) }}</h2>
           </div>
           <div class="hidden lg:flex flex-col gap-6">
             <h2>{{ timeAgo(notification.created_at) }}</h2>
             <h2 v-if="notification.read == 0" class="text-green-500 pl-10">
-              {{ $t("Notification.new") }}
+              {{ $t("notification.new") }}
             </h2>
           </div>
         </div>
@@ -112,11 +112,10 @@
 </template>
       
 <script setup>
-// eslint-disable-next-line no-unused-vars
 import axios from "@/config/axios/index.js";
 import { onMounted } from "vue";
 import { useCredentials } from "@/stores/index.js";
-import { thumbnail } from "../helpers/thumbnail";
+import { thumbnail } from "@/helpers/thumbnail";
 const credentials = useCredentials();
 
 const url_notifications = `${import.meta.env.VITE_API_BASE_URL}notifications`;

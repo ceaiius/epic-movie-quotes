@@ -5,7 +5,6 @@
       flex flex-col
       bg-black_bg
       md:w-[900px] md:h-fit
-      lg:ml-48 lg:mb-64
       w-screen
       h-screen
       md:rounded-xl
@@ -17,10 +16,10 @@
         <img
           class="cursor-pointer pl-6"
           src="/images/back-arrow.svg"
-          alt=""
+          alt="back arrow icon"
           @click="$emit('closePopup')"
         />
-        <h2 class="text-white">{{ $t("MovieList.add_quote") }}</h2>
+        <h2 class="text-white">{{ $t("movie_list.add_quote") }}</h2>
         <div></div>
       </div>
     </div>
@@ -37,7 +36,11 @@
         items-center
       "
     >
-      <img class="w-40 h-40" :src="url_thumbnail + data?.thumbnail" alt="" />
+      <img
+        class="w-40 h-40"
+        :src="url_thumbnail + data?.thumbnail"
+        alt="user avatar"
+      />
 
       <div class="flex flex-col gap-2">
         <h1 class="text-brown">
@@ -55,7 +58,7 @@
           </div>
         </div>
         <h2 class="text-white">
-          Director :
+          {{ $t("movie_list.director") }}:
           {{
             i18n.global.locale == "En" ? data?.director?.en : data?.director?.ka
           }}
@@ -95,7 +98,7 @@
               <img
                 class="absolute top-5 left-4"
                 src="/images/camera.svg"
-                alt=""
+                alt="camera icon"
               />
             </div>
             <Field name="field">
@@ -135,7 +138,7 @@
               mt-6
             "
           >
-            Post
+            {{ $t("news_feed.post") }}
           </button>
         </div>
       </Form>
@@ -144,16 +147,14 @@
 </template>
   
   <script setup>
-import InputTextArea from "../Form/InputTextArea.vue";
-
+import InputTextArea from "@/views/HomeView/NewsFeed/Form/InputTextArea.vue";
 import axios from "@/config/axios/index.js";
 import { Form } from "vee-validate";
-import { i18n } from "../../../../i18n";
+import { i18n } from "@/i18n";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
-import InputFile from "../Form/InputFile.vue";
+import InputFile from "@/views/HomeView/NewsFeed/Form/InputFile.vue";
 
-// eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["closePopup", "updateQuotes"]);
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
 const route = useRoute();

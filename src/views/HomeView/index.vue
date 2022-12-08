@@ -16,6 +16,6 @@
 </template>
 
 <script setup>
-import NavBar from "../../components/NavBar.vue";
-import NewsFeed from "../HomeView/NewsFeed/Index.vue";
+import NavBar from "@/components/NavBar.vue";
+import NewsFeed from "@/views/HomeView/NewsFeed/Index.vue";
 </script>

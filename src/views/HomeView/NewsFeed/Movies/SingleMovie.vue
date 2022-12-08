@@ -11,10 +11,10 @@
           </dialog-modal>
         </teleport>
         <div class="flex flex-col text-white gap-6">
-          <h2>{{ $t("MovieList.movie_description") }}</h2>
+          <h2>{{ $t("movie_list.movie_description") }}</h2>
           <img
             :src="url + data?.thumbnail"
-            alt=""
+            alt="movie thumbnail"
             class="w-[800px] h-[330px] lg:h-[550px] object-cover"
           />
           <div class="flex flex-col gap-6 lg:hidden">
@@ -32,14 +32,14 @@
               </div>
             </div>
             <p>
-              {{ $t("MovieList.director") }}:
+              {{ $t("movie_list.director") }}:
               {{
                 i18n.global.locale == "En"
                   ? data?.director?.en
                   : data?.director?.ka
               }}
             </p>
-            <p>{{ $t("MovieList.budget") }}: {{ data?.budget }}$</p>
+            <p>{{ $t("movie_list.budget") }}: {{ data?.budget }}$</p>
             <p>
               {{
                 i18n.global.locale == "En"
@@ -62,21 +62,21 @@
               <img
                 src="/images/pencil.svg"
                 class="h-5 pl-6 cursor-pointer"
-                alt=""
+                alt="pencil icon"
                 @click="editMovie = true"
               />
 
               <img
                 src="/images/delete.svg"
                 class="h-5 pl-4 cursor-pointer"
-                alt=""
+                alt="delete icon"
                 @click="deleteMovie"
               />
             </div>
           </div>
           <div class="flex gap-6 items-center">
             <h2>
-              {{ $t("MovieList.quotes") }} ({{ $t("MovieList.total") }}
+              {{ $t("movie_list.quotes") }} ({{ $t("movie_list.total") }}
               {{ count }})
             </h2>
             <button
@@ -97,8 +97,8 @@
               "
               @click="addQuote = true"
             >
-              <span><img src="/images/plus.svg" alt="" /></span>
-              {{ $t("MovieList.add_quote") }}
+              <span><img src="/images/plus.svg" alt="plus icon" /></span>
+              {{ $t("movie_list.add_quote") }}
             </button>
           </div>
 
@@ -164,22 +164,22 @@
                   class="flex gap-4 pt-6 pl-6 cursor-pointer"
                   @click="viewQuote = true"
                 >
-                  <img src="/images/eye.svg" alt="" />
-                  <h2>View Quote</h2>
+                  <img src="/images/eye.svg" alt="eye icon" />
+                  <h2>{{ $t("movie_list.view_quote") }}</h2>
                 </div>
                 <div
                   class="flex gap-4 pt-6 pl-6 cursor-pointer"
                   @click="editQuote = true"
                 >
-                  <img src="/images/pencil.svg" alt="" />
-                  <h2>Edit</h2>
+                  <img src="/images/pencil.svg" alt="pencil icon" />
+                  <h2>{{ $t("movie_list.edit") }}</h2>
                 </div>
                 <div
                   class="flex gap-4 pt-6 pl-6 cursor-pointer"
                   @click="deleteQuote(item.id)"
                 >
-                  <img src="/images/delete.svg" alt="" />
-                  <h2>Delete</h2>
+                  <img src="/images/delete.svg" alt="delete icon" />
+                  <h2>{{ $t("movie_list.delete") }}</h2>
                 </div>
               </div>
             </div>
@@ -188,7 +188,7 @@
               <img
                 class="absolute right-6 bottom-6 lg:top-6 z-50 cursor-pointer"
                 src="/images/dots.svg"
-                alt=""
+                alt="three dots"
                 @click="quoteCrud = item.id"
               />
             </div>
@@ -205,7 +205,7 @@
               <img
                 class="object-cover w-full pl-4 pr-4 md:w-64 h-36 rounded-md"
                 :src="url_thumbnail + item.thumbnail"
-                alt=""
+                alt="user avatar"
               />
               <h2 class="mt-2 lg:mt-0 ml-6">
                 "{{ i18n.global.locale == "En" ? item.name.en : item.name.ka }}"
@@ -215,11 +215,11 @@
             <div class="flex gap-6 items-center mt-6 mb-6 ml-0 lg:ml-28">
               <div class="flex gap-6">
                 <h2>{{ item.comments.length }}</h2>
-                <img src="/images/comments.svg" alt="" />
+                <img src="/images/comments.svg" alt="comments icon" />
               </div>
               <div class="flex gap-6">
                 <h2>{{ item.users_count }}</h2>
-                <img src="/images/likes.svg" alt="" />
+                <img src="/images/likes.svg" alt="likes icon" />
               </div>
             </div>
           </div>
@@ -246,7 +246,7 @@
               </div>
             </div>
             <p>
-              {{ $t("MovieList.director") }}:
+              {{ $t("movie_list.director") }}:
               {{
                 i18n.global.locale == "En"
                   ? data?.director?.en
@@ -254,7 +254,7 @@
               }}
             </p>
 
-            <p>{{ $t("MovieList.budget") }}: {{ data?.budget }} $</p>
+            <p>{{ $t("movie_list.budget") }}: {{ data?.budget }} $</p>
 
             <p>
               {{
@@ -282,14 +282,14 @@
             <img
               src="/images/pencil.svg"
               class="h-5 pl-6 cursor-pointer"
-              alt=""
+              alt="pencil icon"
               @click="editMovie = true"
             />
 
             <img
               src="/images/delete.svg"
               class="h-5 pl-4 cursor-pointer"
-              alt=""
+              alt="delete icon"
               @click="deleteMovie"
             />
           </div>
@@ -311,14 +311,14 @@
 <script setup>
 import { onBeforeMount, ref } from "vue";
 import axios from "@/config/axios/index.js";
-import { i18n } from "../../../../i18n";
+import { i18n } from "@/i18n";
 import { useRoute } from "vue-router";
-import router from "../../../../router";
-import DialogModal from "../../../../components/DialogModal.vue";
-import EditMovieDoalog from "../Dialogs/EditMovieDialog.vue";
-import AddQuote from "./AddQuote.vue";
-import EditQuoteDialog from "../Dialogs/EditQuoteDialog.vue";
-import ViewQuoteDialog from "../Dialogs/ViewQuoteDialog.vue";
+import router from "@/router";
+import DialogModal from "@/components/DialogModal.vue";
+import EditMovieDoalog from "@/views/HomeView/NewsFeed/Dialogs/EditMovieDialog.vue";
+import AddQuote from "@/views/HomeView/NewsFeed/Movies/AddQuote.vue";
+import EditQuoteDialog from "@/views/HomeView/NewsFeed/Dialogs/EditQuoteDialog.vue";
+import ViewQuoteDialog from "@/views/HomeView/NewsFeed/Dialogs/ViewQuoteDialog.vue";
 const quoteCrud = ref();
 const editQuote = ref(false);
 const addQuote = ref(false);

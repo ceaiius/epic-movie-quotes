@@ -3,7 +3,7 @@
   <div
     class="lg:flex flex-col mt-10 items-center gap-20 w-full hidden relative"
   >
-    <h2 class="text-white lg:block hidden">{{ $t("Profile.my_profile") }}</h2>
+    <h2 class="text-white lg:block hidden">{{ $t("profile.my_profile") }}</h2>
     <div v-if="success" class="z-20 right-20 fixed">
       <SuccessDialog
         message="Profile uptaded sucessfully"
@@ -51,7 +51,7 @@
                   translate-y-0
                 "
                 :src="thumbnail(credentials.avatar)"
-                alt=""
+                alt="user avatar"
               />
               <div
                 class="
@@ -63,7 +63,7 @@
                 "
               >
                 <h2 class="text-white cursor-pointer" @click="handleClick">
-                  {{ $t("Profile.upload_new_photo") }}
+                  {{ $t("profile.upload_new_photo") }}
                 </h2>
               </div>
               <div>
@@ -93,7 +93,7 @@
                 "
               >
                 <h2 class="absolute -top-10 left-0 text-white">
-                  {{ $t("Profile.username") }}
+                  {{ $t("profile.username") }}
                 </h2>
                 <Field
                   v-slot="{ meta, field }"
@@ -132,7 +132,7 @@
                   class="lg:absolute lg:-right-20 text-white cursor-pointer"
                   for="username"
                   @click="editUsername = !editUsername"
-                  >{{ $t("Profile.edit") }}</label
+                  >{{ $t("profile.edit") }}</label
                 >
                 <p
                   v-if="usernameTaken"
@@ -144,7 +144,7 @@
                     absolute
                   "
                 >
-                  {{ $t("RegistrationForm.username_taken") }}
+                  {{ $t("registration_form.username_taken") }}
                 </p>
               </div>
               <hr class="border-hr_color" />
@@ -153,7 +153,7 @@
                   <label
                     class="text-white absolute -top-10 left-0"
                     for="email"
-                    >{{ $t("Profile.email") }}</label
+                    >{{ $t("profile.email") }}</label
                   >
 
                   <div>
@@ -174,10 +174,10 @@
                     <img
                       class="absolute top-3 right-3"
                       src="/images/checked_round.svg"
-                      alt=""
+                      alt="checked icon"
                     />
                     <h2 class="absolute top-2 text-white -right-40">
-                      {{ $t("Profile.primary_email") }}
+                      {{ $t("profile.primary_email") }}
                     </h2>
                   </div>
                 </div>
@@ -190,7 +190,7 @@
                   <label
                     class="text-white absolute -top-10 left-0"
                     for="email"
-                    >{{ $t("Profile.email") }}</label
+                    >{{ $t("profile.email") }}</label
                   >
                   <div
                     v-if="hover"
@@ -219,7 +219,9 @@
                         src="/images/unverified-black.svg"
                         alt="unverified black icon"
                       />
-                      <h2>Please verify new email address</h2>
+                      <h2>
+                        {{ $t("profile.please_verify_new_email_address") }}
+                      </h2>
                       <img
                         class="absolute top-9"
                         src="/images/white-arrow.svg"
@@ -260,20 +262,20 @@
                           v-if="item.email_verified_at == null"
                           class="cursor-pointer"
                         >
-                          {{ $t("Profile.not_verified") }}
+                          {{ $t("profile.not_verified") }}
                         </h2>
                         <h2
                           v-else
                           class="cursor-pointer"
                           @click="makePrimary(item.email)"
                         >
-                          {{ $t("Profile.make_this_primary") }}
+                          {{ $t("profile.make_this_primary") }}
                         </h2>
                         <h2
                           class="cursor-pointer"
                           @click="deleteEmail(item.id)"
                         >
-                          {{ $t("Profile.remove") }}
+                          {{ $t("profile.remove") }}
                         </h2>
                       </div>
                     </div>
@@ -309,8 +311,8 @@
                     "
                     @click="credentials.can_edit_email_popup = true"
                   >
-                    <span><img src="/images/plus.svg" alt="" /></span>
-                    {{ $t("Profile.add_new_email") }}
+                    <span><img src="/images/plus.svg" alt="plus icon" /></span>
+                    {{ $t("profile.add_new_email") }}
                   </button>
                 </div>
                 <hr class="border-[#efefef4d]" />
@@ -319,7 +321,7 @@
                 <div>
                   <div class="mb-10">
                     <h2 class="absolute -top-10 left-0 text-white">
-                      {{ $t("Profile.password") }}
+                      {{ $t("profile.password") }}
                     </h2>
                     <input
                       id="password"
@@ -343,7 +345,7 @@
                         (editPassword = !editPassword),
                           (passwordReset = !passwordReset)
                       "
-                      >{{ $t("Profile.edit") }}</label
+                      >{{ $t("profile.edit") }}</label
                     >
                   </div>
                   <div v-if="passwordReset">
@@ -360,17 +362,23 @@
                         p-4
                       "
                     >
-                      <h2>Passwords should contain:</h2>
+                      <h2>{{ $t("profile.passwords_should_contain") }}:</h2>
                       <p>
                         <span class="flex gap-2"
-                          ><img src="/images/grey_circle.svg" alt="" />8 or more
-                          characters</span
+                          ><img
+                            src="/images/grey_circle.svg"
+                            alt="grey circle icon"
+                          />{{ $t("profile.eight_or_more_characters") }}</span
                         >
                       </p>
                       <p>
                         <span class="flex gap-2"
-                          ><img src="/images/green_circle.svg" alt="" />15
-                          lowercase character</span
+                          ><img
+                            src="/images/green_circle.svg"
+                            alt="green circle icon"
+                          />{{
+                            $t("profile.fifteen_lowercase_characters")
+                          }}</span
                         >
                       </p>
                     </div>
@@ -378,7 +386,7 @@
                       <label
                         for="exampleInputPassword1"
                         class="text-white text-base pb-2"
-                        >{{ $t("RegistrationForm.password") }}</label
+                        >{{ $t("registration_form.password") }}</label
                       >
                       <Field
                         v-slot="{ meta, field }"
@@ -398,7 +406,9 @@
                           ]"
                           :type="[showPassword ? 'text' : 'password']"
                           class="bg-input_bg text-sm h-10 p-2 border-2 rounded"
-                          :placeholder="placeholderPassword"
+                          :placeholder="
+                            $t('registration_form.password_placeholder')
+                          "
                         />
                       </Field>
                       <span @click="showPassword = !showPassword">
@@ -465,7 +475,7 @@
                       <label
                         for="exampleInputPassword1"
                         class="text-white text-base pb-2"
-                        >{{ $t("RegistrationForm.confirm_password") }}</label
+                        >{{ $t("registration_form.confirm_password") }}</label
                       >
                       <Field
                         v-slot="{ meta, field }"
@@ -485,7 +495,9 @@
                               : '',
                           ]"
                           class="bg-input_bg text-sm h-10 p-2 border-2 rounded"
-                          :placeholder="placeholderConfirm"
+                          :placeholder="
+                            $t('registration_form.confirm_placeholder')
+                          "
                         />
                       </Field>
 
@@ -560,7 +572,7 @@
           class="flex items-center gap-6 self-end mr-96 mb-10"
         >
           <h2 class="text-grey_text cursor-pointer" @click="cancelEdit">
-            Cancel
+            {{ $t("profile.cancel") }}
           </h2>
           <button
             type="submit"
@@ -574,7 +586,7 @@
               text-sm
             "
           >
-            {{ $t("MovieList.save_changes") }}
+            {{ $t("movie_list.save_changes") }}
           </button>
         </div>
       </Form>
@@ -582,14 +594,14 @@
   </div>
 </template>
     
-    <script setup>
+<script setup>
 import { onBeforeMount, ref } from "vue";
 import axios from "@/config/axios/index.js";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { useCredentials } from "@/stores/index.js";
-import SuccessDialog from "../GoogleProfile/SuccessDialog.vue";
-import DialogModal from "../../../../components/DialogModal.vue";
-import { thumbnail } from "../../../../helpers/thumbnail";
+import SuccessDialog from "@/views/HomeView/Profile/GoogleProfile/SuccessDialog.vue";
+import DialogModal from "@/components/DialogModal.vue";
+import { thumbnail } from "@/helpers/thumbnail";
 import EnterEmail from "@/views/HomeView/Profile/EmailProfile/EnterEmail.vue";
 const credentials = useCredentials();
 const email = ref();
