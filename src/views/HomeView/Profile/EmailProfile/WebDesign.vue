@@ -253,7 +253,7 @@
                     />
                     <div
                       :class="
-                        item.email_verified_at == null ? '-right-[62%] ' : ''
+                        item.email_verified_at == null ? '-right-[60%] ' : ''
                       "
                       class="absolute top-2 text-white -right-[78%]"
                     >
@@ -362,7 +362,7 @@
                         p-4
                       "
                     >
-                      <h2>{{ $t("profile.passwords_should_contain") }}:</h2>
+                      <h2>{{ $t("profile.password_should_contain") }}:</h2>
                       <p>
                         <span class="flex gap-2"
                           ><img
@@ -376,9 +376,7 @@
                           ><img
                             src="/images/green_circle.svg"
                             alt="green circle icon"
-                          />{{
-                            $t("profile.fifteen_lowercase_characters")
-                          }}</span
+                          />{{ $t("profile.fifteen_or_more_characters") }}</span
                         >
                       </p>
                     </div>
@@ -681,6 +679,7 @@ const cancelEdit = () => {
   editPassword.value = false;
   editThumbnail.value = false;
   passwordReset.value = false;
+  usernameTaken.value = false;
 };
 
 const fetchUser = () => {
@@ -709,6 +708,7 @@ const handleSubmit = async (values) => {
     editUsername.value = false;
     editPassword.value = false;
     passwordReset.value = false;
+    usernameTaken.value = false;
   } catch (err) {
     console.log(err);
     usernameTaken.value = true;

@@ -5,6 +5,7 @@
       bg-[#24222F]
       w-screen
       h-auto
+      items-center
       lg:hidden
       md:rounded-xl
       rounded-none
@@ -36,7 +37,7 @@
           alt="exit icon"
           @click="$emit('exit')"
         />
-        <h2>{{ $t("profile.passwords_should_contain") }}:</h2>
+        <h2>{{ $t("profile.password_should_contain") }}:</h2>
         <p>
           <span class="flex gap-2"
             ><img src="/images/grey_circle.svg" alt="grey circle icon" />{{
@@ -47,12 +48,12 @@
         <p>
           <span class="flex gap-2"
             ><img src="/images/green_circle.svg" alt="green circle icon" />{{
-              $t("profile.fifteen_lowercase_characters")
+              $t("profile.fifteen_or_more_characters")
             }}</span
           >
         </p>
       </div>
-      <div class="flex flex-col items-center pt-10 relative">
+      <div class="flex flex-col items-center w-full pt-10 relative">
         <label for="exampleInputPassword1" class="text-white text-base pb-2">{{
           $t("registration_form.password")
         }}</label>
@@ -69,7 +70,7 @@
               !meta.valid && meta.touched ? ' border-red-500' : '',
             ]"
             :type="[showPassword ? 'text' : 'password']"
-            class="bg-input_bg w-96 text-sm h-10 p-2 border-2 rounded"
+            class="bg-input_bg w-full xs:w-96 text-sm h-10 p-2 border-2 rounded"
             :placeholder="$t('registration_form.password_placeholder')"
           />
         </Field>
@@ -150,7 +151,7 @@
               meta.valid && meta.touched ? ' border-green-500' : '',
               !meta.valid && meta.touched ? ' border-red-500' : '',
             ]"
-            class="bg-input_bg w-96 text-sm h-10 p-2 border-2 rounded"
+            class="bg-input_bg w-full xs:w-96 text-sm h-10 p-2 border-2 rounded"
             :placeholder="$t('registration_form.confirm_placeholder')"
           />
         </Field>
@@ -218,16 +219,17 @@
           class="
             text-white
             bg-default_red
-            w-32
+            xs:w-32
             h-12
             mt-10
+            w-full
             font-medium
             rounded-md
             text-sm
           "
           @click="handleClick"
         >
-          Add
+          {{ $t("profile.add") }}
         </button>
       </div>
     </div>

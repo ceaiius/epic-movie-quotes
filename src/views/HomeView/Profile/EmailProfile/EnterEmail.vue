@@ -11,7 +11,11 @@
     "
   >
     <teleport to="body">
-      <dialog-modal v-if="confirmEmail" @close="confirmEmail = false">
+      <dialog-modal
+        v-if="confirmEmail"
+        top="md:ml-10"
+        @close="confirmEmail = false"
+      >
         <ConfirmEmail @save="addEmail" @exit="confirmEmail = false" />
       </dialog-modal>
     </teleport>
@@ -88,9 +92,11 @@ const addEmail = async () => {
     emit("exit");
     confirmEmail.value = false;
     credentials.success_email = true;
+    credentials.email_taken = true;
   } catch (err) {
     console.log(err);
     credentials.loading = false;
+    credentials.email_taken = true;
   }
 };
 </script>
