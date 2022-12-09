@@ -1,17 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
-import LandingView from "../views/LandingView/index.vue";
-import HomeView from "../views/HomeView/index.vue";
+import LandingView from "@/views/LandingView/index.vue";
+import HomeView from "@/views/HomeView/index.vue";
 import { isAuthenticated, isRemembered } from "@/router/guards.js";
 
-import PermissionDenied from "../views/ErrorView/PermissionDenied.vue";
-import UserPost from "../views/HomeView/NewsFeed/UserPost.vue";
-import MovieList from "../views/HomeView/NewsFeed/Movies/MovieList.vue";
-import SingleMovie from "../views/HomeView/NewsFeed/Movies/SingleMovie.vue";
-import NotFound from "../views/ErrorView/NotFound.vue";
-import GoogleProfile from "../views/HomeView/Profile/GoogleProfile/Index.vue";
-import EmailProfile from "../views/HomeView/Profile/EmailProfile/Index.vue";
+import PermissionDenied from "@/views/ErrorView/PermissionDenied.vue";
+import UserPost from "@/views/HomeView/NewsFeed/UserPost.vue";
+import MovieList from "@/views/HomeView/NewsFeed/Movies/MovieList.vue";
+import SingleMovie from "@/views/HomeView/NewsFeed/Movies/SingleMovie.vue";
+import NotFound from "@/views/ErrorView/NotFound.vue";
+import GoogleProfile from "@/views/HomeView/Profile/GoogleProfile/Index.vue";
+import EmailProfile from "@/views/HomeView/Profile/EmailProfile/Index.vue";
 import { useAuthStore } from "@/stores/auth";
-import VerifyEmail from "../views/HomeView/Profile/EmailProfile/VerifyEmail.vue";
+import VerifyEmail from "@/views/HomeView/Profile/EmailProfile/VerifyEmail.vue";
 import axios from "axios";
 axios.defaults.withCredentials = true;
 const router = createRouter({

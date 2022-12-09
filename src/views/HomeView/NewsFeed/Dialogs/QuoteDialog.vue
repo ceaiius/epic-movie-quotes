@@ -18,10 +18,10 @@
         <img
           class="cursor-pointer"
           src="/images/back-arrow.svg"
-          alt=""
+          alt="back arrow icon"
           @click="$emit('closePopup')"
         />
-        <h2 class="text-white">{{ $t("NewsFeed.write_new_quote") }}</h2>
+        <h2 class="text-white">{{ $t("news_feed.write_new_quote") }}</h2>
         <p class="invisible"></p>
       </div>
       <hr class="w-full border-hr_color mt-6" />
@@ -58,7 +58,7 @@
               <img
                 class="absolute top-5 left-4"
                 src="/images/camera.svg"
-                alt=""
+                alt="camera icon"
               />
             </div>
             <Field name="field">
@@ -97,7 +97,7 @@
               mt-6
             "
           >
-            {{ $t("NewsFeed.post") }}
+            {{ $t("news_feed.post") }}
           </button>
         </div>
       </Form>
@@ -106,14 +106,14 @@
 </template>
 
 <script setup>
-import InputTextArea from "../Form/InputTextArea.vue";
+import InputTextArea from "@/views/HomeView/NewsFeed/Form/InputTextArea.vue";
 
 import axios from "@/config/axios/index.js";
 import { Form } from "vee-validate";
-import { i18n } from "../../../../i18n";
+import { i18n } from "@/i18n";
 import { onMounted, ref } from "vue";
-import InputFile from "../Form/InputFile.vue";
-// eslint-disable-next-line no-unused-vars
+import InputFile from "@/views/HomeView/NewsFeed/Form/InputFile.vue";
+
 const emit = defineEmits(["updateQuotes", "closePopup"]);
 const url = import.meta.env.VITE_API_BASE_URL + "movies";
 const url_quotes = import.meta.env.VITE_API_BASE_URL + "quotes";

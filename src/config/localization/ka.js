@@ -1,6 +1,6 @@
 export default {
   Ka: {
-    LandingPage: {
+    landing_page: {
       movie_quotes: "ფილმის ციტატები",
       sign_up: "რეგისტრაცია",
       log_in: "შესვლა",
@@ -13,7 +13,6 @@ export default {
       to_be_secretly_in_love_with_each_other: "ფარულად ვიყოთ შეყვარებულები ",
       and_leave_it_that: "და ესე დავტოვოთ",
       to_be_secretly_in_love: "ფარულად ვიყოთ შეყვარებულები",
-
       the_royal_tenenbaums: "ტენენბაუმების ოჯახი",
       I_see_in_your_eyes_the_same: "შენ თვალებში ვხედავ იმავე შიშს",
       fear_that_would_take_the: "რომელიც წაიღებს",
@@ -22,7 +21,7 @@ export default {
       all_rights_reserved: "ყველა უფლება დაცულია",
       get_started: "დაწყება",
     },
-    RegistrationForm: {
+    registration_form: {
       create_an_account: "შექმენი ანგარიში",
       start_journey: "დაიწყე თავგადასავალი!",
       username_taken: "სახელი დაკავებულია",
@@ -40,7 +39,7 @@ export default {
       password_placeholder: "პაროლი",
       confirm_placeholder: "დაადასტურეთ პაროლი",
     },
-    LoginForm: {
+    login_form: {
       log_in_your_account: "ანგარიშზე შესვლა",
       welcome_back: "კეთილი იყოს თქვენი დაბრუნება!",
       email: "იმეილი",
@@ -61,8 +60,25 @@ export default {
       send_instructions: "გამოგზავნა",
       invalid_email: "არასწორი მეილი",
       back_to_login: "უკან დაბრუნება",
+      skip: "გამოტოვება",
+      go_to_my_email: "მეილზე გადასვლა",
+      we_have_sent_password_recovery:
+        "მეილზე გამოგიგზავნეთ პაროლის აღდგენის ინსტრუქცია",
+      check_your_email: "შეამოწმეთ თქვენი მეილი",
+      reset_password: "პაროლის აღდგენა",
+      password_must_be_different:
+        "ახალი პაროლი უნდა განსხვავდებოდეს ძველი პაროლისგან",
+      create_new_password: "შექმენი ახალი პაროლი",
+      go_to_news_feed: "ნიუს ფიდზე გადასვლა",
+      password_changed: "პაროლი წარმატებით განახლდა",
+      success: "წარმატება!",
+      please_check: "გთხოვთ, შეამოწმოთ მეილი",
+      activate_account:
+        "გთხოვთ, შეამოწმეთ მეილი და მიყევით მეილის ვალიდაციის ინსტრუქციას",
+      thank_you: "გმადლობთ!",
+      account_activated: "ანგარიში გააქტიურებულია!",
     },
-    NewsFeed: {
+    news_feed: {
       movie_quotes: "ფილმის ციტატები",
       log_out: "გასვლა",
       edit_profile: "პროფილის რედაქტირება",
@@ -75,7 +91,7 @@ export default {
       search: "ჩაწერე @ ფილმის მოსაძებნად, ჩაწერე # ციტატის მოძაძებნად",
       post: "დაპოსტვა",
     },
-    MovieList: {
+    movie_list: {
       my_list_of_movies: "ჩემი ფილმების სია",
       total: "ჯამში",
       quotes: "ციტატები",
@@ -91,8 +107,10 @@ export default {
       genre: "ჟანრი",
       view_quote: "ციტატის ნახვა",
       year: "წელი",
+      edit: "შეცვლა",
+      delete: "წაშლა",
     },
-    Profile: {
+    profile: {
       my_profile: "ჩემი პროფილი",
       upload_new_photo: "ატვირთე ახალი ფოტო",
       edit: "შეცვლა",
@@ -109,8 +127,13 @@ export default {
       enter_new_email: "შეიყვანე ახალი მეილი",
       are_you_sure_to_make_changes: "დარწმუნებული ხართ ცვლილებებში?",
       confirm: "დადასტურება",
+      cancel: "გაუქმება",
+      password_should_contain: "პაროლი უნდა შეიცავდეს",
+      eight_or_more_characters: "8 ზე მეტ სიმბოლოს",
+      fifteen_or_more_characters: "15 დაბალი რეგისტრის სიმბოლოს",
+      please_verify_new_email_address: "გთხოვთ დაადასტუროთ ახალი მეილი",
     },
-    Notification: {
+    notification: {
       notifications: "შეტყობინებები",
       no_notifications_yet: "ცარიელია",
       mark_as_all_read: "მონიშნე წაკითხულად",

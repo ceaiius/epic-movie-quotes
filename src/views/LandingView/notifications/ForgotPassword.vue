@@ -12,12 +12,12 @@
     "
   >
     <div class="mt-20 flex flex-col justify-center items-center gap-6">
-      <img src="/images/send-email.png" alt="" />
+      <img src="/images/send-email.png" alt="send email image" />
       <h1 class="text-2xl font-bold text-white">
-        {{ $t("LoginForm.forgot_password_question") }}?
+        {{ $t("login_form.forgot_password_question") }}?
       </h1>
       <h2 class="text-grey_text text-center">
-        {{ $t("LoginForm.instructions") }}
+        {{ $t("login_form.instructions") }}
       </h2>
       <Form
         class="flex flex-col gap-6 relative"
@@ -33,7 +33,7 @@
               !meta.valid && meta.touched ? ' border-red-500' : '',
             ]"
             class="w-96 bg-input_bg text-sm h-10 p-2 border rounded relative"
-            :placeholder="$t('RegistrationForm.email_placeholder')"
+            :placeholder="$t('registration_form.email_placeholder')"
           />
         </Field>
         <h2
@@ -46,7 +46,7 @@
             top-16
           "
         >
-          {{ $t("LoginForm.invalid_email") }}
+          {{ $t("login_form.invalid_email") }}
         </h2>
         <ErrorMessage
           class="
@@ -72,7 +72,7 @@
           :disabled="credentials.loading"
         >
           <LoadingSpinner v-if="credentials.loading" />
-          <span v-else> {{ $t("LoginForm.send_instructions") }}</span>
+          <span v-else> {{ $t("login_form.send_instructions") }}</span>
         </button>
       </Form>
 
@@ -81,9 +81,9 @@
         @click="$emit('backToLogin')"
       >
         <span class="cursor-pointer"
-          ><img src="/images/back-arrow.svg" alt=""
+          ><img src="/images/back-arrow.svg" alt="back arrow icon"
         /></span>
-        <p class="cursor-pointer">{{ $t("LoginForm.back_to_login") }}</p>
+        <p class="cursor-pointer">{{ $t("login_form.back_to_login") }}</p>
       </div>
     </div>
   </div>
@@ -93,8 +93,7 @@
 import { Field, Form, ErrorMessage } from "vee-validate";
 import { useCredentials } from "@/stores/index.js";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
-// eslint-disable-next-line no-unused-vars
-const emit = defineEmits(["openPasswordSent", "backToLogin"]);
+defineEmits(["openPasswordSent", "backToLogin"]);
 const credentials = useCredentials();
 </script>
   

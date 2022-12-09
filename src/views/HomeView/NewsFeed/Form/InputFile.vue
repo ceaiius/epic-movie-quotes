@@ -11,7 +11,7 @@
       @dragover.prevent
     >
       <div class="flex gap-6 items-center text-white">
-        <img src="/images/file-camera.svg" alt="" />
+        <img src="/images/file-camera.svg" alt="camera icon" />
         <p>{{ img !== null ? img : "Upload image" }}</p>
       </div>
       <div>

@@ -21,21 +21,21 @@
           <img
             class="cursor-pointer"
             src="/images/pencil.svg"
-            alt=""
+            alt="pencil icon"
             @click="$emit('edit')"
           />
           <img
             class="cursor-pointer pl-4"
             src="/images/delete.svg"
-            alt=""
+            alt="delete icon"
             @click="$emit('delete')"
           />
         </div>
-        <h2 class="text-white">{{ $t("MovieList.view_quote") }}</h2>
+        <h2 class="text-white">{{ $t("movie_list.view_quote") }}</h2>
         <img
           class="cursor-pointer"
           src="/images/exit.svg"
-          alt=""
+          alt="exit icon"
           @click="$emit('exit')"
         />
       </div>
@@ -59,16 +59,17 @@
         <div class="relative">
           <img
             :src="url_thumbnail + thumbnail"
-            alt=""
+            alt="user avatar"
             class="w-full max-h-64 object-cover"
           />
         </div>
         <div class="flex gap-6 text-white m-6">
           <div class="flex gap-2 cursor-pointer">
-            {{ comment_count }} <img src="/images/comments.svg" alt="" />
+            {{ comment_count }}
+            <img src="/images/comments.svg" alt="comments icon" />
           </div>
           <div class="flex gap-2 cursor-pointer">
-            {{ likes }} <img src="/images/likes.svg" alt="" />
+            {{ likes }} <img src="/images/likes.svg" alt="likes icon" />
           </div>
         </div>
 
@@ -81,7 +82,7 @@
               <img
                 :src="avatar(credentials.avatar)"
                 class="md:w-12 md:h-12 rounded-full object-cover"
-                alt=""
+                alt="user icon"
               />
             </div>
             <div>
@@ -99,13 +100,12 @@
   <script setup>
 import { onMounted, ref } from "vue";
 import axios from "@/config/axios/index.js";
-import InputReadOnly from "../Form/InputReadOnly.vue";
+import InputReadOnly from "@/views/HomeView/NewsFeed/Form/InputReadOnly.vue";
 import { useCredentials } from "@/stores/index.js";
-import { thumbnail as avatar } from "../../../../helpers/thumbnail";
+import { thumbnail as avatar } from "@/helpers/thumbnail";
 const credentials = useCredentials();
 const props = defineProps(["id"]);
-// eslint-disable-next-line no-unused-vars
-const emit = defineEmits(["delete", "exit"]);
+defineEmits(["delete", "exit"]);
 const thumbnail = ref();
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
 const data = ref([]);

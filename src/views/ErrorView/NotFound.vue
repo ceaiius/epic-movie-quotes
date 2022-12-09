@@ -14,8 +14,12 @@
   >
     <div class="relative">
       <div>
-        <img src="/images/ghost.png" alt="" />
-        <img class="relative top-6" src="/images/ghost-shadow.png" alt="" />
+        <img src="/images/ghost.png" alt="image of a ghost" />
+        <img
+          class="relative top-6"
+          src="/images/ghost-shadow.png"
+          alt="image of ghost's shadow"
+        />
       </div>
     </div>
     <div>
@@ -48,5 +52,5 @@
 </template>
 
 <script setup>
-import router from "../../router";
+import router from "@/router";
 </script>

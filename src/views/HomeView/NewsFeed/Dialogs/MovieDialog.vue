@@ -16,7 +16,7 @@
         <img
           class="cursor-pointer"
           src="/images/back-arrow.svg"
-          alt=""
+          alt="back arrow icon"
           @click="$emit('closePopup')"
         />
         <h2 class="text-white">Add Movie</h2>
@@ -85,14 +85,14 @@
           </div>
           <div class="relative">
             <InputField
-              :placeholder="$t('MovieList.year')"
+              :placeholder="$t('movie_list.year')"
               name="year"
               rules="required|num"
             />
           </div>
           <div class="relative">
             <InputField
-              :placeholder="$t('MovieList.budget')"
+              :placeholder="$t('movie_list.budget')"
               name="budget"
               rules="required|numeric"
             />
@@ -125,9 +125,9 @@
 <script setup>
 import { Form } from "vee-validate";
 import axios from "@/config/axios/index.js";
-import InputField from "../Form/InputField.vue";
-import InputFile from "../Form/InputFile.vue";
-import InputSelect from "../Form/InputSelect.vue";
+import InputField from "@/views/HomeView/NewsFeed/Form/InputField.vue";
+import InputFile from "@/views/HomeView/NewsFeed/Form/InputFile.vue";
+import InputSelect from "@/views/HomeView/NewsFeed/Form/InputSelect.vue";
 
 const emit = defineEmits(["updateMovies", "closePopup"]);
 const url = import.meta.env.VITE_API_BASE_URL + "movies";

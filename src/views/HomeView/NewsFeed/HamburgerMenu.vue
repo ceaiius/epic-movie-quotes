@@ -32,7 +32,7 @@
             translate-y-0
           "
           :src="thumbnail(credentials.avatar)"
-          alt=""
+          alt="user avatar"
         />
         <div>
           <h2 class="text-white text-2xl">{{ username }}</h2>
@@ -40,7 +40,7 @@
             <router-link
               :to="{ name: googleUser ? 'google_profile' : 'email_profile' }"
               ><h2 class="cursor-pointer">
-                {{ $t("NewsFeed.edit_profile") }}
+                {{ $t("news_feed.edit_profile") }}
               </h2></router-link
             >
           </h3>
@@ -54,11 +54,11 @@
               ? '/images/home.svg'
               : '/images/home-white.svg'
           "
-          alt=""
+          alt="home icon"
         />
 
         <router-link :to="{ name: 'news-feed' }">
-          <h2 class="cursor-pointer">{{ $t("NewsFeed.news_feed") }}</h2>
+          <h2 class="cursor-pointer">{{ $t("news_feed.news_feed") }}</h2>
         </router-link>
       </div>
       <div class="ml-4 mt-6 flex gap-8 items-center text-white">
@@ -68,11 +68,11 @@
               ? '/images/camera-white.png'
               : '/images/camera.svg'
           "
-          alt=""
+          alt="camera icon"
         />
         <router-link :to="{ name: 'list-of-movies' }"
           ><h2 class="cursor-pointer">
-            {{ $t("NewsFeed.list_of_movies") }}
+            {{ $t("news_feed.list_of_movies") }}
           </h2></router-link
         >
       </div>
@@ -94,7 +94,7 @@
             "
             @click="isOpenLogin = true"
           >
-            {{ $t("NewsFeed.log_out") }}
+            {{ $t("news_feed.log_out") }}
           </button>
         </form>
       </div>
@@ -106,10 +106,10 @@
 import axios from "@/config/axios/jwt.js";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import router from "../../../router";
+import router from "@/router";
 import { useAuthStore } from "@/stores/auth";
 import { useCredentials } from "@/stores/index.js";
-import { thumbnail } from "../../../helpers/thumbnail";
+import { thumbnail } from "@/helpers/thumbnail";
 const credentials = useCredentials();
 const username = ref("");
 const authStore = useAuthStore();

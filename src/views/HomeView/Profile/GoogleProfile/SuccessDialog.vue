@@ -12,12 +12,12 @@
     "
   >
     <div class="flex flex-row gap-4 text-success_text">
-      <img src="/images/valid-fill.svg" alt="" />
+      <img src="/images/valid-fill.svg" alt="valid icon" />
       <p class="text-base">{{ message }}</p>
       <img
         class="cursor-pointer"
         src="/images/exit-black.svg"
-        alt=""
+        alt="black exit icon"
         @click="$emit('exit')"
       />
     </div>
@@ -25,8 +25,6 @@
 </template>
 
 <script setup>
-// eslint-disable-next-line no-unused-vars
-const emit = defineEmits(["exit"]);
-// eslint-disable-next-line no-unused-vars
-const props = defineProps(["message"]);
+defineEmits(["exit"]);
+defineProps(["message"]);
 </script>

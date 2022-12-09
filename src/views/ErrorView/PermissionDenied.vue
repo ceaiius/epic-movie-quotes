@@ -14,11 +14,11 @@
   >
     <div class="relative">
       <div>
-        <img src="/images/union.png" alt="" />
+        <img src="/images/union.png" alt="image of a union" />
         <img
           class="absolute -bottom-12 w-[345px] h-[261px]"
           src="/images/gandolf.png"
-          alt=""
+          alt="image of gandolf"
         />
       </div>
     </div>
@@ -54,5 +54,5 @@
 </template>
 
 <script setup>
-import router from "../../router";
+import router from "@/router";
 </script>

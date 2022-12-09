@@ -29,7 +29,7 @@
             whitespace-nowrap
             text-brown
           "
-          >{{ $t("LandingPage.movie_quotes") }}</span
+          >{{ $t("landing_page.movie_quotes") }}</span
         >
 
         <div id="navbar-default" class="">
@@ -38,7 +38,7 @@
               <a class="flex justify-center items-center gap-2"
                 >{{ activeLanguage }}
 
-                <span><img src="/images/arrow.svg" alt="" /></span
+                <span><img src="/images/arrow.svg" alt="arrow icon" /></span
               ></a>
               <div v-if="!isHiddenDropdown">
                 <a
@@ -71,7 +71,7 @@
                 "
                 @click="credentials.isOpenRegister = true"
               >
-                {{ $t("LandingPage.sign_up") }}
+                {{ $t("landing_page.sign_up") }}
               </button>
             </li>
             <li @click="isHiddenDropdown = true">
@@ -89,7 +89,7 @@
                 "
                 @click="credentials.isOpenLogin = true"
               >
-                {{ $t("LandingPage.log_in") }}
+                {{ $t("landing_page.log_in") }}
               </button>
             </li>
           </ul>
@@ -165,8 +165,8 @@
             mt-52
           "
         >
-          {{ $t("LandingPage.find_any_quote_in") }} <br />
-          {{ $t("LandingPage.millions_of_movie_lines") }}
+          {{ $t("landing_page.find_any_quote_in") }} <br />
+          {{ $t("landing_page.millions_of_movie_lines") }}
         </h1>
       </header>
       <button
@@ -183,7 +183,7 @@
         "
         @click="credentials.isOpenRegister = true"
       >
-        {{ $t("LandingPage.get_started") }}
+        {{ $t("landing_page.get_started") }}
       </button>
     </div>
   </div>
@@ -193,16 +193,16 @@
     >
       <div class="ml-52 flex flex-col gap-4">
         <span class="relative top-large_dash_top right-large_dash_right"
-          ><img src="/images/line.svg" alt=""
+          ><img src="/images/line.svg" alt="line icon"
         /></span>
 
         <h1 class="text-white lg:text-5xl text-sm flex">
-          “ {{ $t("LandingPage.you_have_to_leave_something") }}<br />
-          {{ $t("LandingPage.behind_to_go_forward") }}”
+          “ {{ $t("landing_page.you_have_to_leave_something") }}<br />
+          {{ $t("landing_page.behind_to_go_forward") }}”
         </h1>
 
         <h2 class="text-grey text-3xl">
-          {{ $t("LandingPage.interstellar") }}, 2014
+          {{ $t("landing_page.interstellar") }}, 2014
         </h2>
       </div>
     </div>
@@ -212,19 +212,19 @@
     >
       <div class="ml-52 flex flex-col gap-4">
         <span class="relative top-large_dash_top right-large_dash_right"
-          ><img src="/images/line.svg" alt=""
+          ><img src="/images/line.svg" alt="line icon"
         /></span>
 
         <h1 class="text-white lg:text-5xl text-sm flex">
-          {{ $t("LandingPage.i_think_we_re_just_gonna_have") }},
+          {{ $t("landing_page.i_think_we_re_just_gonna_have") }},
           <br />
-          {{ $t("LandingPage.to_be_secretly_in_love_with_each_other") }}
+          {{ $t("landing_page.to_be_secretly_in_love_with_each_other") }}
           <br />
-          {{ $t("LandingPage.and_leave_it_that") }}
+          {{ $t("landing_page.and_leave_it_that") }}
         </h1>
 
         <h2 class="text-grey text-3xl">
-          {{ $t("LandingPage.the_royal_tenenbaums") }}, 2001
+          {{ $t("landing_page.the_royal_tenenbaums") }}, 2001
         </h2>
       </div>
     </div>
@@ -233,74 +233,74 @@
     >
       <div class="ml-52 flex flex-col gap-4">
         <span class="relative top-large_dash_top right-large_dash_right"
-          ><img src="/images/line.svg" alt=""
+          ><img src="/images/line.svg" alt="line image"
         /></span>
 
         <h1 class="text-white lg:text-5xl text-sm flex">
-          “{{ $t("LandingPage.I_see_in_your_eyes_the_same") }} <br />
-          {{ $t("LandingPage.fear_that_would_take_the") }} <br />
-          {{ $t("LandingPage.heart_of_me") }}”
+          “{{ $t("landing_page.I_see_in_your_eyes_the_same") }} <br />
+          {{ $t("landing_page.fear_that_would_take_the") }} <br />
+          {{ $t("landing_page.heart_of_me") }}”
         </h1>
 
         <h2 class="text-grey text-3xl">
-          {{ $t("LandingPage.the_lord_of_the_rings") }}, 2003
+          {{ $t("landing_page.the_lord_of_the_rings") }}, 2003
         </h2>
       </div>
     </div>
   </div>
   <div class="block lg:hidden">
     <div class="flex flex-col justify-center items-center">
-      <img src="/images/image1.png" alt="" />
+      <img src="/images/image1.png" alt="interstellar icon" />
       <div class="absolute">
         <span class="relative top-small_dash_top right-small_dash_right"
-          ><img src="/images/small-line.png" alt=""
+          ><img src="/images/small-line.png" alt="small line image"
         /></span>
         <h1 class="text-white text-xl flex">
-          “ {{ $t("LandingPage.you_have_to_leave_something") }}<br />
-          {{ $t("LandingPage.behind_to_go_forward") }}”
+          “ {{ $t("landing_page.you_have_to_leave_something") }}<br />
+          {{ $t("landing_page.behind_to_go_forward") }}”
         </h1>
 
         <h2 class="text-grey text-lg">
-          {{ $t("LandingPage.interstellar") }}, 2014
+          {{ $t("landing_page.interstellar") }}, 2014
         </h2>
       </div>
     </div>
 
     <div class="flex flex-col justify-center items-center">
-      <img src="/images/image3.png" alt="" />
+      <img src="/images/image3.png" alt="royal tenenbaums image" />
       <div class="absolute">
         <span class="relative top-small_dash_top right-small_dash_right"
-          ><img src="/images/small-line.png" alt=""
+          ><img src="/images/small-line.png" alt="small line image"
         /></span>
         <h1 class="text-white text-xl flex">
-          {{ $t("LandingPage.i_think_we_re_just_gonna_have") }},
+          {{ $t("landing_page.i_think_we_re_just_gonna_have") }},
           <br />
-          {{ $t("LandingPage.to_be_secretly_in_love") }}
+          {{ $t("landing_page.to_be_secretly_in_love") }}
 
           <br />
-          {{ $t("LandingPage.and_leave_it_that") }}
+          {{ $t("landing_page.and_leave_it_that") }}
         </h1>
 
         <h2 class="text-grey text-lg">
-          {{ $t("LandingPage.the_royal_tenenbaums") }}, 2001
+          {{ $t("landing_page.the_royal_tenenbaums") }}, 2001
         </h2>
       </div>
     </div>
 
     <div class="flex flex-col justify-center items-center">
-      <img src="/images/image2.png" alt="" />
+      <img src="/images/image2.png" alt="lord of the rings image" />
       <div class="absolute">
         <span class="relative top-small_dash_top right-small_dash_right"
-          ><img src="/images/small-line.png" alt=""
+          ><img src="/images/small-line.png" alt="small line icon"
         /></span>
         <h1 class="text-white text-xl flex">
-          “{{ $t("LandingPage.I_see_in_your_eyes_the_same") }} <br />
-          {{ $t("LandingPage.fear_that_would_take_the") }} <br />
-          {{ $t("LandingPage.heart_of_me") }}”
+          “{{ $t("landing_page.I_see_in_your_eyes_the_same") }} <br />
+          {{ $t("landing_page.fear_that_would_take_the") }} <br />
+          {{ $t("landing_page.heart_of_me") }}”
         </h1>
 
         <h2 class="text-grey text-lg">
-          {{ $t("LandingPage.the_lord_of_the_rings") }}, 2003
+          {{ $t("landing_page.the_lord_of_the_rings") }}, 2003
         </h2>
       </div>
     </div>
@@ -308,8 +308,8 @@
 
   <footer class="p-4 bg-gradient-to-tr from-[#181623] to-[#191725]">
     <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400"
-      >© 2022 <a>{{ $t("LandingPage.movie_quotes") }}</a
-      >. {{ $t("LandingPage.all_rights_reserved") }}
+      >© 2022 <a>{{ $t("landing_page.movie_quotes") }}</a
+      >. {{ $t("landing_page.all_rights_reserved") }}
     </span>
   </footer>
 </template>
@@ -319,14 +319,14 @@
 <script setup>
 import { computed, onMounted, ref } from "vue";
 import DialogModal from "@/components/DialogModal.vue";
-import RegistrationForm from "./RegistrationForm.vue";
-import LoginForm from "./LoginForm.vue";
-import ResetPassword from "./notifications/ResetPassword.vue";
+import RegistrationForm from "@/views/LandingView/RegistrationForm.vue";
+import LoginForm from "@/views/LandingView/LoginForm.vue";
+import ResetPassword from "@/views/LandingView/notifications/ResetPassword.vue";
 import { useRoute } from "vue-router";
-import { i18n } from "../../i18n";
+import { i18n } from "@/i18n";
 import { setLocale } from "@vee-validate/i18n";
-import router from "../../router";
-import ValidationSucessfull from "./notifications/ValidationSucessfull.vue";
+import router from "@/router";
+import ValidationSucessfull from "@/views/LandingView/notifications/ValidationSucessfull.vue";
 import { useCredentials } from "@/stores/index.js";
 const credentials = useCredentials();
 

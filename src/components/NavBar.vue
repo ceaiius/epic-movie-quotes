@@ -14,7 +14,7 @@
             whitespace-nowrap
             text-brown
           "
-          >{{ $t("NewsFeed.movie_quotes") }}</span
+          >{{ $t("news_feed.movie_quotes") }}</span
         >
 
         <teleport to="body">
@@ -31,7 +31,7 @@
           <img
             src="/images/hamburger.svg"
             class="inline-flex items-center rounded-lg lg:hidden cursor-pointer"
-            alt=""
+            alt="hamburger icon"
           />
         </span>
 
@@ -59,7 +59,7 @@
               <img
                 class="w-6 h-6 relative top-2 cursor-pointer"
                 src="/images/search.svg"
-                alt=""
+                alt="search icon"
               />
             </li>
             <li>
@@ -67,7 +67,7 @@
                 <img
                   src="/images/bell.svg"
                   class="w-6 h-6 relative top-2 cursor-pointer"
-                  alt=""
+                  alt="bell icon"
                 />
                 <div
                   class="
@@ -106,7 +106,7 @@
               <a class="flex justify-center items-center gap-2"
                 >{{ activeLanguage }}
 
-                <span><img src="/images/arrow.svg" alt="" /></span
+                <span><img src="/images/arrow.svg" alt="arrow icon" /></span
               ></a>
               <div v-if="!isHiddenDropdown">
                 <a
@@ -136,7 +136,7 @@
                   "
                   @click="isOpenLogin = true"
                 >
-                  {{ $t("NewsFeed.log_out") }}
+                  {{ $t("news_feed.log_out") }}
                 </button>
               </form>
             </li>
@@ -152,15 +152,16 @@ import { computed, onMounted, ref } from "vue";
 import axios from "@/config/axios/jwt.js";
 import { useRouter } from "vue-router";
 
-import DialogModal from "./DialogModal.vue";
-import HamburgerMenu from "../views/HomeView/NewsFeed/HamburgerMenu.vue";
-import SearchDialog from "../views/HomeView/NewsFeed/Dialogs/SearchQuote.vue";
-import SearchDialogMovie from "../views/HomeView/NewsFeed/Dialogs/SearchMovie.vue";
-import NotificationDialog from "./NotificationDialog.vue";
+import DialogModal from "@/components/DialogModal.vue";
+
+import HamburgerMenu from "@/views/HomeView/NewsFeed/HamburgerMenu.vue";
+import SearchDialog from "@/views/HomeView/NewsFeed/Dialogs/SearchQuote.vue";
+import SearchDialogMovie from "@/views/HomeView/NewsFeed/Dialogs/SearchMovie.vue";
+import NotificationDialog from "@/components/NotificationDialog.vue";
 import { useAuthStore } from "@/stores/auth";
 
-import { i18n } from "../i18n";
-import router from "../router";
+import { i18n } from "@/i18n";
+import router from "@/router";
 import { useCredentials } from "@/stores/index.js";
 const credentials = useCredentials();
 const authStore = useAuthStore();

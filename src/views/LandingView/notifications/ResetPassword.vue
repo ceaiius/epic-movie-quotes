@@ -14,9 +14,11 @@
       "
     >
       <div class="mt-20 flex flex-col justify-center items-center gap-2">
-        <h1 class="text-2xl font-bold text-white">Create new password</h1>
+        <h1 class="text-2xl font-bold text-white">
+          {{ $t("login_form.create_new_password") }}
+        </h1>
         <h2 class="text-grey_text text-center">
-          Your new password must be different from previous used passwords
+          {{ $t("login_form.password_must_be_different") }}
         </h2>
         <Form
           class="flex flex-col gap-6 relative"
@@ -26,7 +28,7 @@
             <label
               for="exampleInputPassword1"
               class="text-white text-base pb-2"
-              >{{ $t("RegistrationForm.password") }}</label
+              >{{ $t("registration_form.password") }}</label
             >
             <Field
               v-slot="{ meta, field }"
@@ -42,7 +44,7 @@
                 ]"
                 :type="[showPassword ? 'text' : 'password']"
                 class="bg-input_bg text-sm h-10 p-2 border-2 rounded"
-                :placeholder="$t('RegistrationForm.password_placeholder')"
+                :placeholder="$t('registration_form.password_placeholder')"
               />
             </Field>
             <span @click="showPassword = !showPassword">
@@ -109,7 +111,7 @@
             <label
               for="exampleInputPassword1"
               class="text-white text-base pb-2"
-              >{{ $t("RegistrationForm.confirm_password") }}</label
+              >{{ $t("registration_form.confirm_password") }}</label
             >
             <Field
               v-slot="{ meta, field }"
@@ -125,7 +127,7 @@
                   !meta.valid && meta.touched ? ' border-red-500' : '',
                 ]"
                 class="bg-input_bg text-sm h-10 p-2 border-2 rounded"
-                :placeholder="$t('RegistrationForm.confirm_placeholder')"
+                :placeholder="$t('registration_form.confirm_placeholder')"
               />
             </Field>
 
@@ -201,7 +203,7 @@
             "
             @click="$emit('closePasswordSent')"
           >
-            Reset pasword
+            {{ $t("login_form.reset_password") }}
           </button>
         </Form>
         <div
@@ -209,9 +211,9 @@
           @click="$emit('backToLogin')"
         >
           <span class="cursor-pointer"
-            ><img src="/images/back-arrow.svg" alt=""
+            ><img src="/images/back-arrow.svg" alt="back arrow icon"
           /></span>
-          <p class="cursor-pointer">Back to login</p>
+          <p class="cursor-pointer">{{ $t("login_form.back_to_login") }}</p>
         </div>
       </div>
     </div>
@@ -227,16 +229,13 @@
 import { Field, Form, ErrorMessage } from "vee-validate";
 import axios from "@/config/axios/index.js";
 import { ref } from "vue";
-import router from "../../../router";
+import router from "@/router";
 import { useRoute } from "vue-router";
-import ResetSuccess from "../notifications/ResetSuccess.vue";
+import ResetSuccess from "@/views/LandingView/notifications/ResetSuccess.vue";
 import DialogModal from "@/components/DialogModal.vue";
 import { useCredentials } from "@/stores/index.js";
-
 const credentials = useCredentials();
-// eslint-disable-next-line no-unused-vars
-const emit = defineEmits(["closePasswordSent", "backToLogin"]);
-
+defineEmits(["closePasswordSent", "backToLogin"]);
 const showPassword = ref(false);
 const showPasswordConfirm = ref(false);
 const password = ref("");

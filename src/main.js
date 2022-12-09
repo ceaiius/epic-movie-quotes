@@ -1,13 +1,13 @@
 import { createApp, watch } from "vue";
 import { createPinia } from "pinia";
-import { i18n } from "./i18n.js";
-import App from "./App.vue";
-import router from "./router";
-import "./assets/main.css";
-import "./config/vee-validate/rules";
-import "./config/vee-validate/messages";
+import { i18n } from "@/i18n.js";
+import App from "@/App.vue";
+import router from "@/router";
+import "@/assets/main.css";
+import "@/config/vee-validate/rules";
+import "@/config/vee-validate/messages";
 import Echo from "laravel-echo";
-import { isAuthenticated } from "./router/guards";
+import { isAuthenticated } from "@/router/guards";
 const app = createApp(App);
 
 // eslint-disable-next-line no-unused-vars

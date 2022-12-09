@@ -72,7 +72,7 @@
               translate-y-0
             "
             :src="thumbnail(credentials.avatar)"
-            alt=""
+            alt="user avatar"
           />
           <div
             class="
@@ -84,7 +84,7 @@
             "
           >
             <h2 class="text-white cursor-pointer" @click="handleClick">
-              {{ $t("Profile.upload_new_photo") }}
+              {{ $t("profile.upload_new_photo") }}
             </h2>
           </div>
           <div>
@@ -113,7 +113,7 @@
             class="cursor-pointer"
             @click="credentials.can_edit_username_popup = true"
           >
-            {{ $t("Profile.edit") }}
+            {{ $t("profile.edit") }}
           </h2>
         </div>
         <teleport to="body">
@@ -129,14 +129,14 @@
         <hr class="border-hr_color" />
       </div>
       <div class="flex flex-col w-full sm:w-96 text-white">
-        <h2 class="pl-6">{{ $t("Profile.password") }}</h2>
+        <h2 class="pl-6">{{ $t("profile.password") }}</h2>
         <div class="flex justify-between p-6">
-          <img class="w-36" src="/images/password.svg" alt="" />
+          <img class="w-36" src="/images/password.svg" alt="password icon" />
           <h2
             class="cursor-pointer"
             @click="credentials.can_edit_password_popup = true"
           >
-            {{ $t("Profile.edit") }}
+            {{ $t("profile.edit") }}
           </h2>
         </div>
         <teleport to="body">
@@ -151,11 +151,11 @@
       </div>
       <div class="flex flex-col w-full mb-10 text-white">
         <div class="flex justify-between items-center p-6">
-          <h2>{{ $t("Profile.email") }}</h2>
+          <h2>{{ $t("profile.email") }}</h2>
           <img
             class="w-2 cursor-pointer"
             src="/images/right-arrow.svg"
-            alt=""
+            alt="right arrow icon"
             @click="editEmail = true"
           />
         </div>
@@ -171,7 +171,7 @@
         class="flex gap-6 items-center justify-center mb-10"
       >
         <h2 class="text-grey_text cursor-pointer" @click="cancelEdit">
-          Cancel
+          {{ $t("profile.cancel") }}
         </h2>
         <button
           type="submit"
@@ -185,7 +185,7 @@
             text-sm
           "
         >
-          {{ $t("MovieList.save_changes") }}
+          {{ $t("movie_list.save_changes") }}
         </button>
       </div>
     </Form>
@@ -195,12 +195,12 @@
 <script setup>
 import { onBeforeMount, ref } from "vue";
 import { Form, Field } from "vee-validate";
-import DialogModal from "../../../../components/DialogModal.vue";
-import EditPassword from "./EditPassword.vue";
+import DialogModal from "@/components/DialogModal.vue";
+import EditPassword from "@/views/HomeView/Profile/EmailProfile/EditPassword.vue";
 import EditEmail from "@/views/HomeView/Profile/EmailProfile/EditEmail.vue";
-import EnterUsername from "./EnterUsername.vue";
-import { thumbnail } from "../../../../helpers/thumbnail";
-import SuccessDialog from "../GoogleProfile/SuccessDialog.vue";
+import EnterUsername from "@/views/HomeView/Profile/EmailProfile/EnterUsername.vue";
+import { thumbnail } from "@/helpers/thumbnail";
+import SuccessDialog from "@/views/HomeView/Profile/GoogleProfile/SuccessDialog.vue";
 import axios from "@/config/axios/index.js";
 import { useCredentials } from "@/stores/index.js";
 const credentials = useCredentials();

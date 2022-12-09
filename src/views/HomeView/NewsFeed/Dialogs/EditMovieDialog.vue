@@ -17,10 +17,10 @@
         <img
           class="cursor-pointer pl-6"
           src="/images/back-arrow.svg"
-          alt=""
+          alt="back arrow icon"
           @click="$emit('closePopup')"
         />
-        <h2 class="text-white">{{ $t("MovieList.edit_movie") }}</h2>
+        <h2 class="text-white">{{ $t("movie_list.edit_movie") }}</h2>
         <div></div>
       </div>
 
@@ -93,7 +93,7 @@
           <div class="relative">
             <InputField
               v-model="year"
-              :placeholder="$t('MovieList.year')"
+              :placeholder="$t('movie_list.year')"
               name="year"
               rules="num"
             />
@@ -101,7 +101,7 @@
           <div class="relative">
             <InputField
               v-model="budget"
-              :placeholder="$t('MovieList.budget')"
+              :placeholder="$t('movie_list.budget')"
               name="budget"
               rules="numeric"
             />
@@ -123,19 +123,19 @@
               mt-6
             "
           >
-            {{ $t("MovieList.save_changes") }}
+            {{ $t("movie_list.save_changes") }}
           </button>
         </div>
       </Form>
     </div>
   </div>
 </template>
-  <script setup>
+<script setup>
 import { Form } from "vee-validate";
 import axios from "@/config/axios/index.js";
-import InputField from "../Form/InputField.vue";
-import InputFile from "../Form/InputFile.vue";
-import InputSelect from "../Form/InputSelect.vue";
+import InputField from "@/views/HomeView/NewsFeed/Form/InputField.vue";
+import InputFile from "@/views/HomeView/NewsFeed/Form/InputFile.vue";
+import InputSelect from "@/views/HomeView/NewsFeed/Form/InputSelect.vue";
 import { useRoute } from "vue-router";
 import { onMounted, ref } from "vue";
 import { useCredentials } from "@/stores/index.js";

@@ -24,7 +24,7 @@
     >
       <div class="w-full relative">
         <label class="text-white absolute -top-10 left-0" for="email">{{
-          $t("Profile.primary_email")
+          $t("profile.primary_email")
         }}</label>
 
         <div class="">
@@ -45,7 +45,7 @@
           <img
             class="absolute top-3 right-3"
             src="/images/checked_round.svg"
-            alt=""
+            alt="checked icon"
           />
         </div>
         <hr class="mt-6 border-hr_color w-full" />
@@ -60,7 +60,7 @@
               v-if="item.email_verified_at == null"
               class="flex gap-2 text-sm italic"
             >
-              <img src="/images/unvalidated.svg" alt="" />
+              <img src="/images/unvalidated.svg" alt="unvalidated icon" />
               <h2>Not Verified</h2>
             </span>
 
@@ -79,10 +79,10 @@
               "
               @click="makePrimary(item.email)"
             >
-              {{ $t("Profile.make_this_primary") }}
+              {{ $t("profile.make_this_primary") }}
             </button>
             <h2 class="text-grey cursor-pointer" @click="deleteEmail(item.id)">
-              {{ $t("Profile.remove") }}
+              {{ $t("profile.remove") }}
             </h2>
           </div>
         </div>
@@ -118,8 +118,8 @@
           "
           @click="credentials.can_edit_email_popup = true"
         >
-          <span><img src="/images/plus.svg" alt="" /></span>
-          {{ $t("Profile.add_new_email") }}
+          <span><img src="/images/plus.svg" alt="plus icon" /></span>
+          {{ $t("profile.add_new_email") }}
         </button>
       </div>
     </div>
@@ -129,13 +129,11 @@
   <script setup>
 import { onBeforeMount, ref } from "vue";
 import axios from "@/config/axios/index.js";
-
 import DialogModal from "@/components/DialogModal.vue";
 import EnterEmail from "@/views/HomeView/Profile/EmailProfile/EnterEmail.vue";
 import { useCredentials } from "@/stores/index.js";
 const credentials = useCredentials();
-// eslint-disable-next-line no-unused-vars
-const emit = defineEmits(["exit"]);
+defineEmits(["exit"]);
 const email = ref();
 const emails = ref([]);
 onBeforeMount(() => {

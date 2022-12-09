@@ -7,19 +7,23 @@
     <div class="w-[80%] ml-[10%]">
       <div class="flex items-center justify-between">
         <div class="flex text-white gap-6">
-          <h2>{{ $t("MovieList.my_list_of_movies") }}</h2>
-          <h2>{{ $t("MovieList.total") }} {{ count }}</h2>
+          <h2>{{ $t("movie_list.my_list_of_movies") }}</h2>
+          <h2>{{ $t("movie_list.total") }} {{ count }}</h2>
         </div>
         <div class="h-[52px] relative ml-6">
           <div class="flex items-center">
             <div class="lg:flex hidden">
-              <img class="absolute" src="/images/search.svg" alt="" />
+              <img
+                class="absolute"
+                src="/images/search.svg"
+                alt="search icon"
+              />
 
               <input
                 v-model="inputValue"
                 class="text-white bg-transparent pl-10 w-48 outline-none"
                 type="text"
-                :placeholder="$t('MovieList.search')"
+                :placeholder="$t('movie_list.search')"
               />
             </div>
 
@@ -40,8 +44,8 @@
               "
               @click="addMovies = true"
             >
-              <span><img src="/images/plus.svg" alt="" /></span>
-              {{ $t("MovieList.add_movie") }}
+              <span><img src="/images/plus.svg" alt="plus icon" /></span>
+              {{ $t("movie_list.add_movie") }}
             </button>
           </div>
         </div>
@@ -60,7 +64,7 @@
             <img
               class="h-60 w-96 object-cover rounded-2xl"
               :src="url_thumbnail + item.thumbnail"
-              alt=""
+              alt="user avatar"
               @click="handleClick(item.id)"
             />
           </div>
@@ -72,7 +76,7 @@
 
             <h3 class="flex gap-6 text-2xl mt-2">
               {{ item.quotes.length }}
-              <span><img src="/images/chat.png" alt="" /></span>
+              <span><img src="/images/chat.png" alt="chat icon" /></span>
             </h3>
           </div>
         </div>
@@ -84,10 +88,10 @@
 <script setup>
 import { computed, onMounted, ref } from "vue";
 import axios from "@/config/axios/index.js";
-import { i18n } from "../../../../i18n";
-import DialogModal from "../../../../components/DialogModal.vue";
-import MovieDialog from "../Dialogs/MovieDialog.vue";
-import router from "../../../../router";
+import { i18n } from "@/i18n";
+import DialogModal from "@/components/DialogModal.vue";
+import MovieDialog from "@/views/HomeView/NewsFeed/Dialogs/MovieDialog.vue";
+import router from "@/router";
 import { useCredentials } from "@/stores/index.js";
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
 const credentials = useCredentials();

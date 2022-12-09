@@ -25,11 +25,9 @@
   </Field>
 </template>
     
-    <script setup>
+<script setup>
 import { Field } from "vee-validate";
-
-// eslint-disable-next-line no-unused-vars
-const props = defineProps([
+defineProps([
   "placeholder",
   "language",
   "name",
@@ -38,7 +36,5 @@ const props = defineProps([
   "modelValue",
   "isReadOnly",
 ]);
-
-// eslint-disable-next-line no-unused-vars
-const emit = defineEmits(["update:modelValue"]);
+defineEmits(["update:modelValue"]);
 </script>

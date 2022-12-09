@@ -34,7 +34,7 @@
           <span
             class="cursor-pointer p-2 chip-remove"
             @click="removeChip(index)"
-            ><img src="/images/remove.svg" alt=""
+            ><img src="/images/remove.svg" alt="delete icon"
           /></span>
         </div>
         <input
@@ -81,10 +81,10 @@ import { Field } from "vee-validate";
 import { onBeforeMount, ref } from "vue";
 import { useCredentials } from "@/stores/index.js";
 const credentials = useCredentials();
-// const chips = ref([]);
+
 const open = ref(false);
 const genres = ref();
-// eslint-disable-next-line no-unused-vars
+
 const props = defineProps(["name", "values"]);
 
 onBeforeMount(() => {
