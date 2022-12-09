@@ -38,6 +38,9 @@ export const useCredentials = defineStore("credentials", {
       success_email: false,
       emails: [],
       loading: false,
+      username_taken: false,
+      confirm_username: false,
+      email_taken: false,
     };
   },
 });

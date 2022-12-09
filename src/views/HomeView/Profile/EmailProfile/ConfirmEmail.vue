@@ -26,6 +26,18 @@
           <span v-else> {{ $t("profile.confirm") }}</span>
         </button>
       </div>
+      <teleport to="body">
+        <dialog-modal
+          v-if="credentials.email_taken"
+          top="top-[20%] lg:left-[70%]"
+          @close="credentials.email_taken = false"
+        >
+          <ErrorDialog
+            message="Email has already been taken!"
+            @exit="(credentials.email_taken = false), $emit('exit')"
+          />
+        </dialog-modal>
+      </teleport>
     </div>
   </div>
 </template>
@@ -33,6 +45,8 @@
 <script setup>
 import { useCredentials } from "@/stores/index.js";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
+import DialogModal from "@/components/DialogModal.vue";
+import ErrorDialog from "@/views/HomeView/Profile/GoogleProfile/ErrorDialog.vue";
 const credentials = useCredentials();
 defineEmits(["exit", "save"]);
 </script>

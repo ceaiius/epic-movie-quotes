@@ -24,6 +24,18 @@
           {{ $t("profile.confirm") }}
         </button>
       </div>
+      <teleport to="body">
+        <dialog-modal
+          v-if="credentials.username_taken"
+          top="top-[20%]"
+          @close="credentials.username_taken = false"
+        >
+          <ErrorDialog
+            message="Username has already been taken!"
+            @exit="(credentials.username_taken = false), $emit('exit')"
+          />
+        </dialog-modal>
+      </teleport>
     </div>
   </div>
 </template>
@@ -31,6 +43,8 @@
 <script setup>
 import axios from "@/config/axios/index.js";
 import { useCredentials } from "@/stores/index.js";
+import DialogModal from "@/components/DialogModal.vue";
+import ErrorDialog from "@/views/HomeView/Profile/GoogleProfile/ErrorDialog.vue";
 const credentials = useCredentials();
 const emit = defineEmits(["exit", "save"]);
 const handeClick = async () => {
@@ -44,8 +58,9 @@ const handeClick = async () => {
     credentials.can_edit_username_popup = false;
     credentials.can_edit_password_popup = false;
     credentials.confirmed_username_edit = credentials.username_edit;
+    credentials.username_taken = false;
   } catch (err) {
-    console.log(err);
+    credentials.username_taken = true;
   }
 };
 </script>

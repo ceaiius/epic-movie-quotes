@@ -199,6 +199,7 @@ const cancelEdit = () => {
   } else {
     preview.src = url_thumbnail + credentials.avatar;
   }
+  usernameTaken.value = false;
 
   credentials.canEditGoogle = false;
 };

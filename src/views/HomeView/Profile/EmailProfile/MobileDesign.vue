@@ -45,7 +45,7 @@
     <teleport to="body">
       <dialog-modal
         v-if="credentials.success_email"
-        top="top-[10%] left-[80%]"
+        top="top-[10%] left-[50%] lg:left-[80%]"
         @close="credentials.success_email = false"
       >
         <SuccessDialog
@@ -104,7 +104,7 @@
 
       <div class="flex flex-col gap-2 justify-center items-center"></div>
       <div class="flex flex-col w-full sm:w-96 text-white">
-        <h2 class="pl-6">{{ $t("Profile.username") }}</h2>
+        <h2 class="pl-6">{{ $t("profile.username") }}</h2>
         <div class="flex justify-between p-6">
           <h2>
             {{ credentials.confirmed_username_edit }}
