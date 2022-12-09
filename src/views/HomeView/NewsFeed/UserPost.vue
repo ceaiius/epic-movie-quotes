@@ -50,7 +50,7 @@
               class="w-[686px] text-white bg-transparent pl-10 outline-none"
               type="text"
               :placeholder="$t('news_feed.search')"
-              @keypress="handleSearch"
+              @keyup="handleSearch"
             />
 
             <hr class="border-hr_color mt-6" />
@@ -223,70 +223,9 @@ const username = ref("");
 
 const id = ref();
 
-// const searched = computed(() => {
-//   if (inputValue.value || credentials.quote_search) {
-//     return credentials.quotes_array.filter((item) => {
-//       if (
-//         i18n.global.locale == "En" &&
-//         (inputValue.value.charAt(0) == "@" ||
-//           credentials.quote_search.charAt(0) == "@")
-//       ) {
-//         return item.movies.name.en
-//           .toLowerCase()
-//           .includes(
-//             inputValue.value.toLowerCase().replace("@", "") ||
-//               credentials.quote_search.toLowerCase().replace("@", "")
-//           );
-//       } else if (
-//         i18n.global.locale == "En" &&
-//         (inputValue.value.charAt(0) == "#" ||
-//           credentials.quote_search.charAt(0) == "#")
-//       ) {
-//         return item.name.en
-//           .toLowerCase()
-//           .includes(
-//             inputValue.value.toLowerCase().replace("#", "") ||
-//               credentials.quote_search.toLowerCase().replace("#", "")
-//           );
-//       } else if (
-//         i18n.global.locale == "Ka" &&
-//         (inputValue.value.charAt(0) == "@" ||
-//           credentials.quote_search.charAt(0) == "@")
-//       ) {
-//         return item.movies.name.ka.includes(
-//           inputValue.value.replace("@", "") ||
-//             credentials.quote_search.replace("@", "")
-//         );
-//       } else if (
-//         i18n.global.locale == "Ka" &&
-//         (inputValue.value.charAt(0) == "#" ||
-//           credentials.quote_search.charAt(0) == "#")
-//       ) {
-//         return item.name.ka.includes(
-//           inputValue.value.replace("#", "") ||
-//             credentials.quote_search.replace("#", "")
-//         );
-//       } else if (i18n.global.locale == "En") {
-//         return item.name.en
-//           .toLowerCase()
-//           .includes(
-//             inputValue.value.toLowerCase() ||
-//               credentials.quote_search.toLowerCase()
-//           );
-//       } else if (i18n.global.locale == "Ka") {
-//         return item.name.ka
-//           .toLowerCase()
-//           .includes(inputValue.value.toLowerCase() || credentials.quote_search);
-//       }
-//     });
-//   } else {
-//     return credentials.quotes_array;
-//   }
-// });
-
 const loadMorePosts = () => {
   let url = import.meta.env.VITE_API_BASE_URL + `quotes?page=${count.value}`;
-  if (!inputValue.value) {
+  if (!inputValue.value && !credentials.quote_search) {
     axios.get(url).then((res) => {
       credentials.quotes_array.push(...res.data.data);
       count.value = count.value + 1;
