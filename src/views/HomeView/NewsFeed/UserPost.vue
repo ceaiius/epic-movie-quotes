@@ -44,18 +44,21 @@
         <div class="h-[52px] lg:flex hidden relative ml-6">
           <div class="flex items-center">
             <img class="absolute" src="/images/search.svg" alt="search icon" />
+
             <input
               v-model="inputValue"
               class="w-[686px] text-white bg-transparent pl-10 outline-none"
               type="text"
               :placeholder="$t('news_feed.search')"
+              @keyup="handleSearch"
             />
+
             <hr class="border-hr_color mt-6" />
           </div>
         </div>
       </div>
       <div
-        v-for="item in searched"
+        v-for="item in credentials.quotes_array"
         :key="item.id"
         class="w-auto flex flex-col bg-black_bg mt-6 rounded-xl md:mb-12"
       >
@@ -158,7 +161,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { i18n } from "@/i18n";
 import axios from "@/config/axios/index.js";
 import DialogModal from "@/components/DialogModal.vue";
@@ -186,6 +189,19 @@ window.Echo.channel(`like-channel`).listen(".add-like", () => {
   handleNotifications();
 });
 
+const handleSearch = () => {
+  if (!inputValue.value) {
+    return credentials.quotes_array;
+  }
+  axios
+    .post("quotes-search", {
+      search: inputValue.value,
+    })
+    .then((res) => {
+      credentials.quotes_array = res.data;
+    });
+};
+
 const handleCount = () => {
   const url_notifications = `${
     import.meta.env.VITE_API_BASE_URL
@@ -207,74 +223,14 @@ const username = ref("");
 
 const id = ref();
 
-const searched = computed(() => {
-  if (inputValue.value || credentials.quote_search) {
-    return credentials.quotes_array.filter((item) => {
-      if (
-        i18n.global.locale == "En" &&
-        (inputValue.value.charAt(0) == "@" ||
-          credentials.quote_search.charAt(0) == "@")
-      ) {
-        return item.movies.name.en
-          .toLowerCase()
-          .includes(
-            inputValue.value.toLowerCase().replace("@", "") ||
-              credentials.quote_search.toLowerCase().replace("@", "")
-          );
-      } else if (
-        i18n.global.locale == "En" &&
-        (inputValue.value.charAt(0) == "#" ||
-          credentials.quote_search.charAt(0) == "#")
-      ) {
-        return item.name.en
-          .toLowerCase()
-          .includes(
-            inputValue.value.toLowerCase().replace("#", "") ||
-              credentials.quote_search.toLowerCase().replace("#", "")
-          );
-      } else if (
-        i18n.global.locale == "Ka" &&
-        (inputValue.value.charAt(0) == "@" ||
-          credentials.quote_search.charAt(0) == "@")
-      ) {
-        return item.movies.name.ka.includes(
-          inputValue.value.replace("@", "") ||
-            credentials.quote_search.replace("@", "")
-        );
-      } else if (
-        i18n.global.locale == "Ka" &&
-        (inputValue.value.charAt(0) == "#" ||
-          credentials.quote_search.charAt(0) == "#")
-      ) {
-        return item.name.ka.includes(
-          inputValue.value.replace("#", "") ||
-            credentials.quote_search.replace("#", "")
-        );
-      } else if (i18n.global.locale == "En") {
-        return item.name.en
-          .toLowerCase()
-          .includes(
-            inputValue.value.toLowerCase() ||
-              credentials.quote_search.toLowerCase()
-          );
-      } else if (i18n.global.locale == "Ka") {
-        return item.name.ka
-          .toLowerCase()
-          .includes(inputValue.value.toLowerCase() || credentials.quote_search);
-      }
-    });
-  } else {
-    return credentials.quotes_array;
-  }
-});
-
 const loadMorePosts = () => {
   let url = import.meta.env.VITE_API_BASE_URL + `quotes?page=${count.value}`;
-
-  axios.get(url).then((res) => {
-    credentials.quotes_array.push(...res.data.data);
-    count.value = count.value + 1;
-  });
+  if (!inputValue.value && !credentials.quote_search) {
+    axios.get(url).then((res) => {
+      credentials.quotes_array.push(...res.data.data);
+      count.value = count.value + 1;
+    });
+  }
 };
 onMounted(() => {
   fetchUser();

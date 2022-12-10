@@ -24,6 +24,7 @@
           type="text"
           placeholder="Search"
           class="border-none outline-none text-white bg-transparent"
+          @keyup="handleSearch"
         />
       </div>
       <div class="mt-10 ml-8 text-input_bg flex flex-col gap-2">
@@ -36,7 +37,18 @@
 
 <script setup>
 import { useCredentials } from "@/stores/index.js";
+import axios from "@/config/axios/index.js";
 const credentials = useCredentials();
 defineEmits(["closeSearch"]);
+
+const handleSearch = () => {
+  axios
+    .post("quotes-search", {
+      search: credentials.quote_search,
+    })
+    .then((res) => {
+      credentials.quotes_array = res.data;
+    });
+};
 </script>
 
