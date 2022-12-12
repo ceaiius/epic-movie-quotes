@@ -42,18 +42,6 @@ const commentValue = ref();
 const credentials = useCredentials();
 const props = defineProps(["id", "author", "count"]);
 
-console.log(props.count);
-const fetch = () => {
-  let url = import.meta.env.VITE_API_BASE_URL + `quotes-show`;
-  axios
-    .post(url, {
-      id: props.count,
-    })
-    .then((res) => {
-      credentials.quotes_array = res.data;
-    });
-};
-
 const handleComment = async () => {
   const url_comment = `${import.meta.env.VITE_API_BASE_URL}comment/${props.id}`;
   axios
@@ -65,7 +53,6 @@ const handleComment = async () => {
       author_id: props.author,
     })
     .then(() => {
-      fetch();
       commentValue.value = "";
     });
 };

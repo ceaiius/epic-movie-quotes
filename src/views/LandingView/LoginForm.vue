@@ -37,7 +37,11 @@
             <label for="email" class="text-white text-base pb-2">{{
               $t("login_form.email")
             }}</label>
-            <Field v-slot="{ meta, field }" name="email" rules="required|email">
+            <Field
+              v-slot="{ meta, field }"
+              name="email"
+              rules="required|login|min:3"
+            >
               <input
                 v-model="email"
                 class="bg-input_bg text-sm h-10 p-2 border-2 rounded"

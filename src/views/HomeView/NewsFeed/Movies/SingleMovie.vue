@@ -339,13 +339,17 @@ const editMovie = ref(false);
 const route = useRoute();
 const id = route.params.id;
 const data = ref();
-const getMovies = () => {
+const getMovies = async () => {
   const url = `${import.meta.env.VITE_API_BASE_URL}movies/${id}`;
-  axios.get(url).then((res) => {
-    data.value = res.data;
+  try {
+    await axios.get(url).then((res) => {
+      data.value = res.data;
 
-    genres.value = JSON.parse(res.data.genre);
-  });
+      genres.value = JSON.parse(res.data.genre);
+    });
+  } catch (err) {
+    router.back();
+  }
 };
 const getQuotes = () => {
   axios.get(url_quotes).then((res) => {

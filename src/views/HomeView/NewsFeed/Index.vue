@@ -23,7 +23,7 @@
           <h3 class="text-input_bg text-sm cursor-pointer">
             <router-link
               :to="{ name: googleUser ? 'google_profile' : 'email_profile' }"
-              ><h2 class="cursor-pointer">
+              ><h2 class="cursor-pointer whitespace-nowrap">
                 {{ $t("news_feed.edit_profile") }}
               </h2></router-link
             >
