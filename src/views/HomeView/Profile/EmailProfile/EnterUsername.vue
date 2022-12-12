@@ -33,7 +33,7 @@
         <Field
           v-slot="{ meta, field }"
           name="username"
-          rules="username|required|min:6|max:15"
+          rules="username|required|min:3|max:15"
         >
           <input
             id="email"

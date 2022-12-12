@@ -99,7 +99,7 @@
                   v-slot="{ meta, field }"
                   v-model="username"
                   name="username"
-                  rules="required|username"
+                  rules="username|required|min:3|max:15"
                 >
                   <input
                     v-bind="field"

@@ -50,7 +50,7 @@
               class="w-[686px] text-white bg-transparent pl-10 outline-none"
               type="text"
               :placeholder="$t('news_feed.search')"
-              @keyup="handleSearch"
+              @keyup="searchByPhrase"
             />
 
             <hr class="border-hr_color mt-6" />
@@ -173,26 +173,56 @@ import BaseLike from "@/views/HomeView/NewsFeed/BaseLike.vue";
 import CommentSection from "@/views/HomeView/NewsFeed/CommentSection.vue";
 const credentials = useCredentials();
 
-window.Echo.channel(`comment-channel`).listen(".new-comment", () => {
-  fetch();
+window.Echo.channel(`comment-channel`).listen(".new-comment", (e) => {
   handleCount();
   handleNotifications();
+
+  let quote = credentials.quotes_array.filter(
+    (x) => x.id == e.comment.quote_id
+  );
+  if (credentials.user_id !== e.comment.user_id) {
+    fetch();
+  } else {
+    quote[0].comments.push(e.comment);
+  }
 });
 
-window.Echo.channel(`delete-comment-channel`).listen(".delete-comment", () => {
-  fetch();
+window.Echo.channel(`delete-comment-channel`).listen(".delete-comment", (e) => {
+  if (credentials.user_id !== e.comment.user_id) {
+    fetch();
+  } else {
+    let quote = credentials.quotes_array.filter(
+      (x) => x.id == e.comment.quote_id
+    );
+    quote[0].comments = quote[0].comments.filter((x) => x.id !== e.comment.id);
+  }
 });
 
-window.Echo.channel(`like-channel`).listen(".add-like", () => {
-  fetch();
+window.Echo.channel(`like-channel`).listen(".add-like", (e) => {
   handleCount();
   handleNotifications();
+
+  let quote = credentials.quotes_array.filter((x) => x.id == e.like.quote_id);
+  if (credentials.user_id !== e.like.user_id) {
+    fetch();
+  } else {
+    if (e.like.was_liked == true) {
+      quote[0].users_count++;
+    } else {
+      quote[0].users_count--;
+    }
+  }
 });
+
+const timer = ref(null);
+const searchByPhrase = () => {
+  clearTimeout(timer.value);
+  timer.value = setTimeout(() => {
+    handleSearch();
+  }, 500);
+};
 
 const handleSearch = () => {
-  if (!inputValue.value) {
-    return credentials.quotes_array;
-  }
   axios
     .post("quotes-search", {
       search: inputValue.value,
@@ -288,24 +318,16 @@ const getQuotes = () => {
 
 const deleteQuote = (id) => {
   const url = `${import.meta.env.VITE_API_BASE_URL}comment/${id}`;
-  axios.delete(url).then((res) => {
-    if (res.status === 200) {
-      fetch();
-    }
-  });
+  axios.delete(url);
 };
 
 const handleLike = async (id, author) => {
   const url_like = `${import.meta.env.VITE_API_BASE_URL}quotes-like`;
-  axios
-    .post(url_like, {
-      quote_id: id,
-      user_id: credentials.user_id,
-      username: credentials.user_name,
-      author_id: author,
-    })
-    .then(() => {
-      fetch();
-    });
+  axios.post(url_like, {
+    quote_id: id,
+    user_id: credentials.user_id,
+    username: credentials.user_name,
+    author_id: author,
+  });
 };
 </script>

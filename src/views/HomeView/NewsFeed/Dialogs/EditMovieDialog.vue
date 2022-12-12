@@ -137,7 +137,7 @@ import InputField from "@/views/HomeView/NewsFeed/Form/InputField.vue";
 import InputFile from "@/views/HomeView/NewsFeed/Form/InputFile.vue";
 import InputSelect from "@/views/HomeView/NewsFeed/Form/InputSelect.vue";
 import { useRoute } from "vue-router";
-import { onMounted, ref } from "vue";
+import { onBeforeMount, ref } from "vue";
 import { useCredentials } from "@/stores/index.js";
 const credentials = useCredentials();
 const emit = defineEmits(["updateMovies", "closePopup"]);
@@ -162,7 +162,7 @@ const header = {
 
 const data = ref([]);
 
-onMounted(() => {
+onBeforeMount(() => {
   getMovies();
 });
 const getMovies = () => {

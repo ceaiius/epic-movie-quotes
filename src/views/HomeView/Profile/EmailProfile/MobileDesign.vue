@@ -49,7 +49,7 @@
         @close="credentials.success_email = false"
       >
         <SuccessDialog
-          message="Email updated succesfully"
+          message="Email added succesfully"
           @exit="credentials.success_email = false"
         />
       </dialog-modal>
