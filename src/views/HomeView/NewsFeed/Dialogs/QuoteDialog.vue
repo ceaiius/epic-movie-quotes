@@ -8,6 +8,7 @@
       pb-12
       lg:ml-48 lg:mb-64
       w-screen
+      lg:mt-20
       h-screen
       md:rounded-xl
       rounded-none
@@ -25,6 +26,14 @@
         <p class="invisible"></p>
       </div>
       <hr class="w-full border-hr_color mt-6" />
+      <div class="w-full flex justify-start items-center ml-[25%] gap-6 mt-6">
+        <img
+          :src="thumbnail(credentials.avatar)"
+          class="object-cover rounded-full block w-12 h-12"
+          alt="user avatar"
+        />
+        <h2 class="text-white">{{ credentials.user_name }}</h2>
+      </div>
     </div>
     <div class="flex justify-center">
       <Form
@@ -61,10 +70,14 @@
                 alt="camera icon"
               />
             </div>
-            <Field name="field">
+            <Field v-slot="{ meta, field }" name="field" rules="required">
               <select
                 id="movies"
                 v-model="selectValue"
+                v-bind="field"
+                :class="[
+                  !meta.valid && meta.touched ? 'border border-red-500' : '',
+                ]"
                 class="
                   bg-black
                   text-white
@@ -110,11 +123,13 @@
 import InputTextArea from "@/views/HomeView/NewsFeed/Form/InputTextArea.vue";
 
 import axios from "@/config/axios/index.js";
-import { Form } from "vee-validate";
+import { Form, Field } from "vee-validate";
 import { i18n } from "@/i18n";
 import { onMounted, ref } from "vue";
 import InputFile from "@/views/HomeView/NewsFeed/Form/InputFile.vue";
-
+import { useCredentials } from "@/stores/index.js";
+import { thumbnail } from "@/helpers/thumbnail";
+const credentials = useCredentials();
 const emit = defineEmits(["updateQuotes", "closePopup"]);
 const url = import.meta.env.VITE_API_BASE_URL + "movies";
 const url_quotes = import.meta.env.VITE_API_BASE_URL + "quotes";
