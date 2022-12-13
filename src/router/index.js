@@ -22,15 +22,24 @@ const router = createRouter({
       name: "landing",
       beforeEnter: isRemembered,
       component: LandingView,
+      meta: {
+        title: "Epic Movie Quotes",
+      },
     },
     {
       path: "/denied",
       name: "denied",
       component: PermissionDenied,
+      meta: {
+        title: "Denied",
+      },
     },
     {
       path: "/:pathMatch(.*)",
       component: NotFound,
+      meta: {
+        title: "Not found",
+      },
     },
     {
       path: "/home",
@@ -38,31 +47,49 @@ const router = createRouter({
       redirect: "/home/news-feed",
       component: HomeView,
       beforeEnter: isAuthenticated,
+      meta: {
+        title: "Home",
+      },
       children: [
         {
           name: "news-feed",
           path: "news-feed",
           component: UserPost,
+          meta: {
+            title: "News Feed",
+          },
         },
         {
           path: "list-of-movies",
           component: MovieList,
           name: "list-of-movies",
+          meta: {
+            title: "List of Movies",
+          },
         },
         {
           path: "movie/:id",
           component: SingleMovie,
           name: "movie",
+          meta: {
+            title: "Single Movie",
+          },
         },
         {
           path: "google_profile",
           component: GoogleProfile,
           name: "google_profile",
+          meta: {
+            title: "Google Profile",
+          },
         },
         {
           path: "email_profile",
           component: EmailProfile,
           name: "email_profile",
+          meta: {
+            title: "Email Profile",
+          },
         },
         {
           path: "verify-new-email",
