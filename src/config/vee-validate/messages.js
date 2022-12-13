@@ -14,6 +14,7 @@ configure({
         max: "{field} must not have more than 0:{max} characters",
         username: "{field} must be in english alphabet and lowercase",
         confirmed: "Password's don't match",
+        login: "Email or username is not valid",
       },
       names: {
         // For English version, This will be auto generated according to the keys.
@@ -32,6 +33,7 @@ configure({
         username:
           "{field} უნდა იყოს მხოლოდ ინგლისური ასოებით და ქვედა რეგისტრში",
         confirmed: "პაროლები არ ემთხვევა",
+        login: "მეილის ან სახელის ფორმატი არასწორია",
       },
       names: {
         password: "პაროლი",

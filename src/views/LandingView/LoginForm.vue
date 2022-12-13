@@ -52,6 +52,7 @@
                 type="email"
                 v-bind="field"
                 :placeholder="$t('registration_form.password_placeholder')"
+                @focus="(wrongCredentials = false), (notVerified = false)"
               />
               <span>
                 <img
@@ -324,6 +325,7 @@ const isNotLogged = ref(true);
 const isOpenPasswordSent = ref(false);
 const credentials = useCredentials();
 const url = import.meta.env.VITE_API_GOOGLE_URL;
+
 const handleForgotPassword = async () => {
   try {
     credentials.loading = true;
@@ -354,7 +356,7 @@ const handleLogin = async () => {
     notVerified.value = false;
     if (err.response.data == "wrong email or password") {
       wrongCredentials.value = true;
-    } else if (err.response.data == "Email is not verified!") {
+    } else if (err.response.data == "Email is not verified") {
       notVerified.value = true;
     }
 

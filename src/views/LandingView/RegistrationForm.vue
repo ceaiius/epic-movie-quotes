@@ -52,6 +52,7 @@
                 type="text"
                 class="bg-input_bg text-sm h-10 w-full p-2 border-2 rounded"
                 :placeholder="$t('registration_form.username_placeholder')"
+                @focus="nameTaken = false"
               />
               <span>
                 <img
@@ -76,13 +77,7 @@
             </Field>
 
             <ErrorMessage
-              class="
-                text-default_red
-                whitespace-nowrap
-                text-center text-sm
-                -bottom-6
-                absolute
-              "
+              class="text-default_red text-sm -bottom-12 absolute"
               name="username"
             />
             <p
@@ -98,7 +93,7 @@
               {{ $t("registration_form.username_taken") }}
             </p>
           </div>
-          <div class="flex flex-col pt-6 relative">
+          <div class="flex flex-col pt-12 relative">
             <label for="email" class="text-white text-base pb-2">{{
               $t("registration_form.email")
             }}</label>
@@ -114,6 +109,7 @@
                 ]"
                 class="bg-input_bg text-sm h-10 p-2 border-2 rounded"
                 :placeholder="$t('registration_form.email_placeholder')"
+                @focus="emailTaken = false"
               />
               <span>
                 <img
@@ -121,7 +117,7 @@
                     meta.valid && meta.touched ? 'block' : 'hidden',
                     !meta.valid && meta.touched ? 'hidden' : 'block',
                   ]"
-                  class="w-6 h-6 absolute top-16 right-2"
+                  class="w-6 h-6 absolute top-register_top right-2"
                   src="/images/valid.svg"
                   alt="valid icon"
                 />
@@ -130,7 +126,7 @@
                     meta.valid && meta.touched ? 'hidden' : 'block',
                     !meta.valid && meta.touched ? 'block' : 'hidden',
                   ]"
-                  class="w-6 h-6 absolute top-16 right-2"
+                  class="w-6 h-6 absolute top-register_top right-2"
                   src="/images/invalid.svg"
                   alt="invalid icon"
                 />
@@ -138,7 +134,7 @@
             </Field>
 
             <ErrorMessage
-              class="text-default_red text-sm -bottom-6 absolute"
+              class="text-default_red text-sm -bottom-12 absolute"
               name="email"
             />
             <p
@@ -155,7 +151,7 @@
             </p>
           </div>
 
-          <div class="flex flex-col pt-10 relative">
+          <div class="flex flex-col pt-12 relative">
             <label
               for="exampleInputPassword1"
               class="text-white text-base pb-2"
@@ -190,7 +186,7 @@
                   w-6
                   h-6
                   absolute
-                  top-20
+                  top-register_top
                   right-2
                   cursor-pointer
                   fill-transparent
@@ -220,7 +216,7 @@
                   w-6
                   h-6
                   absolute
-                  top-20
+                  top-register_top
                   right-2
                   cursor-pointer
                   stroke-[#7F8487]
@@ -234,7 +230,7 @@
               </svg>
             </span>
             <ErrorMessage
-              class="text-default_red text-sm -bottom-6 absolute"
+              class="text-default_red text-center text-sm -bottom-10 absolute"
               name="password"
             />
           </div>
@@ -318,7 +314,7 @@
               </svg>
             </span>
             <ErrorMessage
-              class="text-default_red text-sm -bottom-6 absolute"
+              class="text-default_red text-center text-sm -bottom-8 absolute"
               name="password_confirmation"
             />
           </div>
