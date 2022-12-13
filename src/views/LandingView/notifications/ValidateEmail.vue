@@ -29,6 +29,7 @@
           rounded-md
           text-sm
           mt-8
+          hover:bg-button_hover
         "
         @click="$emit('closeValidate')"
       >

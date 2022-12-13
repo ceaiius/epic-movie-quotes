@@ -44,6 +44,7 @@
           font-medium
           rounded-md
           text-sm
+          hover:bg-button_hover
         "
         @click="router.push({ name: 'landing' })"
       >

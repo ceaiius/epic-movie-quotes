@@ -16,7 +16,14 @@
       </div>
       <div>
         <p
-          class="bg-[#462676] text-white rounded-sm p-2 cursor-pointer"
+          class="
+            bg-[#462676]
+            text-white
+            rounded-sm
+            p-2
+            cursor-pointer
+            hover:bg-[#5800FF]
+          "
           @click="handleClick"
         >
           Choose file

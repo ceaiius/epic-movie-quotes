@@ -20,6 +20,7 @@ module.exports = {
         success_text: "#0F5132",
         hr_color: "#efefef4d",
         unvalidated: "rgba(236, 149, 36, 0.2)",
+        button_hover: "#FF1E1E",
       },
       screens: {
         xs: "375px",

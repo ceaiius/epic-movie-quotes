@@ -57,6 +57,7 @@
             font-medium
             rounded-md
             text-sm
+            hover:bg-button_hover
           "
         >
           {{ $t("profile.add") }}

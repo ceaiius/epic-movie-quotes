@@ -68,6 +68,7 @@
                   font-medium
                   rounded-md
                   text-sm
+                  hover:bg-button_hover
                 "
                 @click="credentials.isOpenRegister = true"
               >
@@ -180,6 +181,7 @@
           rounded-md
           text-sm
           mt-6
+          hover:bg-button_hover
         "
         @click="credentials.isOpenRegister = true"
       >

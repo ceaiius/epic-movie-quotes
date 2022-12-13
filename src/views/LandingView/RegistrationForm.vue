@@ -330,6 +330,7 @@
               rounded-md
               text-sm
               mt-10
+              hover:bg-button_hover
             "
             :disabled="loading"
           >

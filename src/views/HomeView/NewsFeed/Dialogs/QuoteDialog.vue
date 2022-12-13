@@ -95,6 +95,7 @@
               rounded-md
               text-sm
               mt-6
+              hover:bg-button_hover
             "
           >
             {{ $t("news_feed.post") }}

@@ -51,7 +51,7 @@
                 ]"
                 type="email"
                 v-bind="field"
-                :placeholder="$t('registration_form.password_placeholder')"
+                :placeholder="$t('registration_form.username_placeholder')"
                 @focus="(wrongCredentials = false), (notVerified = false)"
               />
               <span>
@@ -227,6 +227,7 @@
               rounded-md
               text-sm
               mt-8
+              hover:bg-button_hover
             "
           >
             {{ $t("login_form.sign_in") }}

@@ -113,6 +113,7 @@
               rounded-md
               text-sm
               mt-6
+              hover:bg-button_hover
             "
           >
             Add movie

@@ -253,9 +253,15 @@
                     />
                     <div
                       :class="
-                        item.email_verified_at == null ? '-right-[60%] ' : ''
+                        item.email_verified_at == null
+                          ? i18n.global.locale == 'En'
+                            ? '-right-[63%] '
+                            : '-right-[73%]'
+                          : i18n.global.locale == 'En'
+                          ? '-right-[78%]'
+                          : '-right-[62%]'
                       "
-                      class="absolute top-2 text-white -right-[78%]"
+                      class="absolute top-2 text-white"
                     >
                       <div class="flex gap-6">
                         <h2
@@ -597,6 +603,7 @@ import { onBeforeMount, ref } from "vue";
 import axios from "@/config/axios/index.js";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { useCredentials } from "@/stores/index.js";
+import { i18n } from "@/i18n";
 import SuccessDialog from "@/views/HomeView/Profile/GoogleProfile/SuccessDialog.vue";
 import DialogModal from "@/components/DialogModal.vue";
 import { thumbnail } from "@/helpers/thumbnail";

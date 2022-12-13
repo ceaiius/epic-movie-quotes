@@ -121,6 +121,7 @@
               rounded-md
               text-sm
               mt-6
+              hover:bg-button_hover
             "
           >
             {{ $t("movie_list.save_changes") }}

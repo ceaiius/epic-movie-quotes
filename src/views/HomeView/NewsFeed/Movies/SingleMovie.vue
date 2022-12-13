@@ -94,6 +94,7 @@
                 rounded-md
                 text-sm
                 cursor-pointer
+                hover:bg-button_hover
               "
               @click="addQuote = true"
             >
