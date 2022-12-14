@@ -179,7 +179,7 @@ const getMovies = () => {
     director_ka.value = data.value.director.ka;
     description_en.value = data.value.description.en;
     description_ka.value = data.value.description.ka;
-    genre.value = JSON.parse(data.value.genre);
+    genre.value = data.value.genre;
     year.value = data.value.year;
     budget.value = data.value.budget;
   });

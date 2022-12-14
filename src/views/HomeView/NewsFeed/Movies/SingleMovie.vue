@@ -346,7 +346,7 @@ const getMovies = async () => {
     await axios.get(url).then((res) => {
       data.value = res.data;
 
-      genres.value = JSON.parse(res.data.genre);
+      genres.value = res.data.genre;
     });
   } catch (err) {
     router.back();
