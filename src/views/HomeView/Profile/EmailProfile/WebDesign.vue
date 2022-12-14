@@ -252,15 +252,7 @@
                       @mouseleave="hover = false"
                     />
                     <div
-                      :class="
-                        item.email_verified_at == null
-                          ? i18n.global.locale == 'En'
-                            ? '-right-[63%] '
-                            : '-right-[73%]'
-                          : i18n.global.locale == 'En'
-                          ? '-right-[78%]'
-                          : '-right-[62%]'
-                      "
+                      :class="textPosition(item.email_verified_at)"
                       class="absolute top-2 text-white"
                     >
                       <div class="flex gap-6">
@@ -623,6 +615,17 @@ const passwordReset = ref(false);
 const editThumbnail = ref(false);
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
 const usernameTaken = ref(false);
+
+const textPosition = (x) => {
+  return x == null
+    ? i18n.global.locale == "En"
+      ? "-right-[63%] "
+      : "-right-[73%]"
+    : i18n.global.locale == "En"
+    ? "-right-[78%]"
+    : "-right-[62%]";
+};
+
 const deleteEmail = (id) => {
   const url = `${import.meta.env.VITE_API_BASE_URL}emails/${id}`;
   axios.delete(url).then((res) => {
