@@ -26,7 +26,7 @@
         @click="toggleGenres"
       >
         <div
-          v-for="(chip, index) in credentials.chip"
+          v-for="(chip, index) in chips"
           :key="chip.label"
           class="bg-default_red flex items-center ml-2 pl-2 rounded-sm w-max"
         >
@@ -41,8 +41,8 @@
           v-bind="field"
           :id="name"
           class="cursor-pointer w-20 bg-transparent pl-4 chip-remove"
-          :class="credentials.chip.length !== 0 ? 'invisible' : ''"
-          :placeholder="credentials.chip.length == 0 ? 'Genre' : ''"
+          :class="chips.length !== 0 ? 'invisible' : ''"
+          :placeholder="chips.length == 0 ? 'Genre' : ''"
           autocomplete="off"
           disabled
         />
@@ -79,17 +79,15 @@
 <script setup>
 import { Field } from "vee-validate";
 import { onBeforeMount, ref } from "vue";
-import { useCredentials } from "@/stores/index.js";
-const credentials = useCredentials();
 
 const open = ref(false);
 const genres = ref();
-
+const chips = ref([]);
 const props = defineProps(["name", "values"]);
 
 onBeforeMount(() => {
   setTimeout(() => {
-    credentials.chip = props.values.map((x) => x);
+    chips.value = props.values.map((x) => x);
   }, 200);
 });
 
@@ -106,14 +104,14 @@ const movieGenres = [
 ];
 
 const addChip = (e) => {
-  if (!credentials.chip.includes(e.target.textContent)) {
-    credentials.chip.push(e.target.textContent);
-    genres.value = credentials.chip;
+  if (!chips.value.includes(e.target.textContent)) {
+    chips.value.push(e.target.textContent);
+    genres.value = chips;
   }
 };
 
 const removeChip = (index) => {
-  credentials.chip.splice(index, 1);
+  chips.value.splice(index, 1);
   open.value = false;
 };
 
@@ -124,7 +122,7 @@ const toggleGenres = (e) => {
 };
 
 const rule = () => {
-  if (credentials.chip.length === 0) {
+  if (chips.value.length === 0) {
     return false;
   } else {
     return true;
