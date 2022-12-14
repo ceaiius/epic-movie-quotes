@@ -113,9 +113,10 @@
               rounded-md
               text-sm
               mt-6
+              hover:bg-button_hover
             "
           >
-            Add movie
+            {{ $t("movie_list.add_movie") }}
           </button>
         </div>
       </Form>

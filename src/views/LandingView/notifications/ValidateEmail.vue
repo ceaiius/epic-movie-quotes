@@ -16,7 +16,7 @@
       <h1 class="text-2xl font-bold text-white">
         {{ $t("login_form.thank_you") }}
       </h1>
-      <h2 class="text-white text-center">
+      <h2 class="text-white text-center px-4">
         {{ $t("login_form.activate_account") }}
       </h2>
       <button
@@ -29,6 +29,7 @@
           rounded-md
           text-sm
           mt-8
+          hover:bg-button_hover
         "
         @click="$emit('closeValidate')"
       >

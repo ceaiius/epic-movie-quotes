@@ -41,6 +41,7 @@
                 font-medium
                 rounded-md
                 text-sm
+                hover:bg-button_hover
               "
               @click="addMovies = true"
             >
@@ -62,14 +63,14 @@
         <div v-for="item in searched" :key="item.id">
           <div>
             <img
-              class="h-60 w-96 object-cover rounded-2xl"
+              class="h-60 w-96 object-cover rounded-2xl cursor-pointer"
               :src="url_thumbnail + item.thumbnail"
               alt="user avatar"
               @click="handleClick(item.id)"
             />
           </div>
           <div class="mt-2 text-white">
-            <h2>
+            <h2 class="hover:text-[#DC3535]">
               {{ i18n.global.locale == "En" ? item.name.en : item.name.ka }}
               {{ item.year }}
             </h2>

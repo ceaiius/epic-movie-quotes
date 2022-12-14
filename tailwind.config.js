@@ -20,6 +20,7 @@ module.exports = {
         success_text: "#0F5132",
         hr_color: "#efefef4d",
         unvalidated: "rgba(236, 149, 36, 0.2)",
+        button_hover: "#FF1E1E",
       },
       screens: {
         xs: "375px",
@@ -29,6 +30,7 @@ module.exports = {
         large_dash_right: "80px",
         small_dash_top: "16px",
         small_dash_right: "24px",
+        register_top: "88px",
       },
       width: {
         input_width: "600px",

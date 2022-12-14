@@ -121,6 +121,7 @@
               rounded-md
               text-sm
               mt-6
+              hover:bg-button_hover
             "
           >
             {{ $t("movie_list.save_changes") }}
@@ -163,8 +164,11 @@ const header = {
 const data = ref([]);
 
 onBeforeMount(() => {
-  getMovies();
-});
+  setTimeout(() => {
+    getMovies();
+  });
+}),
+  500;
 const getMovies = () => {
   const url = `${import.meta.env.VITE_API_BASE_URL}movies/${id}`;
   axios.get(url).then((res) => {

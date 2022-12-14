@@ -89,9 +89,8 @@ const props = defineProps(["name", "values"]);
 
 onBeforeMount(() => {
   setTimeout(() => {
-    props.values.map((x) => credentials.chip.push(x));
-    credentials.chip = props.values;
-  }, 100);
+    credentials.chip = props.values.map((x) => x);
+  }, 200);
 });
 
 const movieGenres = [

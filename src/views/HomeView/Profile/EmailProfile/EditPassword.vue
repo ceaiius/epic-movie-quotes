@@ -226,6 +226,7 @@
             font-medium
             rounded-md
             text-sm
+            hover:bg-button_hover
           "
           @click="handleClick"
         >

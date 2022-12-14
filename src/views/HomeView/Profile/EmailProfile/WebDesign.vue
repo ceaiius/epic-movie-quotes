@@ -252,10 +252,8 @@
                       @mouseleave="hover = false"
                     />
                     <div
-                      :class="
-                        item.email_verified_at == null ? '-right-[60%] ' : ''
-                      "
-                      class="absolute top-2 text-white -right-[78%]"
+                      :class="textPosition(item.email_verified_at)"
+                      class="absolute top-2 text-white"
                     >
                       <div class="flex gap-6">
                         <h2
@@ -597,6 +595,7 @@ import { onBeforeMount, ref } from "vue";
 import axios from "@/config/axios/index.js";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { useCredentials } from "@/stores/index.js";
+import { i18n } from "@/i18n";
 import SuccessDialog from "@/views/HomeView/Profile/GoogleProfile/SuccessDialog.vue";
 import DialogModal from "@/components/DialogModal.vue";
 import { thumbnail } from "@/helpers/thumbnail";
@@ -616,6 +615,17 @@ const passwordReset = ref(false);
 const editThumbnail = ref(false);
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
 const usernameTaken = ref(false);
+
+const textPosition = (x) => {
+  return x == null
+    ? i18n.global.locale == "En"
+      ? "-right-[63%] "
+      : "-right-[73%]"
+    : i18n.global.locale == "En"
+    ? "-right-[78%]"
+    : "-right-[62%]";
+};
+
 const deleteEmail = (id) => {
   const url = `${import.meta.env.VITE_API_BASE_URL}emails/${id}`;
   axios.delete(url).then((res) => {

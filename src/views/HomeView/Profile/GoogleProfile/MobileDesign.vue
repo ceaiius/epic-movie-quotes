@@ -123,6 +123,7 @@
             font-medium
             rounded-md
             text-sm
+            hover:bg-button_hover
           "
         >
           {{ $t("movie_list.save_changes") }}
@@ -153,8 +154,13 @@ const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
 
 const cancelEdit = () => {
   credentials.username_edit = credentials.user_name;
+
   var preview = document.getElementById("mobile_img");
-  preview.src = url_thumbnail + credentials.avatar;
+  if (credentials.avatar.includes("https")) {
+    preview.src = credentials.avatar;
+  } else {
+    preview.src = url_thumbnail + credentials.avatar;
+  }
   isEditable.value = false;
 };
 

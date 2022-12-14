@@ -16,7 +16,7 @@
       <h1 class="text-2xl font-bold text-white">
         {{ $t("login_form.forgot_password_question") }}?
       </h1>
-      <h2 class="text-grey_text text-center">
+      <h2 class="text-grey_text text-center px-4">
         {{ $t("login_form.instructions") }}
       </h2>
       <Form
@@ -68,6 +68,7 @@
             rounded-md
             text-sm
             mt-6
+            hover:bg-button_hover
           "
           :disabled="credentials.loading"
         >

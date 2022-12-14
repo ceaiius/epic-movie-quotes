@@ -41,6 +41,7 @@ export const useCredentials = defineStore("credentials", {
       username_taken: false,
       confirm_username: false,
       email_taken: false,
+      genres: [],
     };
   },
 });
