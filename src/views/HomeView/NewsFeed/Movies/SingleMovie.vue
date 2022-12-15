@@ -143,6 +143,7 @@
                 <dialog-modal v-if="editQuote" @close="editQuote = false">
                   <EditQuoteDialog
                     :id="item.id"
+                    :quotes="item"
                     @delete="deleteQuote(item.id)"
                     @exit="editQuote = false"
                     @update-quotes="getQuotes"
@@ -154,6 +155,7 @@
                 <dialog-modal v-if="viewQuote" @close="viewQuote = false">
                   <ViewQuoteDialog
                     :id="item.id"
+                    :quotes="item"
                     @exit="viewQuote = false"
                     @delete="deleteQuote(item.id)"
                     @edit="(editQuote = true), (viewQuote = false)"
@@ -298,6 +300,7 @@
         <teleport to="body">
           <dialog-modal v-if="editMovie" @close="editMovie = false">
             <EditMovieDoalog
+              :movie="data"
               @update-movies="router.push({ name: 'list-of-movies' })"
               @close-popup="editMovie = false"
             />
@@ -331,6 +334,7 @@ const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
 const data_quotes = ref([]);
 const genres = ref([]);
 const count = ref();
+
 onBeforeMount(() => {
   getMovies();
   getQuotes();
@@ -339,7 +343,8 @@ onBeforeMount(() => {
 const editMovie = ref(false);
 const route = useRoute();
 const id = route.params.id;
-const data = ref();
+const data = ref([]);
+
 const getMovies = async () => {
   const url = `${import.meta.env.VITE_API_BASE_URL}movies/${id}`;
   try {

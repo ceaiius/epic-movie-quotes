@@ -138,51 +138,28 @@ import InputField from "@/views/HomeView/NewsFeed/Form/InputField.vue";
 import InputFile from "@/views/HomeView/NewsFeed/Form/InputFile.vue";
 import InputSelect from "@/views/HomeView/NewsFeed/Form/InputSelect.vue";
 import { useRoute } from "vue-router";
-import { onBeforeMount, ref } from "vue";
+import { ref } from "vue";
 import { useCredentials } from "@/stores/index.js";
 const credentials = useCredentials();
 const emit = defineEmits(["updateMovies", "closePopup"]);
+const props = defineProps(["movie"]);
 const route = useRoute();
 const id = route.params.id;
 const url = `${import.meta.env.VITE_API_BASE_URL}movies/${id}`;
-const name_en = ref("");
-const name_ka = ref("");
-const director_en = ref("");
-const director_ka = ref("");
-const description_en = ref("");
-const description_ka = ref("");
-const genre = ref([]);
-const budget = ref();
-const year = ref();
+const name_en = ref(props.movie.name.en);
+const name_ka = ref(props.movie.name.ka);
+const director_en = ref(props.movie.director.en);
+const director_ka = ref(props.movie.director.ka);
+const description_en = ref(props.movie.description.en);
+const description_ka = ref(props.movie.description.ka);
+const genre = ref(props.movie.genre);
+const budget = ref(props.movie.budget);
+const year = ref(props.movie.year);
 
 const header = {
   headers: {
     "Content-Type": "multipart/form-data",
   },
-};
-
-const data = ref([]);
-
-onBeforeMount(() => {
-  setTimeout(() => {
-    getMovies();
-  });
-}),
-  500;
-const getMovies = () => {
-  const url = `${import.meta.env.VITE_API_BASE_URL}movies/${id}`;
-  axios.get(url).then((res) => {
-    data.value = res.data;
-    name_en.value = data.value.name.en;
-    name_ka.value = data.value.name.ka;
-    director_en.value = data.value.director.en;
-    director_ka.value = data.value.director.ka;
-    description_en.value = data.value.description.en;
-    description_ka.value = data.value.description.ka;
-    genre.value = data.value.genre;
-    year.value = data.value.year;
-    budget.value = data.value.budget;
-  });
 };
 
 const handleSubmit = (values) => {

@@ -7,13 +7,19 @@
       w-screen
       h-96
       relative
-      -top-4
+      -top-0
       md:rounded-xl
       rounded-none
     "
   >
     <div class="p-6">
-      <div class="flex gap-4 items-center">
+      <img
+        class="cursor-pointer"
+        src="/images/back-arrow.svg"
+        alt="back arrow icon"
+        @click="$emit('closePopup')"
+      />
+      <div class="flex pt-6 gap-4 items-center">
         <img
           :class="[
             isActive('google_profile')

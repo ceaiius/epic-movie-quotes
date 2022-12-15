@@ -23,7 +23,7 @@
             top="top-1/3"
             @close="isHamburgerClicked = false"
           >
-            <HamburgerMenu />
+            <HamburgerMenu @close-popup="isHamburgerClicked = false" />
           </dialog-modal>
         </teleport>
 
