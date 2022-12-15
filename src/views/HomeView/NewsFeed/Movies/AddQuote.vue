@@ -8,6 +8,8 @@
       w-screen
       h-screen
       md:rounded-xl
+      max-h-screen
+      overflow-auto
       rounded-none
     "
   >
@@ -27,17 +29,19 @@
       class="
         w-full
         flex
+        md:flex-row
+        flex-col
         justify-center
-        lg:justify-start
+        md:justify-start
         gap-6
         ml-6
-        lg:ml-32
+        md:ml-32
         mt-6
-        items-center
+        md:items-center
       "
     >
       <img
-        class="w-40 h-40"
+        class="md:w-60 h-40 w-full pr-12 md:pr-0"
         :src="url_thumbnail + data?.thumbnail"
         alt="user avatar"
       />
@@ -171,7 +175,7 @@ const getMovies = () => {
   const url = `${import.meta.env.VITE_API_BASE_URL}movies/${id}`;
   axios.get(url).then((res) => {
     data.value = res.data;
-    genres.value = JSON.parse(res.data.genre);
+    genres.value = res.data.genre;
     console.log(res.data);
   });
 };

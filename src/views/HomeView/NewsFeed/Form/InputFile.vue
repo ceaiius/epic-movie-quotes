@@ -6,13 +6,13 @@
         meta.valid && meta.touched ? 'border border-green-500' : '',
         !meta.valid && meta.touched ? 'border border-red-500' : '',
       ]"
-      class="border p-3 flex justify-between"
+      class="border flex-col md:flex-row gap-6 p-3 flex md:justify-between"
       @drop.prevent="dragFile"
       @dragover.prevent
     >
       <div class="flex gap-6 items-center text-white">
         <img src="/images/file-camera.svg" alt="camera icon" />
-        <p>{{ img !== null ? img : "Upload image" }}</p>
+        <p class="self-center">{{ img !== null ? img : "Upload image" }}</p>
       </div>
       <div>
         <p

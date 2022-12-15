@@ -92,33 +92,20 @@
     
 <script setup>
 import { Form } from "vee-validate";
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import axios from "@/config/axios/index.js";
 
 import InputFileEdit from "@/views/HomeView/NewsFeed/Form/InputFileEdit.vue";
 import InputField from "@/views/HomeView/NewsFeed/Form/InputField.vue";
 import { useCredentials } from "@/stores/index.js";
 const credentials = useCredentials();
-const props = defineProps(["id"]);
-
+const props = defineProps(["id", "quotes"]);
+console.log(props.quotes);
 const emit = defineEmits(["delete", "exit", "updateQuotes", "closePopup"]);
 
-const data = ref([]);
-const name_en = ref();
-const name_ka = ref();
-const url_quotes = import.meta.env.VITE_API_BASE_URL + "quotes-all";
-onMounted(() => {
-  getQuotes();
-});
-
-const getQuotes = () => {
-  axios.get(url_quotes).then((res) => {
-    data.value = res.data.filter((x) => x.id == props.id);
-    name_en.value = data.value[0].name.en;
-    name_ka.value = data.value[0].name.ka;
-    credentials.thumbnail = data.value[0].thumbnail;
-  });
-};
+const name_en = ref(props.quotes.name.en);
+const name_ka = ref(props.quotes.name.ka);
+credentials.thumbnail = ref(props.quotes.thumbnail);
 
 const header = {
   headers: {

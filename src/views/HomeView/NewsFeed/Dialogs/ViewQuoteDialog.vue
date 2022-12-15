@@ -98,42 +98,30 @@
 </template>
       
   <script setup>
-import { onMounted, ref } from "vue";
-import axios from "@/config/axios/index.js";
+import { ref } from "vue";
+
 import InputReadOnly from "@/views/HomeView/NewsFeed/Form/InputReadOnly.vue";
 import { useCredentials } from "@/stores/index.js";
 import { thumbnail as avatar } from "@/helpers/thumbnail";
 const credentials = useCredentials();
-const props = defineProps(["id"]);
+const props = defineProps(["id", "quotes"]);
 defineEmits(["delete", "exit"]);
-const thumbnail = ref();
+const thumbnail = ref(props.quotes.thumbnail);
 const url_thumbnail = import.meta.env.VITE_API_STORAGE_URL;
-const data = ref([]);
-const username = ref("");
-const comment = ref("No comments yet");
-const name_en = ref();
-const comment_count = ref(0);
-const name_ka = ref();
+const username = ref(
+  props.quotes.comments.length == 0
+    ? ""
+    : props.quotes.comments[0].author.username
+);
+const comment = ref(
+  props.quotes.comments.length == 0
+    ? props.quotes.comments.body
+    : props.quotes.comments[0].body
+);
+const name_en = ref(props.quotes.name.en);
+const comment_count = ref(props.quotes.comments.length);
+const name_ka = ref(props.quotes.name.ka);
 const likes = ref(0);
 
-const url_quotes = import.meta.env.VITE_API_BASE_URL + "quotes-all";
-
-onMounted(() => {
-  getQuotes();
-});
-
-const getQuotes = () => {
-  axios.get(url_quotes).then((res) => {
-    data.value = res.data.filter((x) => x.id == props.id);
-    name_en.value = data.value[0].name.en;
-    name_ka.value = data.value[0].name.ka;
-    thumbnail.value = data.value[0].thumbnail;
-    comment_count.value = data.value[0].comments.length;
-    username.value = data.value[0].comments[0].author.username;
-    comment.value = data.value[0].comments[0].body;
-    likes.value = data.value[0].users_count;
-
-    console.log(res.data);
-  });
-};
+console.log(props.quotes.comments.length);
 </script>

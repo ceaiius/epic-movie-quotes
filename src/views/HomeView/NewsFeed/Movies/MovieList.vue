@@ -5,12 +5,12 @@
     :class="addMovies ? 'blur-sm' : 'blur-none'"
   >
     <div class="w-[80%] ml-[10%]">
-      <div class="flex items-center justify-between">
+      <div class="flex items-center justify-between gap-6 flex-wrap">
         <div class="flex text-white gap-6">
           <h2>{{ $t("movie_list.my_list_of_movies") }}</h2>
           <h2>{{ $t("movie_list.total") }} {{ count }}</h2>
         </div>
-        <div class="h-[52px] relative ml-6">
+        <div class="h-[52px] relative">
           <div class="flex items-center">
             <div class="lg:flex hidden">
               <img
